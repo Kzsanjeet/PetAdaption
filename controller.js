@@ -52,56 +52,56 @@ const registerShelter = async(req,res)=>{
 }
 
 
-// //login function for customer
-// const loginUser = async(req,res)=>{
-//     try{
-//         const{email,password}= req.body;
+//login function for customer
+const loginUser = async(req,res)=>{
+    try{
+        const{email,password}= req.body;
 
 
-//         const login = await RegisterCustomer.findOne({email: email})  // left one is key and right one is value
-//         if(!login){
-//            res.status(400).json({message:"Please put the correct email address"})
-//         }else{
-//             const checkPassword = await  bcrypt.compare(password, login.password)
-//             if(checkPassword){
-//                 token = jwt.sign({id:login._id},process.env.JWT_SECRET)
-//                 console.log(token,"hello")
-//                 res.status(200).json({message:"logged in suc",token:token})
+        const login = await RegisterCustomer.findOne({email: email})  // left one is key and right one is value
+        if(!login){
+           res.status(400).json({message:"Please put the correct email address"})
+        }else{
+            const checkPassword = await  bcrypt.compare(password, login.password)
+            if(checkPassword){
+                token = jwt.sign({id:login._id},process.env.JWT_SECRET)
+                console.log(token,"hello")
+                res.status(200).json({message:"logged in suc",token:token})
 
-//             }else{
-//                 res.status(400).json({message:"Password incorrect, Please try again"})
-//             }
+            }else{
+                res.status(400).json({message:"Password incorrect, Please try again"})
+            }
             
-//         }
-//     }catch(err){
-//         res.status(500).json({message:err})
-//     }
+        }
+    }catch(err){
+        res.status(500).json({message:err})
+    }
 
-// }
+}
 
 
 
-// //login for shelter
-// const loginShelter = async(req,res)=>{
-//     try{
-//         const{email,password}=req.body
-//         const login = await RegisterShelter.findOne({email:email}) //right one is the value that came from request body
-//         if(!login){
-//             res.status(200).json({message:"Please put the correct email address"})
-//         }else{
-//             const checkPassword = await bcrypt.compare(password,login.password)
-//             if(checkPassword){
-//                 const token = jwt.sign({id:login._id},process.env.JWT_SECRET)
-//                 // res.cookie('token',token,{http:true, secure:process.env.NODE_ENV='production'})
-//                 res.status(200).json({message:"Logged in sucessfully",token:token})
-//             }else{
-//                 res.status(400).json({message:"Unable to login, please put the correct password"})
-//             }
-//         }
+//login for shelter
+const loginShelter = async(req,res)=>{
+    try{
+        const{email,password}=req.body
+        const login = await RegisterShelter.findOne({email:email}) //right one is the value that came from request body
+        if(!login){
+            res.status(200).json({message:"Please put the correct email address"})
+        }else{
+            const checkPassword = await bcrypt.compare(password,login.password)
+            if(checkPassword){
+                const token = jwt.sign({id:login._id},process.env.JWT_SECRET)
+                // res.cookie('token',token,{http:true, secure:process.env.NODE_ENV='production'})
+                res.status(200).json({message:"Logged in sucessfully",token:token})
+            }else{
+                res.status(400).json({message:"Unable to login, please put the correct password"})
+            }
+        }
 
-//     }catch(err){
-//         res.status(500).json({message:err})
-//     }
-// }
+    }catch(err){
+        res.status(500).json({message:err})
+    }
+}
 
 module.exports={registerUser,registerShelter,loginUser,loginShelter};
