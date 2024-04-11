@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'
 import { GlobalStyles } from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 function Copyright(props) {
@@ -31,12 +32,12 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const navigate = useNavigate()
 
   axios.defaults.withCredentials = true;
 
@@ -48,19 +49,25 @@ export default function SignIn() {
     }));
   };
 
-  axios.defaults.withCredentials = true;
+
   const handleSubmit = (event) => {
     event.preventDefault();
     axios.post('http://localhost:5000/loginCustomer', formData)
-    .then(res => {
-      if(res.data.Login) {
-        window.location.href = '/dashboard';
-      } else {
-        window.location.href = '/';
-      }
-    })
-    .catch(err => console.log(err))
-    // console.log(formData);
+  .then(res => {
+    console.log(res.data)
+    if (res.data.token) {
+      localStorage.setItem('token', res.data.token); // Store the token
+      localStorage.setItem('userId', res.data.userId);
+      const usersid = localStorage.getItem('userId')
+
+      console.log(usersid);
+      navigate('/dashboard');
+    } else {
+      console.log('Login failed:', res.data.message);
+      navigate('/');
+    }
+  })
+  .catch(err => console.error('Error:', err));
   };
 
   return (

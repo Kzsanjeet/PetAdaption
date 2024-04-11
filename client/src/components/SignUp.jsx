@@ -21,8 +21,8 @@ import axios from 'axios';
 
 function SignUp() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
     terms: true,
@@ -38,15 +38,27 @@ function SignUp() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    axios.post('http://localhost:5000/registerShelter', formData)
+    axios.post('http://localhost:5000/registerCustomer', formData)
     .then(res => {
       window.location.href = '/signin';
     })
     .catch(err => console.log(err))
-    // console.log(formData);
+    console.log(formData);
     // Add code to submit the form data to the server
+
+  //   const response = await fetch("http://localhost:5000/registerCustomer", {
+  //     method: "POST",
+  //     headers: {
+  //         "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(formData)
+  // });
+  
+  const data = await response.json();
+  console.log(data);
+  
   };
 
   return (
@@ -73,10 +85,10 @@ function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="firstname"
                   required
                   fullWidth
-                  id="firstName"
+                  id="firstname"
                   label="First Name"
                   autoFocus
                   value={formData.firstName}
@@ -87,9 +99,9 @@ function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  id="lastname"
                   label="Last Name"
-                  name="lastName"
+                  name="lastname"
                   autoComplete="family-name"
                   value={formData.lastName}
                   onChange={handleChange}
