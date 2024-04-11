@@ -53,31 +53,25 @@ const registerShelter = async(req,res)=>{
 
 
 //login function for customer
-const loginUser = async(req,res)=>{
-    try{
-        const{email,password}= req.body;
-
-
-        const login = await RegisterCustomer.findOne({email: email})  // left one is key and right one is value
-        if(!login){
-           res.status(400).json({message:"Please put the correct email address"})
-        }else{
-            const checkPassword = await  bcrypt.compare(password, login.password)
-            if(checkPassword){
-                token = jwt.sign({id:login._id},process.env.JWT_SECRET)
-                console.log(token,"hello")
-                res.status(200).json({message:"logged in suc",token:token})
-
-            }else{
-                res.status(400).json({message:"Password incorrect, Please try again"})
-            }
-            
-        }
-    }catch(err){
-        res.status(500).json({message:err})
+const loginUser = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+  
+      // Find user in the database
+      const user = await RegisterCustomer.findOne({ email });
+  
+      // If user not found or password is incorrect, return error
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+        return res.status(400).json({ message: 'Invalid email or password' });
+      }
+  
+      // If user is found and password is correct, generate and return token
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      return res.status(200).json({ message: 'logged in successfully', token, userId: user._id });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
     }
-
-}
+  };
 
 
 

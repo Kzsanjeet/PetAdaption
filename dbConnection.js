@@ -7,7 +7,7 @@ function connectDB() {
         }
         console.log("Attempting to connect to MongoDB Atlas...");
         mongoose.connect(process.env.CONNECT_URI)
-            .then(() => console.log("Connected to database"))
+            .then(() => console.log("ConnecteD to database"))
             .catch((error) => {
                 console.log("Error occurred while connect to database: " + error);
                 process.exit(1);
