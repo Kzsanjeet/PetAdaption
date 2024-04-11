@@ -92,7 +92,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+              <img className="h-8 w-auto" src={petLogo} alt="" />
             </a>
             <button type="button" className="-m-2.5 rounded-md p-2.5 text-gray-700">
               <span className="sr-only">Close menu</span>
@@ -104,7 +104,7 @@ const Navbar = () => {
           <div className="mt-6 flow-root">
             <div className="-my-1.5 p-1.5">
               <a href="#" className="group flex items-center justify-between p-2.5 text-sm font-semibold leading-6 hover:bg-gray-50">
-                Product
+                Dogs
                 <svg className="h-5 w-5 text-gray-400 group-hover:text-gray-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                 </svg>
@@ -112,9 +112,9 @@ const Navbar = () => {
               {/* More mobile menu items... */}
             </div>
           </div>
-          <a href="#" className="block mt-6 text-sm font-semibold leading-6 text-gray-900">Features</a>
-          <a href="#" className="block mt-4 text-sm font-semibold leading-6 text-gray-900">Marketplace</a>
-          <a href="#" className="block mt-4 text-sm font-semibold leading-6 text-gray-900">Company</a>
+          <a href="#" className="block mt-6 text-sm font-semibold leading-6 text-gray-900">Cats</a>
+          <a href="#" className="block mt-4 text-sm font-semibold leading-6 text-gray-900">Other Pets</a>
+          <a href="#" className="block mt-4 text-sm font-semibold leading-6 text-gray-900">Donate</a>
           <div className="mt-6">
             <a href="#" className="block text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
           </div>
