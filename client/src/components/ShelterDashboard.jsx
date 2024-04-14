@@ -1,8 +1,9 @@
 import React from 'react'
+import AddPet from './AddPet'
 
 const ShelterDashboard = () => {
   return (
-    <div>ShelterDashboard</div>
+    <AddPet />
   )
 }
 

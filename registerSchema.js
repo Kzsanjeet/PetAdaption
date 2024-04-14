@@ -26,6 +26,8 @@ const register2 = mongoose.Schema({
     "firstname":{type: String, required: true},
     "lastname":{type: String, required: true},
     "sheltername":{type:String, required:true},
+    "phone": {type:String, required:true},
+    "address": {type:String, required:true},
     "email":{ 
         type: String,
         required: true,     // Ensures the email field is required
@@ -46,7 +48,15 @@ const register2 = mongoose.Schema({
 }
 )
 
+const petSchema = mongoose.Schema({
+    name: { type: String, required: true },
+    image: { type: String, required: true }, // Assuming you store the image path
+    breed: { type: String, required: true },
+    description: { type: String, required: true },
+  });
+  
+const Pet = mongoose.model('Pet', petSchema);
 const RegisterCustomer= mongoose.model('RegisterCustomer', register1);
 const RegisterShelter = mongoose.model("RegisterShelter",register2)
 
-module.exports = {RegisterCustomer,RegisterShelter}
+module.exports = {RegisterCustomer,RegisterShelter, Pet}

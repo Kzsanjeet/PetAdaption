@@ -31,3 +31,5 @@ app.listen(PORT, (err) => {
     }
     console.log(`Server is running on port ${PORT}`);
 });
+
+const upload = multer({dest:"/assets/images"})
