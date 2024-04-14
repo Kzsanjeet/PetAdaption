@@ -12,7 +12,7 @@ const Sidebar = () => {
         if (token) {
             const decoded = jwtDecode(token);
             const userId = decoded._id; // Assuming the user ID is stored in the token as _id
-            axios.get(`http://localhost:3001/user-data/${userId}`) 
+            axios.get(`http://localhost:5000/user-data/${userId}`) 
             .then(res => {
                 console.log(res.data);
                 setUserData({ firstName: res.data.firstName });

@@ -30,6 +30,8 @@ function AddShelter() {
     address: ''
   });
 
+  const [successMessage, setSuccessMessage] = useState('');
+
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
@@ -42,16 +44,47 @@ function AddShelter() {
     }));
   };
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:3001/addshelter', formData)
-    .then(res => {
-      window.location.href = '/dashboard';
-    })
-    .catch(err => console.log(err))
-    console.log(formData);
-    // Add code to submit the form data to the server
+    axios.post('http://localhost:5000/loginShelter', formData)
+  .then(res => {
+    console.log(res.data)
+    if (res.data.token) {
+      localStorage.setItem('token', res.data.token); // Store the token
+      localStorage.setItem('userId', res.data.userId);
+      const usersid = localStorage.getItem('userId')
+
+      console.log(usersid);
+      navigate('/dashboard');
+    } else {
+      console.log('Login failed:', res.data.message);
+      navigate('/');
+    }
+  })
+  .catch(err => console.error('Error:', err));
   };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   axios.post('http://localhost:5000/registerShelter', formData)
+  //   .then(res => {
+  //     setSuccessMessage('Shelter was added successfully');
+  //     setTimeout(() => setSuccessMessage(''), 5000); // Clear message after 5 seconds
+  //     setFormData({
+  //       firstName: '',
+  //       lastName: '',
+  //       email: '',
+  //       password: '',
+  //       shelterName: '',
+  //       phone: '',
+  //       address: ''
+  //     });
+  //   })
+  //   .catch(err => console.log(err))
+  //   console.log(formData);
+  //   // Add code to submit the form data to the server
+  // };
 
   return (
     <>
@@ -72,18 +105,19 @@ function AddShelter() {
           <Typography component="h1" variant="h5">
             Add A Shelter Home
           </Typography>
+          {successMessage && <Typography color="success">{successMessage}</Typography>}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="firstname"
                   required
                   fullWidth
-                  id="firstName"
+                  id="firstname"
                   label="First Name"
                   autoFocus
-                  value={formData.firstName}
+                  value={formData.firstname}
                   onChange={handleChange}
                 />
               </Grid>
@@ -91,11 +125,11 @@ function AddShelter() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  id="lastname"
                   label="Last Name"
-                  name="lastName"
+                  name="lastname"
                   autoComplete="family-name"
-                  value={formData.lastName}
+                  value={formData.lastname}
                   onChange={handleChange}
                 />
               </Grid>
@@ -126,12 +160,12 @@ function AddShelter() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  name="shelterName"
+                  name="sheltername"
                   required
                   fullWidth
-                  id="shelterName"
+                  id="sheltername"
                   label="Name of Shelter Home"
-                  value={formData.shelterName}
+                  value={formData.sheltername}
                   onChange={handleChange}
                 />
               </Grid>
@@ -149,10 +183,10 @@ function AddShelter() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  name="mixedInput"
+                  name="address"
                   required
                   fullWidth
-                  id="mixedInput"
+                  id="address"
                   label="Address"
                   value={formData.mixedInput}
                   onChange={handleChange}

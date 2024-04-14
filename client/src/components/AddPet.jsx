@@ -18,50 +18,60 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Test from './Test';
 
-
-function SignUp() {
+function AddPet() {
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    terms: true,
+    name: '',
+    image: '',
+    breed: '',
+    description: ''
   });
   const navigate = useNavigate()
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
-
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: newValue,
-    }));
+  
+    if (name === 'image') {
+      const imageFile = event.target.files[0]; // Access the selected file
+      if (imageFile) {
+        formData.append('image', imageFile); // Append the image to formData
+      }
+    } else {
+      // Handle other input types as usual
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: newValue,
+      }));
+    }
   };
+  
+  
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    axios.post('http://localhost:5000/registerCustomer', formData)
-    .then(res => {
-      navigate('/signin');
-    })
-    .catch(err => console.log(err))
+    const formData = new FormData();
+    formData.append('name', formData.name);
+    formData.append('breed', formData.breed);
+    formData.append('description', formData.description);
+  
+    // Access the file input element correctly
+    const fileInput = event.target.querySelector('input[type="file"]');
+    if (fileInput && fileInput.files.length > 0) {
+      formData.append('image', fileInput.files[0]);
+    }
+  
+    axios.post('http://localhost:5000/addPet', formData)
+      .then(res => {
+        navigate('/shelterdashboard');
+        console.log("success")
+      })
+      .catch(err => console.log(err))
     console.log(formData);
-    // Add code to submit the form data to the server
-
-  //   const response = await fetch("http://localhost:5000/registerCustomer", {
-  //     method: "POST",
-  //     headers: {
-  //         "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify(formData)
-  // });
-  
-  // const data = await response.json();
-  // console.log(data);
-  
+    console.log("failed")
   };
+  
 
   return (
     <>
@@ -80,70 +90,61 @@ function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+           Add Your Pet
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstname"
+                  name="name"
                   required
                   fullWidth
-                  id="firstname"
-                  label="First Name"
+                  id="name"
+                  label="Name"
                   autoFocus
-                  value={formData.firstName}
+                  value={formData.name}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
+                Add Image
                 <TextField
-                  required
-                  fullWidth
-                  id="lastname"
-                  label="Last Name"
-                  name="lastname"
-                  autoComplete="family-name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                    required
+                    fullWidth
+                    id="image"
+                    type="file"
+                    label=""
+                    name="image"
+                    onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  value={formData.password}
-                  onChange={handleChange}
+                        required
+                        fullWidth
+                        id="breed"
+                        label="Breed"
+                        name="breed"
+                        autoComplete="breed"
+                        value={formData.breed}
+                        onChange={handleChange}
+                    />
+              </Grid>
+              <Grid item xs={12}>
+              <TextField
+                    required
+                    fullWidth
+                    name="description"
+                    label="Description"
+                    id="description"
+                    multiline
+                    rows={4}
+                    value={formData.description}
+                    onChange={handleChange}
                 />
               </Grid>
 
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox name="terms"
-                  color="primary"
-                  checked={formData.terms}
-                  onChange={handleChange} />}
-                  label="I agree to the terms and conditions"
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -151,20 +152,16 @@ function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: '#3730A3', '&:hover': { bgcolor: '#4608c4' } }}
             >
-              Sign Up
+              Add Pet
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-              <Link to="/signin" onClick={(e) => { e.preventDefault(); }}>Sign in</Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>
     </ThemeProvider>
+    <Test />
     </>
     
   );
 }
 
-export default SignUp;
+export default AddPet;
