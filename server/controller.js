@@ -1,6 +1,7 @@
 const {RegisterCustomer,RegisterShelter, Pet} = require("./registerSchema") //imported schema
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const multer = require('multer');
 
 
 //registration for customer
@@ -98,58 +99,42 @@ const loginShelter = async (req, res) => {
     }
   };  
 
-// // login for shelter
-// const loginShelter = async(req,res)=>{
-//     try{
-//         const{email,password}=req.body
-//         const login = await RegisterShelter.findOne({email:email}) //right one is the value that came from request body
-//         if(!login){
-//             res.status(200).json({message:"Please put the correct email address"})
-//         }else{
-//             const checkPassword = await bcrypt.compare(password,login.password)
-//             if(checkPassword){
-//                 const token = jwt.sign({id:login._id},process.env.JWT_SECRET)
-//                 // res.cookie('token',token,{http:true, secure:process.env.NODE_ENV='production'})
-//                 res.status(200).json({message:"Logged in sucessfully",token:token})
-//             }else{
-//                 res.status(400).json({message:"Unable to login, please put the correct password"})
-//             }
-//         }
-
-//     }catch(err){
-//         res.status(500).json({message:err})
-//     }
-// }
-
-const addPet = async (req, res) => {
-  try {
-    const { name, breed, description } = req.body;
-    
-    // Check if image file exists in the request
-    if (!req.file) {
-      return res.status(400).json({ message: "No image file provided" });
+  const addPet = async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No image uploaded' });
+      }
+  
+      const { name, breed, description } = req.body;
+      const imagePath = req.file.path;
+  
+      const pet = await Pet.create({
+        name: name,
+        image: imagePath,
+        breed: breed,
+        description: description,
+      });
+  
+      if (pet) {
+        return res.status(200).json({ message: 'Your pet has been added successfully', pet });
+      } else {
+        return res.status(500).json({ message: 'Failed to add pet' });
+      }
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
     }
+  };
 
-    const imagePath = req.file.path;
-
-    // Add the pet to the database
-    const pet = await Pet.create({
-      name: name,
-      image: imagePath,
-      breed: breed,
-      description: description,
-    });
-
-    if (pet) {
-      return res.status(200).json({ message: "Your pet has been added successfully" });
-    } else {
-      return res.status(400).json({ message: "Could not add pet" });
+  const getPets = async (req, res) => {
+    try {
+      const pets = await Pet.find();
+      res.status(200).json(pets);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+  };
+  
 
 
 
-module.exports={registerUser,registerShelter,loginUser,loginShelter, addPet};
+module.exports={registerUser,registerShelter,loginUser,loginShelter, addPet, getPets};
