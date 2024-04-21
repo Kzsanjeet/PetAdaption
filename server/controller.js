@@ -150,6 +150,31 @@ const addPet = async (req, res) => {
   }
 };
 
+const editPet = async(req,res)=>{
+  try{
+    const { name, breed, description } = req.body;
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file provided" });
+    }
+    const updatePet = await updatePet.update({
+      name: name,
+      image: imagePath,
+      breed: breed,
+      description: description,
+    });
+
+    if (updatePet) {
+      return res.status(200).json({ message: "Your pet has been updated successfully" });
+    } else {
+      return res.status(400).json({ message: "Could not update pet" });
+    }
+
+  }catch(err){
+    console.log("err",err)
+  }
+
+}
 
 
-module.exports={registerUser,registerShelter,loginUser,loginShelter, addPet};
+
+module.exports={registerUser,registerShelter,loginUser,loginShelter, addPet,editPet};
