@@ -17,26 +17,22 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
-function AddShelter() {
+function AdminRegister() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
-    shelterName: '',
-    phone: '',
-    address: ''
+    terms: true,
   });
-
-  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate()
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
-
-    console.log('New phone number:', newValue);
 
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -44,47 +40,27 @@ function AddShelter() {
     }));
   };
 
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   axios.post('http://localhost:5000/loginShelter', formData)
-  // .then(res => {
-  //   console.log(res.data)
-  //   if (res.data.token) {
-  //     localStorage.setItem('token', res.data.token); // Store the token
-  //     localStorage.setItem('userId', res.data.userId);
-  //     const usersid = localStorage.getItem('userId')
-
-  //     console.log(usersid);
-  //     navigate('/dashboard');
-  //   } else {
-  //     console.log('Login failed:', res.data.message);
-  //     navigate('/');
-  //   }
-  // })
-  // .catch(err => console.error('Error:', err));
-  // };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    axios.post('http://localhost:5000/registerShelter', formData)
-    .then(res => {
-      setSuccessMessage('Shelter was added successfully');
-      setTimeout(() => setSuccessMessage(''), 5000); // Clear message after 5 seconds
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        shelterName: '',
-        phone: '',
-        address: ''
-      });
-    })
-    .catch(err => console.log(err))
-    console.log(formData);
-    // Add code to submit the form data to the server
-  };
+    try {
+        const { firstname, lastname, email, password } = formData;
+
+        // Check if any of the fields are empty
+        if (!firstname || !lastname || !email || !password) {
+            console.log('All fields are required');
+            return;
+        }
+
+        // Post the form data to the backend
+        await axios.post('http://localhost:5000/registerAdmin', formData);
+
+        // Redirect to signin page after successful registration
+        navigate('/admin');
+    } catch (error) {
+        console.error('Failed to register admin:', error);
+    }
+};
+
 
   return (
     <>
@@ -93,7 +69,7 @@ function AddShelter() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 0,
+            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -103,9 +79,8 @@ function AddShelter() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Add A Shelter Home
+            Sign up
           </Typography>
-          {successMessage && <Typography color="success">{successMessage}</Typography>}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -117,7 +92,7 @@ function AddShelter() {
                   id="firstname"
                   label="First Name"
                   autoFocus
-                  value={formData.firstname}
+                  value={formData.firstName}
                   onChange={handleChange}
                 />
               </Grid>
@@ -129,7 +104,7 @@ function AddShelter() {
                   label="Last Name"
                   name="lastname"
                   autoComplete="family-name"
-                  value={formData.lastname}
+                  value={formData.lastName}
                   onChange={handleChange}
                 />
               </Grid>
@@ -158,41 +133,16 @@ function AddShelter() {
                   onChange={handleChange}
                 />
               </Grid>
+
               <Grid item xs={12}>
-                <TextField
-                  name="sheltername"
-                  required
-                  fullWidth
-                  id="sheltername"
-                  label="Name of Shelter Home"
-                  value={formData.sheltername}
-                  onChange={handleChange}
+                <FormControlLabel
+                  control={<Checkbox name="terms"
+                  color="primary"
+                  checked={formData.terms}
+                  onChange={handleChange} />}
+                  label="I agree to the terms and conditions"
                 />
               </Grid>
-              <Grid item xs={12}>
-              <TextField
-                name="phone"
-                required
-                fullWidth
-                id="phone"
-                label="Phone Number"
-                value={formData.phone}
-                onChange={handleChange}
-                type= {"number"}
-              />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="address"
-                  required
-                  fullWidth
-                  id="address"
-                  label="Address"
-                  value={formData.mixedInput}
-                  onChange={handleChange}
-                />
-              </Grid>
-              
             </Grid>
             <Button
               type="submit"
@@ -200,8 +150,13 @@ function AddShelter() {
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: '#3730A3', '&:hover': { bgcolor: '#4608c4' } }}
             >
-              Add Shelter
+              Sign Up
             </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+              <Link to="/signin" onClick={(e) => { e.preventDefault(); }}>Sign in</Link>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
       </Container>
@@ -211,4 +166,4 @@ function AddShelter() {
   );
 }
 
-export default AddShelter;
+export default AdminRegister;

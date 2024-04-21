@@ -1,19 +1,23 @@
 const express = require("express");
 const multer = require("multer");
 const router = express.Router();
-const {registerUser,registerShelter,loginUser, loginShelter, addPet, editPet, getPets} = require("./controller")
+const {registerUser,registerShelter,loginUser, loginShelter, loginAdmin, registerAdmin, addPet, editPet, getPets, deletePet} = require("./controller")
 
 router.route('/registerCustomer').post(registerUser)
 router.route('/loginCustomer').post(loginUser)
 router.route("/registerShelter").post(registerShelter)
+router.route("/loginAdmin").post(loginAdmin)
+router.route("/registerAdmin").post(registerAdmin)
 router.route("/loginShelter").post(loginShelter)
 router.route('/getPets').get(getPets);
-router.route("/editPet").post(editPet)
+// router.route("/editPet").post(editPet)
+router.delete('/deletePet/:id', deletePet)
+router.put('/editPet/:id', editPet);
 
 // Set storage engine
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads');
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
     cb(null, `${Date.now()}-${file.originalname}`);

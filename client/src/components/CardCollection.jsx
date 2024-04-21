@@ -4,21 +4,38 @@ import labrador from '../assets/images/labrador.webp'
 import spitz from '../assets/images/JapaneseSpitz.png'
 import britishShorthair from '../assets/images/britishShorthair.jpg'
 import ragdoll from '../assets/images/ragdoll.jpeg'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const CardCollection = () => {
+  const [pets, setPets] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/getPets')
+      .then(res => setPets(res.data))
+      .catch(err => console.log(err));
+  }, []);
+
+  // Sort the pets by timestamp or ID in descending order
+  const newestPets = pets.sort((a, b) => {
+    const timestampA = parseInt(a._id.toString().substring(0, 8), 16);
+    const timestampB = parseInt(b._id.toString().substring(0, 8), 16);
+    return timestampB - timestampA;
+  }).slice(0, 4);
+  
+
   return (
     <>
-        <div className="mt-36">
-            <h2 className="font-bold text-4xl text-center mb-10">These Beautiful Pets Are <br></br><span>Waiting For Your Love And Care</span></h2>
-            <div className ="flex justify-center gap-10">
-                <Card name ="Bruno" breed="Labrador Retriever" image = {labrador}/>
-                <Card name ="Tommy" breed="Japanese Spitz" image = {spitz}/>
-                <Card name ="Whiskerson" breed="Labrador Retriever" image = {britishShorthair}/>
-                <Card name ="Bella" breed="Ragdoll" image = {ragdoll}/>
-            </div>
+      <div className="mt-36">
+        <h2 className="font-bold text-4xl text-center mb-10">These Beautiful Pets Are <br /><span>Waiting For Your Love And Care</span></h2>
+        <div className="flex justify-center gap-10">
+          {newestPets.map(pet => (
+            <Card key={pet._id} pet={pet} />
+          ))}
         </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default CardCollection
+export default CardCollection;

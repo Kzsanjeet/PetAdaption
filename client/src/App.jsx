@@ -4,6 +4,7 @@ import IconCollection from './components/IconCollection'
 import CardCollection from './components/CardCollection'
 import Footer from './components/Footer'
 import ProductDetail from './components/ProductDetail'
+import PetList from './components/PetList'
 
 const App = () => {
 
@@ -14,7 +15,6 @@ const App = () => {
       <IconCollection />
       <CardCollection />
       </div>
-      <ProductDetail />
       <Footer />
     </>
   )

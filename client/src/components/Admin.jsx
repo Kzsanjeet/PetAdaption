@@ -35,7 +35,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function Admin() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const navigate = useNavigate()
 
@@ -52,7 +52,7 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:5000/loginCustomer', formData)
+    axios.post('http://localhost:5000/loginAdmin', formData)
   .then(res => {
     console.log(res.data)
     if (res.data.token) {
@@ -61,7 +61,7 @@ export default function SignIn() {
       const usersid = localStorage.getItem('userId')
 
       console.log(usersid);
-      navigate('/');
+      navigate('/dashboard');
     } else {
       console.log('Login failed:', res.data.message);
       navigate('/');
@@ -88,7 +88,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Admin Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -131,11 +131,6 @@ export default function SignIn() {
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link to="/signup" variant="body2" onClick={(e) => { e.preventDefault(); }}>
-                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>
