@@ -22,7 +22,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="/">
         Pet Rescue
       </Link>{' '}
       {new Date().getFullYear()}
@@ -88,7 +88,7 @@ export default function ShelterLogin() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Shelter Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -133,11 +133,11 @@ export default function ShelterLogin() {
                   Forgot password?
                 </Link>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <Link to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
         </Box>

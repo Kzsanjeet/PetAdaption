@@ -29,3 +29,5 @@ function PetTable({ pets }) {
     </TableContainer>
   );
 }
+
+export default PetTable;

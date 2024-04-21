@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import petLogo from '../assets/images/petrescue.png';
 import Sidebar from './Sidebar';
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -67,8 +68,8 @@ const Navbar = () => {
                       </svg>
                     </div>
                     <div className="flex-auto">
-                      <a href="#" className="block font-semibold text-gray-900">Analytics</a>
-                      <p className="mt-1 text-gray-600">Get a better understanding of your traffic</p>
+                      <a href="#" className="block font-semibold text-gray-900">Dog Breeds</a>
+                      <p className="mt-1 text-gray-600">Add dog breeds in dropdown</p>
                     </div>
                   </div>
                   {/* More dropdown items... */}
@@ -83,7 +84,7 @@ const Navbar = () => {
           <a href="#" className="text-sm font-semibold leading-6 text-white">Donate</a>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-white">Log out <span aria-hidden="true">&rarr;</span></a>
+          <Link to ="/shelterlogin" className="text-sm font-semibold leading-6 text-white">Shelter Login <span aria-hidden="true">&rarr;</span></Link>
         </div>
       </nav>
       <div className="lg:hidden" role="dialog" aria-modal="true">
@@ -116,7 +117,7 @@ const Navbar = () => {
           <a href="#" className="block mt-4 text-sm font-semibold leading-6 text-gray-900">Other Pets</a>
           <a href="#" className="block mt-4 text-sm font-semibold leading-6 text-gray-900">Donate</a>
           <div className="mt-6">
-            <a href="#" className="block text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+            <Link to ="/shelterlogin" className="block text-sm font-semibold leading-6 text-gray-900">Shelter Login <span aria-hidden="true">&rarr;</span></Link>
           </div>
         </div>
       </div>

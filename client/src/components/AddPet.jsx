@@ -18,59 +18,71 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Test from './Test';
 
 function AddPet() {
-  const [formData, setFormData] = useState({
+  const [formState, setFormState] = useState({
     name: '',
     image: '',
     breed: '',
     description: ''
   });
-  const navigate = useNavigate()
+  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
-  
+
     if (name === 'image') {
       const imageFile = event.target.files[0]; // Access the selected file
       if (imageFile) {
-        formData.append('image', imageFile); // Append the image to formData
+        setFormState((prevFormData) => ({
+          ...prevFormData,
+          [name]: imageFile, // Use the file object directly
+        }));
       }
     } else {
       // Handle other input types as usual
-      setFormData((prevFormData) => ({
+      setFormState((prevFormData) => ({
         ...prevFormData,
         [name]: newValue,
       }));
     }
   };
-  
-  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Create a new FormData object
     const formData = new FormData();
-    formData.append('name', formData.name);
-    formData.append('breed', formData.breed);
-    formData.append('description', formData.description);
-  
-    // Access the file input element correctly
-    const fileInput = event.target.querySelector('input[type="file"]');
-    if (fileInput && fileInput.files.length > 0) {
-      formData.append('image', fileInput.files[0]);
-    }
-  
+
+    // Append the name, breed, and description fields from formState
+    formData.append('name', formState.name);
+    formData.append('breed', formState.breed);
+    formData.append('description', formState.description);
+    formData.append('image', formState.image); // Append the image file directly
+
+    // Make the POST request
     axios.post('http://localhost:5000/addPet', formData)
       .then(res => {
         navigate('/shelterdashboard');
-        console.log("success")
+        console.log("success");
+
+        // Reset the form after successful submission
+        setFormState({
+          name: '',
+          image: '',
+          breed: '',
+          description: ''
+        });
+
+        // Set the success message
+        setSuccessMessage('Your pet has been added successfully. Add Another');
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
+
     console.log(formData);
-    console.log("failed")
-  };
+  }; 
   
 
   return (
@@ -92,7 +104,8 @@ function AddPet() {
           <Typography component="h1" variant="h5">
            Add Your Pet
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          {successMessage && <Typography variant="subtitle1" color="success">{successMessage}</Typography>}
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} encType="multipart/form-data">
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
                 <TextField
@@ -103,7 +116,7 @@ function AddPet() {
                   id="name"
                   label="Name"
                   autoFocus
-                  value={formData.name}
+                  value={formState.name}
                   onChange={handleChange}
                 />
               </Grid>
@@ -127,7 +140,7 @@ function AddPet() {
                         label="Breed"
                         name="breed"
                         autoComplete="breed"
-                        value={formData.breed}
+                        value={formState.breed}
                         onChange={handleChange}
                     />
               </Grid>
@@ -140,7 +153,7 @@ function AddPet() {
                     id="description"
                     multiline
                     rows={4}
-                    value={formData.description}
+                    value={formState.description}
                     onChange={handleChange}
                 />
               </Grid>
@@ -158,7 +171,6 @@ function AddPet() {
         </Box>
       </Container>
     </ThemeProvider>
-    <Test />
     </>
     
   );
