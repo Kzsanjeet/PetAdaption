@@ -32,6 +32,8 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
+app.use("/uploads", express.static('uploads'))
+
 // Updated error handling for app.listen
 app.listen(PORT, (err) => {
     if (err) {

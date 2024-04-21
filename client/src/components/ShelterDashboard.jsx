@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AddPet from './AddPet'
 import PetTable from './PetTable';
 import axios from 'axios';
+import PetList from './PetList';
 
 const ShelterDashboard = () => {
   const [pets, setPets] = useState([]);
@@ -14,7 +15,6 @@ const ShelterDashboard = () => {
   return (
     <>
     <AddPet />
-    <PetTable pets={pets} />
     </>
   )
 }

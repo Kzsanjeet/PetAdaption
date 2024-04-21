@@ -12,6 +12,11 @@ import './index.css'
 import AddShelter from './components/AddShelter.jsx'
 import ShelterLogin from './components/ShelterLogin.jsx'
 import ShelterDashboard from './components/ShelterDashboard.jsx'
+import PetList from './components/PetList.jsx'
+import ShelterLayout from './components/ShelterLayout.jsx'
+import Navbar from './components/Navbar.jsx'
+import Admin from './components/Admin.jsx'
+import AdminRegister from './components/AdminRegister.jsx'
 
 const router = createBrowserRouter([
   {
@@ -41,7 +46,19 @@ const router = createBrowserRouter([
   },
   {
     path:'/shelterdashboard',
-    element: <AdminLayout><ShelterDashboard /></AdminLayout>
+    element: <ShelterLayout><ShelterDashboard /></ShelterLayout>
+  },
+  {
+    path: '/petlist',
+    element: <ShelterLayout><PetList /></ShelterLayout>
+  },
+  {
+    path: '/admin',
+    element:<Layout><Admin /></Layout>
+  },
+  {
+    path: '/admin-register',
+    element:<Layout><AdminRegister /></Layout>
   }
 
 ]);
