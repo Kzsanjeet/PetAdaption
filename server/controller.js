@@ -83,6 +83,7 @@ const registerShelter = async(req,res)=>{
 //login function for customer
 const loginUser = async (req, res) => {
     try {
+      //Extract email an dpasswrod from the requset body
       const { email, password } = req.body;
   
       // Find user in the database
@@ -100,9 +101,11 @@ const loginUser = async (req, res) => {
       return res.status(500).json({ message: err.message });
     }
   };
+
   //login function for Admin
 const loginAdmin = async (req, res) => {
   try {
+    //Extract email and password from the request body
     const { email, password } = req.body;
 
     // Find admin in the database
@@ -125,6 +128,7 @@ const loginAdmin = async (req, res) => {
 //login for shelter
 const loginShelter = async (req, res) => {
     try {
+      //Extract email and password from the request body
       const { email, password } = req.body;
   
       // Find user in the database
@@ -142,6 +146,9 @@ const loginShelter = async (req, res) => {
       return res.status(500).json({ message: err.message });
     }
   };  
+
+
+  //add pet
 
   const addPet = async (req, res) => {
     try {
@@ -179,7 +186,7 @@ const loginShelter = async (req, res) => {
     }
   };
   
-
+//edit pet
   const editPet = async (req, res) => {
     const petId = req.params.id;
     const { name, breed, description } = req.body;
@@ -191,7 +198,7 @@ const loginShelter = async (req, res) => {
         }
 
         const updatedPet = await Pet.findByIdAndUpdate(petId, { name, breed, description }, { new: true });
-
+        
         if (!updatedPet) {
             return res.status(404).json({ message: 'Pet not found' });
         }
@@ -206,7 +213,7 @@ const loginShelter = async (req, res) => {
 };
 
 
-
+//delete pet
 const deletePet = async (req, res) => {
   const petId = req.params.id;
   try {
