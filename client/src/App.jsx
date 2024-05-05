@@ -11,7 +11,7 @@ const App = () => {
   return (
     <>
       <Hero />
-      <div className="relative -top-24">
+      <div className="relative -top-16 md:-top-24">
       <IconCollection />
       <CardCollection />
       </div>

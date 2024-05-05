@@ -22,7 +22,6 @@ const CardCollection = () => {
     const timestampB = parseInt(b._id.toString().substring(0, 8), 16);
     return timestampB - timestampA;
   }).slice(0, 4);
-  
 
   return (
     <>
@@ -30,13 +29,12 @@ const CardCollection = () => {
         <h2 className="font-bold text-4xl text-center mb-10">These Beautiful Pets Are <br /><span>Waiting For Your Love And Care</span></h2>
         <div className="flex flex-wrap justify-center gap-10">
           {newestPets.map(pet => (
-            <div key={pet._id} className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+            <div key={pet._id} className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 flex justify-center">
               <Card pet={pet} />
             </div>
           ))}
         </div>
       </div>
-
     </>
   );
 };
