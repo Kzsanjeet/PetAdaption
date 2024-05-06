@@ -2,7 +2,7 @@ import React from 'react';
 
 const IconCard = (props) => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center cursor-pointer">
       <div>
         <div className="card flex flex-col justify-center py-5 px-8 bg-white rounded-lg shadow-2xl transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-200">
           <div className="prod-img hover:border-red-500">
