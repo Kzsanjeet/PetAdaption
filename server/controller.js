@@ -261,6 +261,20 @@ const loginShelter = async (req, res) => {
     }
   };
   
+  const getPetById = async (req, res) => {
+    try {
+      const pet = await Pet.findById(req.params.id);
+      if (!pet) {
+        return res.status(404).json({ message: 'Pet not found' });
+      }
+      console.log("Pet object before sending:", pet);
+      res.status(200).json(pet);
+    } catch (err) {
+      console.error("Error fetching pet:", err);
+      res.status(500).json({ message: err.message });
+    }
+  };
+  
 //edit pet
   const editPet = async (req, res) => {
     const petId = req.params.id;
