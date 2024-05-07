@@ -24,10 +24,12 @@ function AddPet() {
     name: '',
     image: '',
     breed: '',
+    category:'',
     description: ''
   });
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId")
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -59,11 +61,12 @@ function AddPet() {
     // Append the name, breed, and description fields from formState
     formData.append('name', formState.name);
     formData.append('breed', formState.breed);
+    formData.append('category',formState.category)
     formData.append('description', formState.description);
     formData.append('image', formState.image); // Append the image file directly
 
     // Make the POST request
-    axios.post('http://localhost:5000/addPet', formData)
+    axios.post(`http://localhost:5000/addPet/${userId}`, formData)
       .then(res => {
         navigate('/shelterdashboard');
         console.log("success");
@@ -73,6 +76,7 @@ function AddPet() {
           name: '',
           image: '',
           breed: '',
+          category:'',
           description: ''
         });
 
@@ -141,6 +145,18 @@ function AddPet() {
                         name="breed"
                         autoComplete="breed"
                         value={formState.breed}
+                        onChange={handleChange}
+                    />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                        required
+                        fullWidth
+                        id="category"
+                        label="category"
+                        name="category"
+                        autoComplete="category"
+                        value={formState.category}
                         onChange={handleChange}
                     />
               </Grid>

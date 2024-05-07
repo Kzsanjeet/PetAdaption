@@ -227,11 +227,12 @@ const loginShelter = async (req, res) => {
 
   const addPet = async (req, res) => {
     try {
-      if (!req.file) {
+      if (!req.file.path) {
         return res.status(400).json({ message: 'No image uploaded' });
       }
   
-      const { name, breed, description } = req.body;
+      const { name, breed,category, description} = req.body;
+      const{shelterId} = req.params;
       const imagePath = req.file.path.replace(/\\/g, "/");
       
   
@@ -239,28 +240,46 @@ const loginShelter = async (req, res) => {
         name: name,
         image: imagePath,
         breed: breed,
+        category: category,
         description: description,
+        shelter: shelterId   // added shelter Id
       });
   
       if (pet) {
-        return res.status(200).json({ message: 'Your pet has been added successfully', pet });
+        return res.status(200).json({success:true, message: 'Your pet has been added successfully', pet });
       } else {
-        return res.status(500).json({ message: 'Failed to add pet' });
+        return res.status(500).json({success:false, message: 'Failed to add pet' });
       }
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
   };
 
+  // fetching data for specific shelter pets
+  const specificShelterPets = async(req,res)=>{
+    try {
+      const shelterId = req.params;
+      const pets = await Pet.find({shelter:shelterId});
+      if(!pets){
+        return res.status(404).json({sucess:false,message:"not found"})
+      }else{
+        return res.status(200).json({sucess:true, pets})
+      }
+    } catch (error) {
+      return res.status(400).json({sucess:true,message:"err",error})
+    }
+  }
+
+  // for getting the pet details
   const getPets = async (req, res) => {
     try {
-      const pets = await Pet.find();
-      res.status(200).json(pets);
+      const pets = await Pet.find({}).populate("shelter");
+      res.status(200).json({sucess:true,pets});
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
   };
-  
+   
 //edit pet
   const editPet = async (req, res) => {
     const petId = req.params.id;
@@ -301,4 +320,4 @@ const deletePet = async (req, res) => {
 };
 
 
-module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmin,loginAdmin, addPet, getPets, editPet, deletePet, newPassword, resetPassword};
+module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmin,loginAdmin, addPet, getPets, editPet, deletePet, newPassword, resetPassword,specificShelterPets};
