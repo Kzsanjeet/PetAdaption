@@ -274,7 +274,7 @@ const loginShelter = async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   };
-  
+
 //edit pet
   const editPet = async (req, res) => {
     const petId = req.params.id;
@@ -315,4 +315,4 @@ const deletePet = async (req, res) => {
 };
 
 
-module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmin,loginAdmin, addPet, getPets, editPet, deletePet, newPassword, resetPassword};
+module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmin,loginAdmin, addPet, getPets, editPet, deletePet, newPassword, resetPassword, getPetById};

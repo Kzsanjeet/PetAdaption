@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const router = express.Router();
-const {registerUser,registerShelter,loginUser, loginShelter, loginAdmin, registerAdmin, addPet, editPet, getPets, deletePet, resetPassword, newPassword} = require("./controller")
+const {registerUser,registerShelter,loginUser, loginShelter, loginAdmin, registerAdmin, addPet, editPet, getPets, deletePet, resetPassword, newPassword, getPetById} = require("./controller")
 
 router.route('/registerCustomer').post(registerUser)
 router.route('/loginCustomer').post(loginUser)
@@ -10,6 +10,7 @@ router.route("/loginAdmin").post(loginAdmin)
 router.route("/registerAdmin").post(registerAdmin)
 router.route("/loginShelter").post(loginShelter)
 router.route('/getPets').get(getPets);
+router.route('/getPetById/:id').get(getPetById);
 // router.route("/editPet").post(editPet)
 router.delete('/deletePet/:id', deletePet)
 router.put('/editPet/:id', editPet);
