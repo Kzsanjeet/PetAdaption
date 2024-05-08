@@ -84,10 +84,10 @@ const registerShelter = async(req,res)=>{
 //login function for customer
 const loginUser = async (req, res) => {
     try {
-      //Extract email an dpasswrod from the requset body
+      //Extract email and password from request
       const { email, password } = req.body;
   
-      // Find user in the database
+      // To find user in the database
       const user = await RegisterCustomer.findOne({ email });
   
       // If user not found or password is incorrect, return error
@@ -95,7 +95,7 @@ const loginUser = async (req, res) => {
         return res.status(400).json({ message: 'Invalid email or password' });
       }
   
-      // If user is found and password is correct, generate and return token
+      // If user is found and password is correct, generate token and return
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       return res.status(200).json({ message: 'logged in successfully', token, userId: user._id });
     } catch (err) {
@@ -180,10 +180,10 @@ const loginUser = async (req, res) => {
   //login function for Admin
 const loginAdmin = async (req, res) => {
   try {
-    //Extract email and password from the request body
+    //Extract email and password from request
     const { email, password } = req.body;
 
-    // Find admin in the database
+    // Checking through database
     const user = await RegisterAdmin.findOne({ email });
 
     // If user not found or password is incorrect, return error
@@ -191,7 +191,7 @@ const loginAdmin = async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    // If user is found and password is correct, generate and return token
+    // If user is found and password is correct, generate token and return
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     return res.status(200).json({ message: 'logged in successfully', token, userId: user._id });
   } catch (err) {
@@ -203,10 +203,10 @@ const loginAdmin = async (req, res) => {
 //login for shelter
 const loginShelter = async (req, res) => {
     try {
-      //Extract email and password from the request body
+      //Extract email and password from the request
       const { email, password } = req.body;
   
-      // Find user in the database
+      // To find the specific user in database
       const user = await RegisterShelter.findOne({ email });
   
       // If user not found or password is incorrect, return error
@@ -214,7 +214,7 @@ const loginShelter = async (req, res) => {
         return res.status(400).json({ message: 'Invalid email or password' });
       }
   
-      // If user is found and password is correct, generate and return token
+      // If user is found and password is correct, generate token and return 
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       return res.status(200).json({ message: 'logged in successfully', token, userId: user._id });
     } catch (err) {
@@ -286,21 +286,18 @@ const loginShelter = async (req, res) => {
     const { name, breed, description } = req.body;
 
     try {
-        // Validate input data (e.g., check if name and breed are not empty)
+        // Check if name and breed are not empty
         if (!name || !breed) {
             return res.status(400).json({ message: 'Name and breed are required' });
         }
-
+        //updated pet
         const updatedPet = await Pet.findByIdAndUpdate(petId, { name, breed, description }, { new: true });
         
         if (!updatedPet) {
             return res.status(404).json({ message: 'Pet not found' });
         }
-
-        // Optionally, handle image updates here
-
         res.status(200).json({ message: 'Pet updated successfully', pet: updatedPet });
-    } catch (err) {
+    } catch (err) { //error message
         console.error(err);
         res.status(500).json({ message: 'Internal server error' });
     }
@@ -309,12 +306,12 @@ const loginShelter = async (req, res) => {
 
 //delete pet
 const deletePet = async (req, res) => {
-  const petId = req.params.id;
+  const petId = req.params.id; //by id
   try {
-    // Logic to delete the pet from the database
+    // Delete the pet from the database by Id
     await Pet.findByIdAndDelete(petId);
     res.status(200).json({ message: 'Pet deleted successfully' });
-  } catch (err) {
+  } catch (err) { //error
     res.status(500).json({ message: err.message });
   }
 };
