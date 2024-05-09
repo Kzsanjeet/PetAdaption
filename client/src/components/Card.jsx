@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom';
 
 const Card = ({ pet }) => {
-  const { name, breed, image } = pet;
+  const { name, breed, image, _id } = pet;
 
   return (
     <>
@@ -20,12 +21,14 @@ const Card = ({ pet }) => {
           </p>
         </div>
         <div className="p-6 pt-0">
+          <Link to={`/detail/${_id}`}>
           <button
             className="bg-indigo-800 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
             type="button"
           >
             Read More
           </button>
+        </Link>
         </div>
       </div>
     </>
