@@ -17,6 +17,7 @@ import ShelterLayout from './components/ShelterLayout.jsx'
 import Navbar from './components/Navbar.jsx'
 import Admin from './components/Admin.jsx'
 import AdminRegister from './components/AdminRegister.jsx'
+import ProductDetail from './components/ProductDetail.jsx'
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
   {
     path: '/admin-register',
     element:<Layout><AdminRegister /></Layout>
+  },
+  {
+    path: '/detail/:id',
+    element:<Layout><ProductDetail /></Layout>
   }
 
 ]);

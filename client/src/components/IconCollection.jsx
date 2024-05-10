@@ -7,13 +7,12 @@ import sheltericon from '../assets/icons/shelter.png'
 
 const IconCollection = () => {
   return (
-    <><div className= "flex justify-center gap-2 md:gap-8 sm:gap-4">
-        <IconCard name = "&nbsp;&nbsp;Dog&nbsp;&nbsp;&nbsp;" icon = {dogicon}/>
-        <IconCard name = "&nbsp;&nbsp;Cat&nbsp;&nbsp;&nbsp;&nbsp;" icon = {caticon}/>
-        <IconCard name = "Others&nbsp;" icon = {peticon}/>
-        <IconCard name = "Shelters" icon = {sheltericon}/>
+    <div className="flex flex-wrap justify-center gap-8">
+      <IconCard name="  Dog   " icon={dogicon} className="flex flex:0 0 50%"/>
+      <IconCard name="  Cat    " icon={caticon} className="flex flex:0 0 50%"/>
+      <IconCard name="Others " icon={peticon} className="flex flex:0 0 50%"/>
+      <IconCard name="Shelters" icon={sheltericon} className="flex flex:0 0 50%"/>
     </div>
-    </>
   )
 }
 
