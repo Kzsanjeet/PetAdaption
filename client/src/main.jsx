@@ -22,16 +22,15 @@ import ProductDetail from './components/ProductDetail.jsx'
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout><App /></Layout>,
-    errorElement: <NotFound />
+    element: <Layout><App/></Layout>
   },
   {
     path: '/signup',
-    element: <Layout><SignUp /></Layout>
+    element: <SignUp/>
   },
   {
     path: '/signin',
-    element: <Layout><SignIn /></Layout>
+    element:<SignIn/>
   },
   {
     path: '/dashboard',

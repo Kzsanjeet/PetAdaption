@@ -44,6 +44,7 @@ function SignUp() {
     event.preventDefault();
     axios.post('http://localhost:5000/registerCustomer', formData)
     .then(res => {
+      alert("User registered Successfuylly. Navigating to SignIn page.")
       navigate('/signin');
     })
     .catch(err => console.log(err))
@@ -155,7 +156,7 @@ function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-              <Link to="/signin" onClick={(e) => { e.preventDefault(); }}>Sign in</Link>
+              <Link to="/signin">Sign in</Link>
               </Grid>
             </Grid>
           </Box>
