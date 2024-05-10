@@ -96,7 +96,7 @@ function PetList() {
             <div className="flex justify-center">
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                        <div className="overflow-hidden">
+                      {pets.length>0?<div className="overflow-hidden">
                             <table className="min-w-full text-left text-sm font-light text-surface dark:text-white">
                                 <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
                                     <tr>
@@ -130,7 +130,8 @@ function PetList() {
                                     ))}
                                 </tbody>
                             </table>
-                        </div>
+                        </div> : <div>No pets available</div>}
+                        
                     </div>
                 </div>
             </div>
