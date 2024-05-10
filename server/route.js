@@ -13,24 +13,27 @@ const {registerUser,
           deletePet,
             resetPassword,
            newPassword,
-           createRequest
-          } = require("./controller")
+           createRequest,
+           showRequest
+          } = require("./control/controller");
+
+const { editUserData, deleteUserData } = require("./control/profile");
 
 
-  //pet request 
-
-
+//route for login and registration part
 router.route('/registerCustomer').post(registerUser)
 router.route('/loginCustomer').post(loginUser)
 router.route("/registerShelter").post(registerShelter)
 router.route("/loginAdmin").post(loginAdmin)
 router.route("/registerAdmin").post(registerAdmin)
 router.route("/loginShelter").post(loginShelter)
+
+//route for pet part
 router.route('/getPets').get(getPets);
-// router.route("/editPet").post(editPet)
 router.delete('/deletePet/:id', deletePet)
 router.put('/editPet/:id', editPet);
 
+//route for the password reset part
 router.route('/reset-password-mail').post(resetPassword)
 router.route('/reset-password').post(newPassword)
 
@@ -52,5 +55,10 @@ router.post('/addPet/:shelterId', upload.single('image'), addPet);
 
 //for creating new request 
 router.post('/pet-request', createRequest)
+router.route("/show-request").post(showRequest)
+
+//route for profile edit and delete fo customers
+router.route("/edit-userProfile/:userId").patch(editUserData)
+// router.route("/delete-userProfile/:userId").delete(deleteUserData)
 
 module.exports = router;

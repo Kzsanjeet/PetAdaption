@@ -1,5 +1,5 @@
-const {RegisterCustomer,RegisterShelter, RegisterAdmin, Pet} = require("./registerSchema") //imported schema
-const Request = require("./requestPet")
+const {RegisterCustomer,RegisterShelter, RegisterAdmin, Pet} = require("../schema/registerSchema") //imported schema
+const Request = require("../schema/requestPet")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const multer = require('multer');
@@ -104,6 +104,7 @@ const loginUser = async (req, res) => {
     }
   };
 
+  //for reseting the password for Customer
   const resetPassword = async (req, res) => {
     try {
         const {email} = req.body;
@@ -150,7 +151,7 @@ const loginUser = async (req, res) => {
         // Verify and decode the JWT token
         let decodedEmail;
         try {
-            decodedEmail = jwt.verify(token, 'jwt_secret_key');
+            decodedEmail = jwt.verify(token, 'JWT_SECRET');
         } catch (error) {
             return res.status(400).json({ success: false, message: 'Invalid or expired token' });
         }
@@ -317,8 +318,6 @@ const deletePet = async (req, res) => {
   }
 };
 
-
-
 // for creating request for pet adaption
 const createRequest = async(req, res)=>{
   try {
@@ -359,5 +358,6 @@ const showRequest = async (req, res) => {
 module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmin,loginAdmin, addPet, getPets, editPet, deletePet, newPassword,
    resetPassword,
    specificShelterPets,
-   createRequest
+   createRequest,
+   showRequest
   };
