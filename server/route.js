@@ -12,7 +12,8 @@ const {registerUser,
           getPets,
           deletePet,
             resetPassword,
-           newPassword
+           newPassword,
+           createRequest
           } = require("./controller")
 
 
@@ -48,5 +49,8 @@ const upload = multer({ storage });
 
 // Route to add a pet
 router.post('/addPet/:shelterId', upload.single('image'), addPet); 
+
+//for creating new request 
+router.post('/pet-request', createRequest)
 
 module.exports = router;

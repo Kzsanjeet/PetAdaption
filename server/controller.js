@@ -1,4 +1,5 @@
 const {RegisterCustomer,RegisterShelter, RegisterAdmin, Pet} = require("./registerSchema") //imported schema
+const Request = require("./requestPet")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const multer = require('multer');
@@ -317,4 +318,27 @@ const deletePet = async (req, res) => {
 };
 
 
-module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmin,loginAdmin, addPet, getPets, editPet, deletePet, newPassword, resetPassword,specificShelterPets};
+
+// for creating request for pet adaption
+const createRequest = async(req, res)=>{
+  try {
+    const {userId, petId} = req.body
+    const newRequest = await Request.create({
+      userId:userId,
+      petId:petId
+    })
+    if(!newRequest){
+      return res.status(400).json({success:false, message:"error creating "})
+    }
+    return res.status(200).json({success:true, newRequest})
+  } catch (error) {
+    res.status(400).json({success:false, message:error})
+  }
+}
+
+
+module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmin,loginAdmin, addPet, getPets, editPet, deletePet, newPassword,
+   resetPassword,
+   specificShelterPets,
+   createRequest
+  };
