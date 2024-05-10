@@ -61,6 +61,7 @@ export default function SignIn() {
       const usersid = localStorage.getItem('userId')
 
       console.log(usersid);
+      alert("User Logged in Successfull.")
       navigate('/');
     } else {
       console.log('Login failed:', res.data.message);
@@ -134,7 +135,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/signup" variant="body2" onClick={(e) => { e.preventDefault(); }}>
+                <Link to="/signup" variant="body2">
                   Don't have an account? Sign Up
                 </Link>
               </Grid>

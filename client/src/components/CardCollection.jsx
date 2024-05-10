@@ -12,11 +12,12 @@ const CardCollection = () => {
 
   useEffect(() => {
     axios.get('http://localhost:5000/getPets')
-      .then(res => setPets(res.data))
+      .then(res =>{setPets(res.data.pets)}
+   )
+      
       .catch(err => console.log(err));
   }, []);
 
-  // Sort the pets by timestamp or ID in descending order
   const newestPets = pets.sort((a, b) => {
     const timestampA = parseInt(a._id.toString().substring(0, 8), 16);
     const timestampB = parseInt(b._id.toString().substring(0, 8), 16);
@@ -28,11 +29,12 @@ const CardCollection = () => {
       <div className="mt-36">
         <h2 className="font-bold text-4xl text-center mb-10">These Beautiful Pets Are <br /><span>Waiting For Your Love And Care</span></h2>
         <div className="flex flex-wrap justify-center gap-10">
-          {newestPets.map(pet => (
+         {newestPets.length>0? <div>{newestPets.map(pet => (
             <div key={pet._id} className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 flex justify-center">
               <Card pet={pet} />
             </div>
-          ))}
+          ))}</div>:<div>No pets found.</div>} 
+         
         </div>
       </div>
     </>

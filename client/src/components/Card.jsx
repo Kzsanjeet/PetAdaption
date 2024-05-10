@@ -6,11 +6,11 @@ const Card = ({ pet }) => {
 
   return (
     <>
-      <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+      <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-full">
         <div
           className="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40"
         >
-          <img src={`http://localhost:5000/${image}`} alt="card-image" />
+          <img src={`http://localhost:5000/${image}`} alt="card-image" className='h-full w-full object-cover'/>
         </div>
         <div className="p-6">
           <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
