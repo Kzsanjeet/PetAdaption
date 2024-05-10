@@ -336,6 +336,25 @@ const createRequest = async(req, res)=>{
   }
 }
 
+//for getting the new request for shelter
+const showRequest = async (req, res) => {
+  try {
+    const shelterId = req.params.shelterId;
+    const requests = await Request.find({}).populate({
+      path: 'petId',
+      match: { shelter: shelterId }
+    }).exec();
+    
+    // Filter out any null petId entries (requests without matching pets)
+    const filteredRequests = requests.filter(request => request.petId !== null);
+    
+    res.status(200).json({ success: true, requests: filteredRequests });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+}
+
+
 
 module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmin,loginAdmin, addPet, getPets, editPet, deletePet, newPassword,
    resetPassword,
