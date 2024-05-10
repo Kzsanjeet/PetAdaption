@@ -17,7 +17,21 @@ const editUserData = async(req,res)=>{
     }
 }
 
+const deleteUserData = async(req,res)=>{
+    try {
+        const userId = req.params.id
+        const deleteUser = await RegisterCustomer.findByIdandDelete(userId);
+        if(!deleteUser){
+            return res.status.json({success:false,message:"Unable to delete the user profile"})
+        }else{
+            return res.status.json({success:true,message:"Deleted successully"})
+        }
+    } catch (error) {
+        return res.status.json({sucess:false,message:"error,err"})
+    }
+}
 
 
-module.exports = {editUserData}
+
+module.exports = {editUserData,deleteUserData}
 

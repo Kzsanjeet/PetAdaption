@@ -59,6 +59,6 @@ router.route("/show-request").post(showRequest)
 
 //route for profile edit and delete fo customers
 router.route("/edit-userProfile/:userId").patch(editUserData)
-// router.route("/delete-userProfile/:userId").delete(deleteUserData)
+router.route("/delete-userProfile/:userId").delete(deleteUserData)
 
 module.exports = router;
