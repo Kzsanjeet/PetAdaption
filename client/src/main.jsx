@@ -19,6 +19,7 @@ import Admin from './components/Admin.jsx'
 import AdminRegister from './components/AdminRegister.jsx'
 import ProductDetail from './components/ProductDetail.jsx'
 import CategoryPets from './components/CategoryPets.jsx'
+import FilterPets from './components/FilterPets.jsx'
 
 const router = createBrowserRouter([
   {
@@ -64,9 +65,14 @@ const router = createBrowserRouter([
   {
     path: '/detail/:id',
     element:<Layout><ProductDetail /></Layout>
-  },{
+  },
+  {
     path:'/category/:dog',
     element: <Layout><CategoryPets category ="dog"/></Layout>
+  },
+  {
+    path:'/filterpets',
+    element:<Layout><FilterPets /></Layout>
   }
 
 ]);
