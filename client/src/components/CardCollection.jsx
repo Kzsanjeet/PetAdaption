@@ -29,11 +29,15 @@ const CardCollection = () => {
       <div className="mt-36">
         <h2 className="font-bold text-4xl text-center mb-10">These Beautiful Pets Are <br /><span>Waiting For Your Love And Care</span></h2>
         <div className="flex flex-wrap justify-center gap-10">
-         {newestPets.length>0? <div>{newestPets.map(pet => (
-            <div key={pet._id} className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 flex justify-center">
+        {newestPets.length > 0 ? (
+          newestPets.map(pet => (
+            <div key={pet._id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 flex justify-center">
               <Card pet={pet} />
             </div>
-          ))}</div>:<div>No pets found.</div>} 
+          ))
+        ) : (
+          <div>No pets found.</div>
+        )}
          
         </div>
       </div>

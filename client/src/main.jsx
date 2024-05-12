@@ -18,6 +18,7 @@ import Navbar from './components/Navbar.jsx'
 import Admin from './components/Admin.jsx'
 import AdminRegister from './components/AdminRegister.jsx'
 import ProductDetail from './components/ProductDetail.jsx'
+import CategoryPets from './components/CategoryPets.jsx'
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,9 @@ const router = createBrowserRouter([
   {
     path: '/detail/:id',
     element:<Layout><ProductDetail /></Layout>
+  },{
+    path:'/category/:dog',
+    element: <Layout><CategoryPets category ="dog"/></Layout>
   }
 
 ]);

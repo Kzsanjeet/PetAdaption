@@ -281,6 +281,33 @@ const loginShelter = async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   };
+
+  // get pet by ID
+  const getPetById = async (req, res) => {
+    try {
+      const pet = await Pet.findById(req.params.id);
+      if (!pet) {
+        return res.status(404).json({ message: 'Pet not found' });
+      }
+      console.log("Pet object before sending:", pet);
+      res.status(200).json(pet);
+    } catch (err) {
+      console.error("Error fetching pet:", err);
+      res.status(500).json({ message: err.message });
+    }
+  };
+
+// get pet by category
+const petCategory = async (req, res) => {
+  const { category } = req.query;
+  try {
+    const pets = await Pet.find({ category });
+    res.json(pets);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
    
 //edit pet
   const editPet = async (req, res) => {
@@ -359,5 +386,5 @@ module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmi
    resetPassword,
    specificShelterPets,
    createRequest,
-   showRequest
+   showRequest, getPetById, petCategory
   };
