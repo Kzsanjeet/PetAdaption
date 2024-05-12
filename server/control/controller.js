@@ -210,6 +210,7 @@ const loginShelter = async (req, res) => {
   
       // To find the specific user in database
       const user = await RegisterShelter.findOne({ email });
+      console.log(user)
   
       // If user not found or password is incorrect, return error
       if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -280,6 +281,21 @@ const loginShelter = async (req, res) => {
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
+  };
+
+
+  const applyFilters = () => {
+    let filtered = [...pets]; // Create a new array to avoid mutating the original
+    // Apply filters
+    if (filters.breed) {
+      filtered = filtered.filter(pet => pet.breed === filters.breed);
+    }
+    if (filters.category) {
+      filtered = filtered.filter(pet => pet.category === filters.category);
+    }
+    // Add more filters as needed
+  
+    setFilteredPets(filtered);
   };
 
   // get pet by ID
@@ -386,5 +402,5 @@ module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmi
    resetPassword,
    specificShelterPets,
    createRequest,
-   showRequest, getPetById, petCategory
+   showRequest, getPetById, petCategory, applyFilters
   };

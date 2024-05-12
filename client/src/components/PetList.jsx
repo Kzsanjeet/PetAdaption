@@ -30,6 +30,7 @@ function PetList() {
             .then(res => setPets(res.data))
             .catch(err => console.log(err));
     }, []);
+    console.log(pets)
 
     const handleDelete = async (id) => {
         try {
@@ -109,6 +110,7 @@ function PetList() {
                                     </tr>
                                 </thead>
                                 <tbody>
+                                  {console.log("Pets:", pets)}
                                     {pets.map((pet, index) => (
                                         <tr key={index} className="border-b border-neutral-200 dark:border-white/10">
                                             <td className="whitespace-nowrap px-6 py-4 font-medium">{index + 1}</td>
@@ -136,7 +138,6 @@ function PetList() {
                 </div>
             </div>
 
-            {/* Your edit modal */}
             {selectedPet && (
                 <ThemeProvider theme={createTheme()}>
                 <Container component="main" maxWidth="xs">
