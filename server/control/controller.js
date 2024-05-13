@@ -30,6 +30,134 @@ const registerUser = async(req,res)=>{
         res.status(500).json({message: err.message})
     }
 }
+
+//login function for customer
+const loginUser = async (req, res) => {
+  try {
+    //Extract email and password from request
+    const { email, password } = req.body;
+
+    // To find user in the database
+    const user = await RegisterCustomer.findOne({ email });
+
+    // If user not found or password is incorrect, return error
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    // If user is found and password is correct, generate token and return
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    return res.status(200).json({ message: 'logged in successfully', token, userId: user._id });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+
+const userInfo = async (req, res) => {
+  try {
+    // console.log("hello")
+    const token = req.headers.authorization.split(" ")[1]
+    if(!token){
+        return res.status(403).json({message:"Token is required"})
+    }
+    // console.log(token)
+    const decode = jwt.verify(token, process.env.SECRET_KEY);
+    // console.log(decode)
+    if (!decode) {
+      return res.status(401).json({ success: false, message: "Invalid or expired token" });
+    }
+
+    const getUser = await RegisterCustomer.findById(decode.id);
+    if (getUser) {
+      return res.status(200).json({ success: true, message: "Success", user: getUser });
+    } else {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+  }
+};
+
+
+ //for reseting the password for Customer
+ const resetPassword = async (req, res) => {
+  try {
+      const {email} = req.body;
+      
+      const checkEmail = await RegisterCustomer.findOne({email});
+      if(!checkEmail){
+          return res.status(400).json({ success: false, message: 'Email does not exist' });
+      }
+
+      const token = jwt.sign({ email }, 'jwt_secret_key', { expiresIn: '1h' });
+
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'sanjeetkazithapa@gmail.com',
+        pass: 'zthh seqb uboc cdin'
+      },
+      connectionTimeout: 60000
+    });
+
+    const mailOptions = {
+      from: 'sanjeetkazithapa@gmail.com',
+      to: email,
+      subject: 'Password Reset',
+      html: `<p>You requested a password reset. Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password.</p>`
+
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent:', info.response);
+    res.status(200).send('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).send('Error sending email');
+  }
+};
+
+const newPassword = async (req, res) => {
+  try {
+      const { password,token } = req.body;
+      // const { token } = req.params;
+
+      // Verify and decode the JWT token
+      let decodedEmail;
+      try {
+          decodedEmail = jwt.verify(token, 'JWT_SECRET');
+      } catch (error) {
+          return res.status(400).json({ success: false, message: 'Invalid or expired token' });
+      }
+
+      // Check if decoded email exists
+      if (!decodedEmail || !decodedEmail.email) {
+          return res.status(400).json({ success: false, message: 'Invalid or expired token' });
+      }
+
+      // Hash the new password
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+
+      // Update the user's password based on the decoded email
+      const changePassword = await User.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
+
+      if (!changePassword) {
+          return res.status(400).json({ success: false, message: 'Password reset failed' });
+      }
+
+      res.status(200).json({ success: true, message: 'Password reset successfully' });
+  } catch (error) {
+      console.error('Error resetting password:', error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+}
+
+
+
+
 //registration for admin
 const registerAdmin = async(req,res)=>{
   try{
@@ -82,102 +210,6 @@ const registerShelter = async(req,res)=>{
 }
 
 
-//login function for customer
-const loginUser = async (req, res) => {
-    try {
-      //Extract email and password from request
-      const { email, password } = req.body;
-  
-      // To find user in the database
-      const user = await RegisterCustomer.findOne({ email });
-  
-      // If user not found or password is incorrect, return error
-      if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(400).json({ message: 'Invalid email or password' });
-      }
-  
-      // If user is found and password is correct, generate token and return
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-      return res.status(200).json({ message: 'logged in successfully', token, userId: user._id });
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
-    }
-  };
-
-  //for reseting the password for Customer
-  const resetPassword = async (req, res) => {
-    try {
-        const {email} = req.body;
-        
-        const checkEmail = await RegisterCustomer.findOne({email});
-        if(!checkEmail){
-            return res.status(400).json({ success: false, message: 'Email does not exist' });
-        }
-
-        const token = jwt.sign({ email }, 'jwt_secret_key', { expiresIn: '1h' });
-  
-  
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'sanjeetkazithapa@gmail.com',
-          pass: 'zthh seqb uboc cdin'
-        },
-        connectionTimeout: 60000
-      });
-  
-      const mailOptions = {
-        from: 'sanjeetkazithapa@gmail.com',
-        to: email,
-        subject: 'Password Reset',
-        html: `<p>You requested a password reset. Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password.</p>`
-  
-      };
-  
-      const info = await transporter.sendMail(mailOptions);
-      console.log('Email sent:', info.response);
-      res.status(200).send('Email sent successfully');
-    } catch (error) {
-      console.error('Error sending email:', error);
-      res.status(500).send('Error sending email');
-    }
-  };
-
-  const newPassword = async (req, res) => {
-    try {
-        const { password,token } = req.body;
-        // const { token } = req.params;
-
-        // Verify and decode the JWT token
-        let decodedEmail;
-        try {
-            decodedEmail = jwt.verify(token, 'JWT_SECRET');
-        } catch (error) {
-            return res.status(400).json({ success: false, message: 'Invalid or expired token' });
-        }
-
-        // Check if decoded email exists
-        if (!decodedEmail || !decodedEmail.email) {
-            return res.status(400).json({ success: false, message: 'Invalid or expired token' });
-        }
-
-        // Hash the new password
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(password, salt);
-
-        // Update the user's password based on the decoded email
-        const changePassword = await User.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
-
-        if (!changePassword) {
-            return res.status(400).json({ success: false, message: 'Password reset failed' });
-        }
-
-        res.status(200).json({ success: true, message: 'Password reset successfully' });
-    } catch (error) {
-        console.error('Error resetting password:', error);
-        res.status(500).json({ success: false, message: 'Internal server error' });
-    }
-  }
 
   //login function for Admin
 const loginAdmin = async (req, res) => {
@@ -210,7 +242,6 @@ const loginShelter = async (req, res) => {
   
       // To find the specific user in database
       const user = await RegisterShelter.findOne({ email });
-      console.log(user)
   
       // If user not found or password is incorrect, return error
       if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -225,28 +256,7 @@ const loginShelter = async (req, res) => {
     }
   };  
 
-//add feedback
-  const addFeedback = async (req, res) => {
-    try {
-      const { name, email, comment } = req.body;
-      const { userId } = req.params;
-  
-      const feedback = await Feedback.create({
-        userId: userId,
-        name: name,
-        email: email,
-        comment: comment
-      });
-  
-      if (feedback) {
-        res.status(200).json({ message: 'Successfully sent' });
-      } else {
-        res.status(400).json({ message: 'Not sent' });
-      }
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  };
+
 
 
   //add pet
@@ -305,48 +315,6 @@ const loginShelter = async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   };
-
-
-  const applyFilters = () => {
-    let filtered = [...pets]; // Create a new array to avoid mutating the original
-    // Apply filters
-    if (filters.breed) {
-      filtered = filtered.filter(pet => pet.breed === filters.breed);
-    }
-    if (filters.category) {
-      filtered = filtered.filter(pet => pet.category === filters.category);
-    }
-    // Add more filters as needed
-  
-    setFilteredPets(filtered);
-  };
-
-  // get pet by ID
-  const getPetById = async (req, res) => {
-    try {
-      const pet = await Pet.findById(req.params.id);
-      if (!pet) {
-        return res.status(404).json({ message: 'Pet not found' });
-      }
-      console.log("Pet object before sending:", pet);
-      res.status(200).json(pet);
-    } catch (err) {
-      console.error("Error fetching pet:", err);
-      res.status(500).json({ message: err.message });
-    }
-  };
-
-// get pet by category
-const petCategory = async (req, res) => {
-  const { category } = req.query;
-  try {
-    const pets = await Pet.find({ category });
-    res.json(pets);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server Error' });
-  }
-};
    
 //edit pet
   const editPet = async (req, res) => {
@@ -383,6 +351,8 @@ const deletePet = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
 
 // for creating request for pet adaption
 const createRequest = async(req, res)=>{
@@ -425,5 +395,6 @@ module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmi
    resetPassword,
    specificShelterPets,
    createRequest,
-   showRequest, getPetById, petCategory, applyFilters
+   showRequest,
+   userInfo
   };

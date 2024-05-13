@@ -17,7 +17,8 @@ const {registerUser,
            showRequest,
            getPetById,
            petCategory,
-           applyFilters
+           applyFilters,
+          //  userInfo
           } = require("./control/controller");
 
 const { editUserData, deleteUserData } = require("./control/profile");
@@ -29,7 +30,10 @@ router.route('/loginCustomer').post(loginUser)
 router.route("/registerShelter").post(registerShelter)
 router.route("/loginAdmin").post(loginAdmin)
 router.route("/registerAdmin").post(registerAdmin)
-router.route("/loginShelter").post(loginShelter)
+// router.route("/loginShelter").post(loginShelter)
+
+//for getting the user info for profile
+router.route("/userProfile").get(userInfo)
 
 //route for pet part
 router.route('/getPets').get(getPets);
