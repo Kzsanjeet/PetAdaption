@@ -225,6 +225,29 @@ const loginShelter = async (req, res) => {
     }
   };  
 
+//add feedback
+  const addFeedback = async (req, res) => {
+    try {
+      const { name, email, comment } = req.body;
+      const { userId } = req.params;
+  
+      const feedback = await Feedback.create({
+        userId: userId,
+        name: name,
+        email: email,
+        comment: comment
+      });
+  
+      if (feedback) {
+        res.status(200).json({ message: 'Successfully sent' });
+      } else {
+        res.status(400).json({ message: 'Not sent' });
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
+
 
   //add pet
 
