@@ -50,5 +50,5 @@ const editShelterData = async(req,res)=>{
 
 
 
-module.exports = {editUserData,deleteUserData}
+module.exports = {editUserData,deleteUserData,editShelterData}
 
