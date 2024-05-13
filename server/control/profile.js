@@ -31,11 +31,12 @@ const deleteUserData = async(req,res)=>{
     }
 }
 
+//for shelter profile
 const editShelterData = async(req,res)=>{
     try {
         const ShelterId = req.params.id
         const {firstname,lastname,sheltername,phone,address,email,password} = req.body
-        const editUser = await RegisterCustomer.findByIdAndUpdate(ShelterId,{firstname,lastname,sheltername,phone,address,email,password});
+        const editUser = await RegisterShelter.findByIdAndUpdate(ShelterId,{firstname,lastname,sheltername,phone,address,email,password});
         if(!editUser){
             return res.status(404).json({success:false,message:"Unable to edit the profile"})
         }else{
@@ -46,9 +47,22 @@ const editShelterData = async(req,res)=>{
     }
 }
 
+const deleteShelterData = async(req,res)=>{
+    try {
+        const shelterId = req.params.id
+        const deleteUser = await RegisterShelter.findByIdandDelete(shelterId);
+        if(!deleteUser){
+            return res.status.json({success:false,message:"Unable to delete the user profile"})
+        }else{
+            return res.status.json({success:true,message:"Deleted successully"})
+        }
+    } catch (error) {
+        return res.status.json({sucess:false,message:"error,err"})
+    }
+}
 
 
 
 
-module.exports = {editUserData,deleteUserData,editShelterData}
+module.exports = {editUserData,deleteUserData,editShelterData,deleteShelterData}
 
