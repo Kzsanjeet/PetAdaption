@@ -20,6 +20,7 @@ import AdminRegister from './components/AdminRegister.jsx'
 import ProductDetail from './components/ProductDetail.jsx'
 import CategoryPets from './components/CategoryPets.jsx'
 import FilterPets from './components/FilterPets.jsx'
+import Feedback from './components/feedback.jsx'
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
   {
     path:'/filterpets',
     element:<Layout><FilterPets /></Layout>
+  },
+  {
+    path:'/addfeedback',
+    elemment: <Feedback />
   }
 
 ]);
