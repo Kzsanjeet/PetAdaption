@@ -23,7 +23,7 @@ const {registerUser,
            newPasswordShelter,
           } = require("./control/controller");
 
-const { editUserData, deleteUserData, editShelterData } = require("./control/profile");
+const { editUserData, deleteUserData, editShelterData, deleteShelterData } = require("./control/profile");
 
 
 //route for login and registration part
@@ -76,8 +76,10 @@ router.route("/show-request").post(showRequest)
 //route for profile edit and delete fo customers
 router.route("/edit-userProfile/:userId").patch(editUserData)
 router.route("/delete-userProfile/:userId").delete(deleteUserData)
+
 //route for edit shelter
 router.route("/edit-userProfile/:shelterId").patch(editShelterData)
+router.route("/delete-userProfile/:shelterId").delete(deleteShelterData)
 
 //Route for feedback
 router.route('/addFeedback/:userId').post(addFeedback)
