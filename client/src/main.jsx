@@ -82,18 +82,17 @@ const router = createBrowserRouter([
   },
   {
     path:'/addfeedback',
-<<<<<<< HEAD
     elemment: <Feedback />
   },{
     path:"/forgot",
     element:<Forgot/>
-=======
+  },{
+    path:"/addfeedback",
     element:<AddFeedback />
   },
   {
     path:'/userprofile',
     element:<ShelterLayout><UserProfile /></ShelterLayout>
->>>>>>> d55ee71871db10d1f05d455ba9f5c209c6369afe
   }
 
 ]);
