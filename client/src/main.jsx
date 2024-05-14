@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
 import SignUp from './components/SignUp.jsx'
 import SignIn from './components/SignIn.jsx'
-import NotFound from './components/NotFound.jsx'
+import About from "./components/About.jsx"
 import Dashboard from './components/Dashboard.jsx'
 import Layout from './components/Layout.jsx'
 import AdminLayout from './components/AdminLayout.jsx'
@@ -93,7 +93,13 @@ const router = createBrowserRouter([
   },
   {
     path:'/userprofile',
+    
     element:<ShelterLayout><UserProfile /></ShelterLayout>
+  },{
+    path:'/about',
+    element:<Layout><About/></Layout>
+=======
+<<<<<<< HEAD
   },{
     path:'/reset-password-user/:token',
     element:<NewPassword/>
@@ -109,6 +115,11 @@ const router = createBrowserRouter([
   {
     path:'/userdashboard',
     element:<UserLayout><UserDashboard /></UserLayout>
+<<<<<<< HEAD
+=======
+>>>>>>> 80788c227609bea13ce264498f85043f4c56f15f
+>>>>>>> 6ee59f109f4742ddc5dee81cbf7781a7c6707f8e
+>>>>>>> 3423e6496b362651d39e15bc7e4bea08c8f6cace
   }
 
 ]);
