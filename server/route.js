@@ -23,7 +23,8 @@ const {registerUser,
            resetPasswordShelter,
            newPasswordShelter,
            specificShelterPets,
-           shelterData
+           shelterData,
+           showFeedback
           } = require("./control/controller");
 
 const { editUserData, deleteUserData, editShelterData, deleteShelterData } = require("./control/profile");
@@ -50,6 +51,7 @@ router.delete('/deletePet/:id', deletePet);
 router.put('/editPet/:id', editPet);
 router.get('/specific-shelter-pet/:id',specificShelterPets)
 router.route('/addFeedback/:userId').post(addFeedback)
+router.route('/showFeedback/').get(showFeedback)
 
 //route for the password reset part
 router.route('/reset-password-mail').post(resetPassword)
