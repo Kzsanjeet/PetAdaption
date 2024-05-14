@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import petLogo from '../assets/images/petrescue.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token); // Set isLoggedIn to true if token exists
+  }, []);
 
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove the token
+    setIsLoggedIn(false); // Update isLoggedIn state
+    navigate('/');
+  };
+
   return (
     <>
-      <header className="bg-indigo-800">
+      <header className="bg-indigo-800 sticky top-0 z-50">
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1 ">
             <a href="#" className="-m-1.5 p-1.5">
@@ -38,7 +51,11 @@ const Navbar = () => {
             <a href="#" className="text-sm font-semibold leading-6 text-white">Donate</a>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <Link to="/shelterlogin" className="text-sm font-semibold leading-6 text-white">Shelter Login <span aria-hidden="true">&rarr;</span></Link>
+            {isLoggedIn ? (
+              <button className="text-sm font-semibold leading-6 text-white" onClick={handleLogout}>Logout</button>
+            ) : (
+              <Link to="/shelterlogin" className="text-sm font-semibold leading-6 text-white">Shelter Login <span aria-hidden="true">&rarr;</span></Link>
+            )}
           </div>
         </nav>
         <div className={`lg:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`}>

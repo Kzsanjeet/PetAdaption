@@ -14,13 +14,14 @@ import ShelterLogin from './components/ShelterLogin.jsx'
 import ShelterDashboard from './components/ShelterDashboard.jsx'
 import PetList from './components/PetList.jsx'
 import ShelterLayout from './components/ShelterLayout.jsx'
-import Navbar from './components/Navbar.jsx'
+import Forgot from "./components/Forgot.jsx"
 import Admin from './components/Admin.jsx'
 import AdminRegister from './components/AdminRegister.jsx'
 import ProductDetail from './components/ProductDetail.jsx'
 import CategoryPets from './components/CategoryPets.jsx'
 import FilterPets from './components/FilterPets.jsx'
-import Feedback from './components/feedback.jsx'
+import UserProfile from './components/UserProfile.jsx'
+import AddFeedback from './components/AddFeedback.jsx'
 
 const router = createBrowserRouter([
   {
@@ -72,12 +73,26 @@ const router = createBrowserRouter([
     element: <Layout><CategoryPets category ="dog"/></Layout>
   },
   {
+    path:'/category/:cat',
+    element: <Layout><CategoryPets category ="cat"/></Layout>
+  },
+  {
     path:'/filterpets',
     element:<Layout><FilterPets /></Layout>
   },
   {
     path:'/addfeedback',
     elemment: <Feedback />
+  },{
+    path:"/forgot",
+    element:<Forgot/>
+  },{
+    path:"/addfeedback",
+    element:<AddFeedback />
+  },
+  {
+    path:'/userprofile',
+    element:<ShelterLayout><UserProfile /></ShelterLayout>
   }
 
 ]);
