@@ -22,6 +22,7 @@ import CategoryPets from './components/CategoryPets.jsx'
 import FilterPets from './components/FilterPets.jsx'
 import UserProfile from './components/UserProfile.jsx'
 import AddFeedback from './components/AddFeedback.jsx'
+import NewPassword from './components/NewPassword.jsx'
 
 const router = createBrowserRouter([
   {
@@ -79,10 +80,6 @@ const router = createBrowserRouter([
   {
     path:'/filterpets',
     element:<Layout><FilterPets /></Layout>
-  },
-  {
-    path:'/addfeedback',
-    elemment: <Feedback />
   },{
     path:"/forgot",
     element:<Forgot/>
@@ -93,6 +90,9 @@ const router = createBrowserRouter([
   {
     path:'/userprofile',
     element:<ShelterLayout><UserProfile /></ShelterLayout>
+  },{
+    path:'/reset-password-user/:token',
+    element:<NewPassword/>
   }
 
 ]);

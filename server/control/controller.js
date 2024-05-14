@@ -90,7 +90,7 @@ const userInfo = async (req, res) => {
           return res.status(400).json({ success: false, message: 'Email does not exist' });
       }
 
-      const token = jwt.sign({ email }, 'jwt_secret_key', { expiresIn: '1h' });
+      const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
 
     const transporter = nodemailer.createTransport({
@@ -106,7 +106,7 @@ const userInfo = async (req, res) => {
       from: 'sanjeetkazithapa@gmail.com',
       to: email,
       subject: 'Password Reset',
-      html: `<p>You requested a password reset. Click <a href="http://localhost:3000/reset-password-user/${token}">here</a> to reset your password.</p>`
+      html: `<p>You requested a password reset. Click <a href="http://localhost:5173/reset-password-user/${token}">here</a> to reset your password.</p>`
 
     };
 
@@ -122,12 +122,13 @@ const userInfo = async (req, res) => {
 const newPassword = async (req, res) => {
   try {
       const { password,token } = req.body;
+      // console.log(password, token)
       // const { token } = req.params;
 
       // Verify and decode the JWT token
       let decodedEmail;
       try {
-          decodedEmail = jwt.verify(token, 'JWT_SECRET');
+          decodedEmail = jwt.verify(token, process.env.JWT_SECRET);
       } catch (error) {
           return res.status(400).json({ success: false, message: 'Invalid or expired token' });
       }
@@ -142,7 +143,7 @@ const newPassword = async (req, res) => {
       const hashedPassword = bcrypt.hashSync(password, salt);
 
       // Update the user's password based on the decoded email
-      const changePassword = await User.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
+      const changePassword = await RegisterCustomer.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
 
       if (!changePassword) {
           return res.status(400).json({ success: false, message: 'Password reset failed' });
@@ -262,7 +263,7 @@ const loginShelter = async (req, res) => {
           return res.status(400).json({ success: false, message: 'Email does not exist' });
       }
 
-      const token = jwt.sign({ email }, 'jwt_secret_key', { expiresIn: '1h' });
+      const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
 
     const transporter = nodemailer.createTransport({
@@ -314,7 +315,7 @@ const newPasswordShelter = async (req, res) => {
       const hashedPassword = bcrypt.hashSync(password, salt);
 
       // Update the user's password based on the decoded email
-      const changePassword = await User.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
+      const changePassword = await RegisterCustomer.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
 
       if (!changePassword) {
           return res.status(400).json({ success: false, message: 'Password reset failed' });

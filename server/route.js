@@ -62,7 +62,7 @@ router.route('/addFeedback/:userId').post(addFeedback)
 
 //route for the password reset part
 router.route('/reset-password-mail').post(resetPassword)
-router.route('/reset-password').post(newPassword)
+router.route('/reset-password').patch(newPassword)
 //route for the passoword reset part for shelter
 router.route('/reset-password-mail').post(resetPasswordShelter)
 router.route('/reset-password').post(newPasswordShelter)
