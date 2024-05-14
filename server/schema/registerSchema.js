@@ -23,30 +23,38 @@ const register1 = mongoose.Schema({
 })
 
 const register2 = mongoose.Schema({
-    "firstname":{type: String, required: true},
-    "lastname":{type: String, required: true},
-    "sheltername":{type:String, required:true},
-    "phone": {type:String, required:true},
-    "address": {type:String, required:true},
-    "email":{ 
-        type: String,
-        required: true,     // Ensures the email field is required
-        unique: true,       // Ensures uniqueness of email addresses
-        trim: true,         // Removes leading and trailing whitespace
-        lowercase: true,    // Converts the email to lowercase before saving
-        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ // Validates the format of the email address using a regular expression
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
+    sheltername: { type: String, required: true },
+    phone: { type: String, required: true },
+    address: { type: String, required: true },
+    email: { 
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     },
-    "password":{
-        type: String,
-        required: true,
-        minlength: 8 // Minimum password length requirement
-
-    }
-},
-{
+    password: { type: String, required: true, minlength: 8 },
+    about: { type: String, required: true },
+    socialMedia: {
+      linkedIn: { type: String, default: '' },
+      youtube: { type: String, default: '' },
+      facebook: { type: String, default: '' },
+      instagram: { type: String, default: '' },
+      twitter: { type: String, default: '' }
+    },
+    achievements: [
+      {
+        title: { type: String, required: true },
+        description: { type: String, required: true }
+      }
+    ]
+  },
+  {
     timestamps: true
-}
-)
+  });
 
 
 
