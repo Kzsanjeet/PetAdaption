@@ -15,16 +15,15 @@ const {registerUser,
            newPassword,
            createRequest,
            showRequest,
-<<<<<<< HEAD
+
           //  getPetById,
           //  petCategory,
           //  applyFilters,
-=======
+
            getPetById,
            addFeedback,
            petCategory,
            applyFilters,
->>>>>>> 2468fed1de6a2c12072a49557539f0150cf3a33c
            userInfo,
            resetPasswordShelter,
            newPasswordShelter,
