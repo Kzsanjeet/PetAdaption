@@ -328,6 +328,24 @@ const newPasswordShelter = async (req, res) => {
 }
 
 
+const shelterData = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const userProfile = await register2.findOne({ _id: userId });
+    if (!userProfile) {
+      return res.status(404).json({ message: 'User profile not found' });
+    }
+    res.json(userProfile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
+
+
+
+
+
 //add feedback
 const addFeedback = async (req, res) => {
   try {
@@ -539,5 +557,6 @@ module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmi
    getPetById,
    addFeedback,
    petCategory,
-   applyFilters
+   applyFilters,
+   shelterData
   };

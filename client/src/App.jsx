@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import ProductDetail from './components/ProductDetail'
 import PetList from './components/PetList'
 import Navbar from './components/Navbar'
+import Contact from './components/Contact'
 
 const App = () => {
 
@@ -16,7 +17,7 @@ const App = () => {
       <IconCollection />
       <CardCollection />
       </div>
-      <Footer />
+      <Contact />
     </>
   )
 }

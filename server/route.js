@@ -22,7 +22,8 @@ const {registerUser,
            userInfo,
            resetPasswordShelter,
            newPasswordShelter,
-           specificShelterPets
+           specificShelterPets,
+           shelterData
           } = require("./control/controller");
 
 const { editUserData, deleteUserData, editShelterData, deleteShelterData } = require("./control/profile");
@@ -38,6 +39,7 @@ router.route("/loginShelter").post(loginShelter)
 
 //for getting the user info for profile
 router.route("/userProfile").get(userInfo)
+router.route('/shelterData/:userId').get(shelterData)
 
 //route for pet part
 router.route('/getPets').get(getPets);
