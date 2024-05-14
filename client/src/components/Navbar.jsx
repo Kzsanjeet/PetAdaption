@@ -48,7 +48,7 @@ const Navbar = () => {
             <a href="#" className="text-sm font-semibold leading-6 text-white">Dogs</a>
             <a href="#" className="text-sm font-semibold leading-6 text-white">Cats</a>
             <a href="#" className="text-sm font-semibold leading-6 text-white">Other Pets</a>
-            <a href="#" className="text-sm font-semibold leading-6 text-white">Donate</a>
+          <Link to="/about"><a href="#" className="text-sm font-semibold leading-6 text-white">About</a></Link>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             {isLoggedIn ? (

@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
 import SignUp from './components/SignUp.jsx'
 import SignIn from './components/SignIn.jsx'
-import NotFound from './components/NotFound.jsx'
+import About from "./components/About.jsx"
 import Dashboard from './components/Dashboard.jsx'
 import Layout from './components/Layout.jsx'
 import AdminLayout from './components/AdminLayout.jsx'
@@ -79,10 +79,6 @@ const router = createBrowserRouter([
   {
     path:'/filterpets',
     element:<Layout><FilterPets /></Layout>
-  },
-  {
-    path:'/addfeedback',
-    elemment: <Feedback />
   },{
     path:"/forgot",
     element:<Forgot/>
@@ -92,7 +88,11 @@ const router = createBrowserRouter([
   },
   {
     path:'/userprofile',
+    
     element:<ShelterLayout><UserProfile /></ShelterLayout>
+  },{
+    path:'/about',
+    element:<Layout><About/></Layout>
   }
 
 ]);
