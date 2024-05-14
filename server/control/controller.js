@@ -328,6 +328,71 @@ const newPasswordShelter = async (req, res) => {
 }
 
 
+//add feedback
+const addFeedback = async (req, res) => {
+  try {
+    const { name, email, comment } = req.body;
+    const { userId } = req.params;
+
+    const feedback = await Feedback.create({
+      userId: userId,
+      name: name,
+      email: email,
+      comment: comment
+    });
+
+    if (feedback) {
+      res.status(200).json({ message: 'Successfully sent' });
+    } else {
+      res.status(400).json({ message: 'Not sent' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+const applyFilters = () => {
+  let filtered = [...pets]; // Create a new array to avoid mutating the original
+  // Apply filters
+  if (filters.breed) {
+    filtered = filtered.filter(pet => pet.breed === filters.breed);
+  }
+  if (filters.category) {
+    filtered = filtered.filter(pet => pet.category === filters.category);
+  }
+  // Add more filters as needed
+
+  setFilteredPets(filtered);
+};
+
+// get pet by ID
+const getPetById = async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    if (!pet) {
+      return res.status(404).json({ message: 'Pet not found' });
+    }
+    console.log("Pet object before sending:", pet);
+    res.status(200).json(pet);
+  } catch (err) {
+    console.error("Error fetching pet:", err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// get pet by category
+const petCategory = async (req, res) => {
+const { category } = req.query;
+try {
+  const pets = await Pet.find({ category });
+  res.json(pets);
+} catch (err) {
+  console.error(err);
+  res.status(500).json({ message: 'Server Error' });
+}
+};
+
 
 
   //add pet
@@ -365,7 +430,8 @@ const newPasswordShelter = async (req, res) => {
   // fetching data for specific shelter pets
   const specificShelterPets = async(req,res)=>{
     try {
-      const shelterId = req.params;
+      const shelterId = req.params.id;
+      console.log(shelterId)
       const pets = await Pet.find({shelter:shelterId});
       if(!pets){
         return res.status(404).json({sucess:false,message:"not found"})
@@ -469,5 +535,9 @@ module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmi
    showRequest,
    userInfo,
    resetPasswordShelter,
-   newPasswordShelter
+   newPasswordShelter,
+   getPetById,
+   addFeedback,
+   petCategory,
+   applyFilters
   };

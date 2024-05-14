@@ -19,58 +19,43 @@ import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function Feedback() {
-  const [formState, setFormState] = useState({
+
+function AddFeedback() {
+  const [formData, setFormData] = useState({
     name: '',
-    email:'',
-    description: ''
+    email: '',
+    comment: '',
   });
-  const [successMessage, setSuccessMessage] = useState('');
-  const navigate = useNavigate();
-  const userId = localStorage.getItem("userId")
+  const navigate = useNavigate()
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
 
-      // Handle other input types as usual
-      setFormState((prevFormData) => ({
-        ...prevFormData,
-        [name]: newValue,
-      }));
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: newValue,
+    }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Create a new FormData object
-    const formData = new FormData();
-
-    // Append the name, breed, and description fields from formState
-    formData.append('name', formState.name);
-    formData.append('email',formState.email)
-    formData.append('description', formState.description);
-
-    // Make the POST request
+    const userId = localStorage.getItem("userId");
+  
+    if (!userId) {
+      console.error("User ID not found in localStorage.");
+      return;
+    }
+  
     axios.post(`http://localhost:5000/addFeedback/${userId}`, formData)
       .then(res => {
+        alert("Feedback sent.")
         navigate('/');
-        console.log("success");
-
-        // Reset the form after successful submission
-        setFormState({
-          name: '',
-          email:'',
-          description:''
-        });
-
-        // Set the success message
-        setSuccessMessage('Your feedback has been sent successfully.');
       })
       .catch(err => console.log(err));
-
+  
     console.log(formData);
-  }; 
+  };
   
 
   return (
@@ -90,50 +75,47 @@ function Feedback() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-           Leave Your Feedback
+            Leave Your Feedback
           </Typography>
-          {successMessage && <Typography variant="subtitle1" color="success">{successMessage}</Typography>}
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} encType="multipart/form-data">
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="name"
                   required
                   fullWidth
                   id="name"
                   label="Name"
-                  autoFocus
-                  value={formState.name}
+                  name="name"
+                  autoComplete="family-name"
+                  value={formData.name}
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                        required
-                        fullWidth
-                        id="email"
-                        label="email"
-                        name="email"
-                        autoComplete="email"
-                        value={formState.email}
-                        onChange={handleChange}
-                    />
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
               </Grid>
               <Grid item xs={12}>
               <TextField
                     required
                     fullWidth
-                    name="description"
-                    label="Description"
-                    id="description"
+                    name="comment"
+                    label="Your Feedback"
+                    id="comment"
                     multiline
                     rows={4}
-                    value={formState.description}
+                    value={formData.comment}
                     onChange={handleChange}
                 />
               </Grid>
-
             </Grid>
             <Button
               type="submit"
@@ -141,7 +123,7 @@ function Feedback() {
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: '#3730A3', '&:hover': { bgcolor: '#4608c4' } }}
             >
-              Add Pet
+              Send Feedback
             </Button>
           </Box>
         </Box>
@@ -152,4 +134,4 @@ function Feedback() {
   );
 }
 
-export default Feedback;
+export default AddFeedback;
