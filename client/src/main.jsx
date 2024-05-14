@@ -22,6 +22,10 @@ import CategoryPets from './components/CategoryPets.jsx'
 import FilterPets from './components/FilterPets.jsx'
 import UserProfile from './components/UserProfile.jsx'
 import AddFeedback from './components/AddFeedback.jsx'
+import PetAdopt from './components/PetAdopt.jsx'
+import ShowFeedback from './components/ShowFeedback.jsx'
+import UserDashboard from './components/UserDashboard.jsx'
+import UserLayout from './components/UserLayout.jsx'
 
 const router = createBrowserRouter([
   {
@@ -93,6 +97,18 @@ const router = createBrowserRouter([
   {
     path:'/userprofile',
     element:<ShelterLayout><UserProfile /></ShelterLayout>
+  },
+  {
+    path:'/petadopt',
+    element:<Layout><PetAdopt /></Layout>
+  },
+  {
+    path:'/showfeedback',
+    element:<ShowFeedback />
+  },
+  {
+    path:'/userdashboard',
+    element:<UserLayout><UserDashboard /></UserLayout>
   }
 
 ]);
