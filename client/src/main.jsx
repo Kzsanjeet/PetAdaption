@@ -14,7 +14,7 @@ import ShelterLogin from './components/ShelterLogin.jsx'
 import ShelterDashboard from './components/ShelterDashboard.jsx'
 import PetList from './components/PetList.jsx'
 import ShelterLayout from './components/ShelterLayout.jsx'
-import Navbar from './components/Navbar.jsx'
+import Forgot from "./components/Forgot.jsx"
 import Admin from './components/Admin.jsx'
 import AdminRegister from './components/AdminRegister.jsx'
 import ProductDetail from './components/ProductDetail.jsx'
@@ -86,6 +86,12 @@ const router = createBrowserRouter([
   },
   {
     path:'/addfeedback',
+    elemment: <Feedback />
+  },{
+    path:"/forgot",
+    element:<Forgot/>
+  },{
+    path:"/addfeedback",
     element:<AddFeedback />
   },
   {

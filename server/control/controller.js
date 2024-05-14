@@ -81,7 +81,7 @@ const userInfo = async (req, res) => {
 };
 
 
- //for reseting the password for Customer
+ //for reseting the password for Customer(user)
  const resetPassword = async (req, res) => {
   try {
       const {email} = req.body;
@@ -107,7 +107,7 @@ const userInfo = async (req, res) => {
       from: 'sanjeetkazithapa@gmail.com',
       to: email,
       subject: 'Password Reset',
-      html: `<p>You requested a password reset. Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password.</p>`
+      html: `<p>You requested a password reset. Click <a href="http://localhost:3000/reset-password-user/${token}">here</a> to reset your password.</p>`
 
     };
 
