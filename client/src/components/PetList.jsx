@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+// import { useParams } from 'react-router-dom';
 
 function PetList() {
     const [pets, setPets] = useState([]);
@@ -24,13 +25,23 @@ function PetList() {
         description: ''
     });
     const [selectedImage, setSelectedImage] = useState(null);
+    const id = localStorage.getItem("userId")
+    // console.log(id)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/getPets')
-            .then(res => setPets(res.data))
-            .catch(err => console.log(err));
-    }, []);
-    console.log(pets)
+      // console.log("Fetching pets for ID:", id);
+      axios.get(`http://localhost:5000/specific-shelter-pet/${id}`)
+          .then(res => {
+              // console.log("Received pets data:", res.data);
+              setPets(res.data.pets);
+              // console.log(pets)
+          })
+          .catch(err => console.log(err));
+  }, [id]);
+    // console.log(pets)
+    useEffect(() => {
+      console.log("Pets length:", pets.length);
+  }, [pets]);
 
     const handleDelete = async (id) => {
         try {
@@ -69,8 +80,8 @@ function PetList() {
                 return pet;
             });
     
-            console.log('Updated pets:', updatedPets);
-            console.log('Edited pet:', editedPet);
+            // console.log('Updated pets:', updatedPets);
+            // console.log('Edited pet:', editedPet);
     
             setPets(updatedPets);
             setSelectedPet(null); // Close the edit modal
@@ -94,49 +105,40 @@ function PetList() {
 
     return (
         <>
-            <div className="flex justify-center">
-                <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                      {pets.length>0?<div className="overflow-hidden">
-                            <table className="min-w-full text-left text-sm font-light text-surface dark:text-white">
-                                <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
-                                    <tr>
-                                        <th scope="col" className="px-6 py-4">#</th>
-                                        <th scope="col" className="px-6 py-4">Name</th>
-                                        <th scope="col" className="px-6 py-4">Breed</th>
-                                        <th scope="col" className="px-6 py-4">Description</th>
-                                        <th scope="col" className="px-6 py-4">Image</th>
-                                        <th scope="col" className="px-6 py-4">Actions</th> {/* Added Actions column */}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  {console.log("Pets:", pets)}
-                                    {pets.map((pet, index) => (
-                                        <tr key={index} className="border-b border-neutral-200 dark:border-white/10">
-                                            <td className="whitespace-nowrap px-6 py-4 font-medium">{index + 1}</td>
-                                            <td className="whitespace-nowrap px-6 py-4">{pet.name}</td>
-                                            <td className="whitespace-nowrap px-6 py-4">{pet.breed}</td>
-                                            <td className="whitespace-nowrap px-6 py-4">{pet.description}</td>
-                                            <td className="whitespace-nowrap px-6 py-4">
-                                                <img src={`http://localhost:5000/${pet.image}`} alt={pet.name} style={{ width: 100, height: 100 }} />
-                                            </td>
-                                            <td className="whitespace-nowrap px-6 py-4">
-                                                <IconButton onClick={() => handleEdit(pet)} aria-label="edit">
-                                                    <EditIcon />
-                                                </IconButton>
-                                                <IconButton onClick={() => handleDelete(pet._id)} aria-label="delete">
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div> : <div>No pets available</div>}
-                        
+          <div className="flex justify-center">
+            <div className="w-full lg:w-3/4 p-4 lg:pl-36">
+              {pets && pets.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
+                  {pets.map((pet, index) => (
+                    <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
+                      <img
+                        src={`http://localhost:5000/${pet.image}`}
+                        alt={pet.name}
+                        className="w-full h-40 object-cover"
+                      />
+                      <div className="p-4">
+                        <h3 className="text-lg font-semibold">{pet.name}</h3>
+                        <p className="text-gray-500">{pet.breed}</p>
+                        <p className="mt-2 text-sm">{pet.description}</p>
+                        <div className="mt-4 flex justify-end">
+                          <IconButton onClick={() => handleEdit(pet)} aria-label="edit">
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton onClick={() => handleDelete(pet._id)} aria-label="delete">
+                            <DeleteIcon />
+                          </IconButton>
+                        </div>
+                      </div>
                     </div>
+                  ))}
                 </div>
+              ) : (
+                <div className="text-center">No pets available</div>
+              )}
             </div>
+          </div>
+
+
 
             {selectedPet && (
                 <ThemeProvider theme={createTheme()}>
