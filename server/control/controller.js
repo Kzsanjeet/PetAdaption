@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const multer = require('multer');
 const nodemailer = require("nodemailer")
+const { Feedback } = require('../schema/registerSchema')
 
 
 //registration for customer
@@ -90,7 +91,7 @@ const userInfo = async (req, res) => {
           return res.status(400).json({ success: false, message: 'Email does not exist' });
       }
 
-      const token = jwt.sign({ email }, 'jwt_secret_key', { expiresIn: '1h' });
+      const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
 
     const transporter = nodemailer.createTransport({
@@ -106,7 +107,7 @@ const userInfo = async (req, res) => {
       from: 'sanjeetkazithapa@gmail.com',
       to: email,
       subject: 'Password Reset',
-      html: `<p>You requested a password reset. Click <a href="http://localhost:3000/reset-password-user/${token}">here</a> to reset your password.</p>`
+      html: `<p>You requested a password reset. Click <a href="http://localhost:5173/reset-password-user/${token}">here</a> to reset your password.</p>`
 
     };
 
@@ -122,12 +123,13 @@ const userInfo = async (req, res) => {
 const newPassword = async (req, res) => {
   try {
       const { password,token } = req.body;
+      // console.log(password, token)
       // const { token } = req.params;
 
       // Verify and decode the JWT token
       let decodedEmail;
       try {
-          decodedEmail = jwt.verify(token, 'JWT_SECRET');
+          decodedEmail = jwt.verify(token, process.env.JWT_SECRET);
       } catch (error) {
           return res.status(400).json({ success: false, message: 'Invalid or expired token' });
       }
@@ -142,7 +144,7 @@ const newPassword = async (req, res) => {
       const hashedPassword = bcrypt.hashSync(password, salt);
 
       // Update the user's password based on the decoded email
-      const changePassword = await User.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
+      const changePassword = await RegisterCustomer.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
 
       if (!changePassword) {
           return res.status(400).json({ success: false, message: 'Password reset failed' });
@@ -262,7 +264,7 @@ const loginShelter = async (req, res) => {
           return res.status(400).json({ success: false, message: 'Email does not exist' });
       }
 
-      const token = jwt.sign({ email }, 'jwt_secret_key', { expiresIn: '1h' });
+      const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
 
     const transporter = nodemailer.createTransport({
@@ -314,7 +316,7 @@ const newPasswordShelter = async (req, res) => {
       const hashedPassword = bcrypt.hashSync(password, salt);
 
       // Update the user's password based on the decoded email
-      const changePassword = await User.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
+      const changePassword = await RegisterCustomer.findOneAndUpdate({ email: decodedEmail.email }, { password: hashedPassword });
 
       if (!changePassword) {
           return res.status(400).json({ success: false, message: 'Password reset failed' });
@@ -328,17 +330,22 @@ const newPasswordShelter = async (req, res) => {
 }
 
 
+
+
+
 const shelterData = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const userProfile = await register2.findOne({ _id: userId });
-    if (!userProfile) {
+    console.log(userId)
+    const shelterProfile = await RegisterShelter.findOne({ _id: userId });
+    if (!shelterProfile) {
       return res.status(404).json({ message: 'User profile not found' });
     }
-    res.json(userProfile);
+    // console.log(userProfile)
+    res.status(200).json({success:true, shelterProfile})
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({error: err});
   }
 };
 
@@ -366,6 +373,19 @@ const addFeedback = async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+const showFeedback = async (req, res) => {
+  try {
+      const feedbackList = await Feedback.find({});
+      if (feedbackList.length === 0) {
+          return res.status(404).json({ message: 'No feedbacks found' });
+      }
+      res.status(200).json({ success: true, feedbackList });
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ error: err });
   }
 };
 
@@ -558,5 +578,6 @@ module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmi
    addFeedback,
    petCategory,
    applyFilters,
-   shelterData
+   shelterData,
+   showFeedback
   };

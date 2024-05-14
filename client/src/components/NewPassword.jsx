@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import "./NewPassword.css"; // Import CSS for styling
+import { Navigate, redirect, useNavigate, useParams } from "react-router-dom";
 
 const NewPassword = () => {
   // State variables for new password and confirm password
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate()
+
+  const {token} = useParams()
+  // console.log(token)
 
   // Handler for input change in new password field
   const handleNewPasswordChange = (e) => {
@@ -17,12 +23,36 @@ const NewPassword = () => {
   };
 
   // Handler for form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     // Logic for handling password submission, e.g., validation
     console.log("New Password:", newPassword);
     console.log("Confirm Password:", confirmPassword);
-    // You can add your logic for password validation here
+    if(newPassword === confirmPassword){
+      try{
+        const setNewPass = await fetch("http://localhost:5000/reset-password",{
+          method:"PATCH",
+          headers:{
+            'Content-Type':"application/json"
+          },
+          body:JSON.stringify({
+            password:confirmPassword, 
+            token
+          })
+        })
+        const data =await setNewPass.json()
+        console.log(data)
+        if(data.success){
+          alert("Password updated successfully!!")
+          navigate("/signin")
+        }
+  
+      }catch(err){
+        console.log(err)  
+    }
+    }else{
+      alert("BOth password must be same...")
+    }
   };
 
   return (

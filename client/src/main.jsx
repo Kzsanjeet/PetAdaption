@@ -22,6 +22,14 @@ import CategoryPets from './components/CategoryPets.jsx'
 import FilterPets from './components/FilterPets.jsx'
 import UserProfile from './components/UserProfile.jsx'
 import AddFeedback from './components/AddFeedback.jsx'
+<<<<<<< HEAD
+import NewPassword from './components/NewPassword.jsx'
+=======
+import PetAdopt from './components/PetAdopt.jsx'
+import ShowFeedback from './components/ShowFeedback.jsx'
+import UserDashboard from './components/UserDashboard.jsx'
+import UserLayout from './components/UserLayout.jsx'
+>>>>>>> 80788c227609bea13ce264498f85043f4c56f15f
 
 const router = createBrowserRouter([
   {
@@ -90,9 +98,30 @@ const router = createBrowserRouter([
     path:'/userprofile',
     
     element:<ShelterLayout><UserProfile /></ShelterLayout>
+<<<<<<< HEAD
   },{
     path:'/about',
     element:<Layout><About/></Layout>
+=======
+<<<<<<< HEAD
+  },{
+    path:'/reset-password-user/:token',
+    element:<NewPassword/>
+=======
+  },
+  {
+    path:'/petadopt',
+    element:<Layout><PetAdopt /></Layout>
+  },
+  {
+    path:'/showfeedback',
+    element:<ShowFeedback />
+  },
+  {
+    path:'/userdashboard',
+    element:<UserLayout><UserDashboard /></UserLayout>
+>>>>>>> 80788c227609bea13ce264498f85043f4c56f15f
+>>>>>>> 6ee59f109f4742ddc5dee81cbf7781a7c6707f8e
   }
 
 ]);
