@@ -67,7 +67,7 @@ const FilterPets = () => {
         <button type="submit">Apply Filters</button>
       </form>
       <ul>
-        {filteredPets.map(pet => (
+        {filteredPets.length>0 ? (filteredPets.map(pet => (
           <li key={pet._id}>
             <h2>{pet.name}</h2>
             <img src={pet.image} alt={pet.name} />
@@ -75,7 +75,9 @@ const FilterPets = () => {
             <p>{pet.category}</p>
             <p>{pet.description}</p>
           </li>
-        ))}
+        ))):<div>No pets</div>}
+        
+        
       </ul>
     </div>
   );

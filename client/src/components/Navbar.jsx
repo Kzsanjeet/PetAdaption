@@ -17,8 +17,10 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove the token
+    localStorage.removeItem('token'); 
+    localStorage.removeItem("userId")// Remove the token
     setIsLoggedIn(false); // Update isLoggedIn state
+    window.reload()
     navigate('/');
   };
 
