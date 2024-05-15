@@ -25,11 +25,11 @@ const addFeedback = async (req, res) => {
   // for getting the pet details
   const getFeedback = async (req, res) => {
     try {
-      const Feedback = await Feedback.find({}).populate("user")
-      if(!Feedback){
+      const showComments = await Feedback.find({}).populate("user")
+      if(!showComments){
         return res.status(404).json({success:false,message:"Unable to get feedback"})
       }else{
-        return res.status(200).json({sucess:true,Feedback});
+        return res.status(200).json({sucess:true,showComments});
       }
       
     } catch (err) {
