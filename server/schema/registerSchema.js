@@ -67,6 +67,10 @@ const petSchema = mongoose.Schema({
     "shelter": {
         type:mongoose.Schema.Types.ObjectId,
         ref:"RegisterShelter"   
+    },
+    status:{
+      type:String,
+      default:"available"
     }
   });
 

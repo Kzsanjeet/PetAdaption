@@ -9,7 +9,7 @@ const { Feedback } = require('../schema/registerSchema')
 const showPetRequest = async (req, res) => {
     try {
         const shelterId = req.params.id; // Adjust the parameter name if needed
-        console.log(shelterId);
+        // console.log(shelterId);
         
         // Fetching requests for a specific shelterId
         const showPet = await Request.find({shelterId}).populate("userId").populate("petId").populate("shelterId");
@@ -28,11 +28,16 @@ const showPetRequest = async (req, res) => {
 }
 const acceptPetReq = async(req, res) =>{
     try {
-        const {reqId} = req.params.id;
+        const reqId = req.params.id;
+        const {petId} = req.body
+        console.log(reqId, petId)
         const acceptReq = await Request.findByIdAndUpdate({_id:reqId},{
             status:"Accepted"
         })
-        if(!acceptReq){
+        const updatePet = await Pet.findByIdAndUpdate({_id:petId},{
+            status:"booked"
+        })
+        if(!acceptReq && !updatePet){
             return res.status(400).json({success:false, message:"Unable to accept the request!!"})
         }
         return res.status(200).json({success:true, message:"Successfully accepted." , acceptReq})
@@ -45,7 +50,8 @@ const acceptPetReq = async(req, res) =>{
 
 const rejectPetReq = async(req, res) =>{
     try {
-        const {reqId} = req.params.id;
+        const reqId = req.params.id;
+        // console.log(reqId)
         const acceptReq = await Request.findByIdAndDelete({_id:reqId})
         if(!acceptReq){
             return res.status(400).json({success:false, message:"Unable to reject the request!!"})
