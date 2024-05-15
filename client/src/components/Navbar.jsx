@@ -31,7 +31,7 @@ const Navbar = () => {
           <div className="flex lg:flex-1 ">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img className="h-8 w-auto" src={petLogo} alt="" />
+          <Link to="/"><img className="h-8 w-auto" src={petLogo} alt="" /></Link>    
             </a>
           </div>
           <div className="flex lg:hidden">
@@ -47,8 +47,7 @@ const Navbar = () => {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            <a href="#" className="text-sm font-semibold leading-6 text-white">Dogs</a>
-            <a href="#" className="text-sm font-semibold leading-6 text-white">Cats</a>
+          <Link to="/filterpets"> <a href="#" className="text-sm font-semibold leading-6 text-white">Categories</a></Link>
             <a href="#" className="text-sm font-semibold leading-6 text-white">Other Pets</a>
           <Link to="/about"><a href="#" className="text-sm font-semibold leading-6 text-white">About</a></Link>
           </div>
