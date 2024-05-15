@@ -18,6 +18,60 @@ const AdoptRequest = () => {
         }
     }
 
+    //accepting request 
+    const handleAccept = async (requestId, petId) => {
+        console.log(requestId, petId)
+        try {
+            const acceptReq = await fetch(`http://localhost:5000/accept-pet-request/${requestId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json" 
+                },
+                body:JSON.stringify({petId})
+            });
+    
+            if (rejectReq.ok) {
+                const data = await acceptReq.json();
+                if(data.success){
+                    window.location.reload()
+                }
+                console.log(data);
+            } else {
+                // Handle non-successful response
+                console.error('Failed to accept pet request:', acceptReq.status);
+            }
+        } catch (error) {
+            console.error('Error while accept pet request:', error);
+        }
+    };
+
+    //rejecting request
+    const handleReject = async (requestId) => {
+        // console.log(requestId)
+        try {
+            const rejectReq = await fetch(`http://localhost:5000/reject-pet-request/${requestId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json" 
+                }
+            });
+    
+            if (rejectReq.ok) {
+                const data = await rejectReq.json();
+                if(data.success){
+                    window.location.reload()
+                }
+                console.log(data);
+            } else {
+                // Handle non-successful response
+                console.error('Failed to reject pet request:', rejectReq.status);
+            }
+        } catch (error) {
+            console.error('Error while rejecting pet request:', error);
+        }
+    };
+     console.log(reqlist)
+
     useEffect(() => {
         showPetReqs()
     }, [])
@@ -54,10 +108,10 @@ const AdoptRequest = () => {
                           <h2>Enough Space ? <span>{pet.data.enoughSpace}</span></h2>
                           <h2>Had Pet Before ? <span>{pet.data.hadPetBefore}</span></h2>
                           <h2>Pet Nutrition ? <span>{pet.data.petNutrition}</span></h2>
-                          <button className="approve">
+                          <button className="approve" onClick={()=>handleAccept(pet._id, pet.petId._id)}>
                             Approve
                           </button>
-                          <button className="remove">
+                          <button className="remove" onClick={()=>handleReject(pet._id)}>
                             Deny
                           </button>
                       </div>

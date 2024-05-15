@@ -113,7 +113,7 @@ router.route("/getFeedback").get(getFeedback)
 
 // for pet request routes
 router.route("/show-pet-request/:id").get(showPetRequest)
-router.route("/accept-pet-request").patch(acceptPetReq)
-router.route("/reject-pet-request").delete(rejectPetReq)
+router.route("/accept-pet-request/:id").patch(acceptPetReq)
+router.route("/reject-pet-request/:id").delete(rejectPetReq)
 
 module.exports = router;
