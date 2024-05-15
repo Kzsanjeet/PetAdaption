@@ -1,10 +1,12 @@
 const Feedback = require("../schema/feedbackSchema")
 
 const addFeedback = async (req, res) => {
+  console.log("hello")
     try {
-        const userId = req.params.id
+        const userId = req.params.id;
         const {comment} = req.body;
       
+        console.log(userId, comment)
       const newFeedback = await Feedback.create({
         user:userId,
         comment

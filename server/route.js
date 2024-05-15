@@ -70,8 +70,8 @@ router.get('/specific-shelter-pet/:id',specificShelterPets)
 
 
 //feedback
-router.route('/addFeedback/:userId').post(addFeedback)
-router.route("/getFeedback").get(getFeedback)
+router.post('/add-feedback/:id', addFeedback);
+router.get('/get-feedback',getFeedback)
 
 
 //route for the password reset part
