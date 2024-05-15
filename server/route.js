@@ -23,6 +23,7 @@ const {registerUser,
            resetPasswordShelter,
            newPasswordShelter,
            specificShelterPets,
+           getShelter,
            shelterData,
            showFeedback
           } = require("./control/controller");
@@ -37,7 +38,9 @@ const {
 
     //importing from pet Request
     const {
-      showPetRequest
+      showPetRequest,
+      acceptPetReq,
+      rejectPetReq
     } = require("./control/petRequest")
 
 
@@ -52,6 +55,8 @@ router.route("/loginShelter").post(loginShelter)
 //for getting the user info for profile
 router.route("/userProfile").get(userInfo)
 router.route('/shelterData/:userId').get(shelterData)
+//getting all the shelter
+router.route('/get-shelter').get(getShelter)
 
 //route for pet part
 router.route('/getPets').get(getPets);
@@ -68,9 +73,8 @@ router.route('/showFeedback/').get(showFeedback)
 router.route('/reset-password-mail').post(resetPassword)
 router.route('/reset-password').patch(newPassword)
 //route for the passoword reset part for shelter
-router.route('/reset-password-mail').post(resetPasswordShelter)
-router.route('/reset-password').post(newPasswordShelter)
-
+router.route('/reset-password-mail-shelter').post(resetPasswordShelter)
+router.route('/reset-password-shelter').patch(newPasswordShelter)
 
 // Set storage engine
 const storage = multer.diskStorage({
@@ -109,5 +113,7 @@ router.route("/getFeedback").get(getFeedback)
 
 // for pet request routes
 router.route("/show-pet-request/:id").get(showPetRequest)
+router.route("/accept-pet-request").patch(acceptPetReq)
+router.route("/reject-pet-request").delete(rejectPetReq)
 
 module.exports = router;
