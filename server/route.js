@@ -15,11 +15,6 @@ const {registerUser,
            newPassword,
            createRequest,
            showRequest,
-
-          //  getPetById,
-          //  petCategory,
-          //  applyFilters,
-
            getPetById,
            addFeedback,
            petCategory,
@@ -39,6 +34,13 @@ const {
     getFeedback } = require("./control/feedback");
 
 
+
+    //importing from pet Request
+    const {
+      showPetRequest
+    } = require("./control/petRequest")
+
+
 //route for login and registration part
 router.route('/registerCustomer').post(registerUser)
 router.route('/loginCustomer').post(loginUser)
@@ -54,7 +56,7 @@ router.route('/shelterData/:userId').get(shelterData)
 //route for pet part
 router.route('/getPets').get(getPets);
 // router.route('/getPets').get(applyFilters);
-// router.route('/getPetById/:id').get(getPetById);
+router.route('/getPetById/:id').get(getPetById);
 // router.route('/petCategory').get(petCategory);
 router.delete('/deletePet/:id', deletePet);
 router.put('/editPet/:id', editPet);
@@ -87,7 +89,7 @@ const upload = multer({ storage });
 router.post('/addPet/:shelterId', upload.single('image'), addPet); 
 
 //for creating new request 
-router.post('/pet-request', createRequest)
+router.post('/create-pet-request', createRequest)
 router.route("/show-request").post(showRequest)
 
 //route for profile edit and delete fo customers
@@ -102,5 +104,10 @@ router.route("/delete-userProfile/:shelterId").delete(deleteShelterData)
 // router.route('/addFeedback/:userId').post(addFeedback)
 // router.route("/deleteFeedback/:userId").delete(deleteFeedback)
 router.route("/getFeedback").get(getFeedback)
+
+
+
+// for pet request routes
+router.route("/show-pet-request/:id").get(showPetRequest)
 
 module.exports = router;

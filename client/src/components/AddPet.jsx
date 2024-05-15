@@ -29,7 +29,7 @@ function AddPet() {
   });
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId")
+  const shelterId = localStorage.getItem("shelterId")
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -66,7 +66,7 @@ function AddPet() {
     formData.append('image', formState.image); // Append the image file directly
 
     // Make the POST request
-    axios.post(`http://localhost:5000/addPet/${userId}`, formData)
+    axios.post(`http://localhost:5000/addPet/${shelterId}`, formData)
       .then(res => {
         navigate('/shelterdashboard');
         console.log("success");

@@ -37,20 +37,20 @@ const register2 = mongoose.Schema({
       match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     },
     password: { type: String, required: true, minlength: 8 },
-    about: { type: String, required: true },
-    socialMedia: {
-      linkedIn: { type: String, default: '' },
-      youtube: { type: String, default: '' },
-      facebook: { type: String, default: '' },
-      instagram: { type: String, default: '' },
-      twitter: { type: String, default: '' }
-    },
-    achievements: [
-      {
-        title: { type: String, required: true },
-        description: { type: String, required: true }
-      }
-    ]
+    // about: { type: String, required: true },
+    // socialMedia: {
+    //   linkedIn: { type: String, default: '' },
+    //   youtube: { type: String, default: '' },
+    //   facebook: { type: String, default: '' },
+    //   instagram: { type: String, default: '' },
+    //   twitter: { type: String, default: '' }
+    // },
+    // achievements: [
+    //   {
+    //     title: { type: String, required: true },
+    //     description: { type: String, required: true }
+    //   }
+    // ]
   },
   {
     timestamps: true

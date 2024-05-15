@@ -222,7 +222,7 @@ const registerShelter = async(req,res)=>{
             address: address
         })
         if(shelter){
-            res.status(200).json({message:"Approved and created succesfully"})
+            res.status(200).json({success:true, message:"Approved and created succesfully", shelter})
         }else{
             res.status(400).json({message:"Not registered"})
         }
@@ -411,7 +411,7 @@ const getPetById = async (req, res) => {
     if (!pet) {
       return res.status(404).json({ message: 'Pet not found' });
     }
-    console.log("Pet object before sending:", pet);
+    // console.log("Pet object before sending:", pet);
     res.status(200).json(pet);
   } catch (err) {
     console.error("Error fetching pet:", err);
@@ -471,6 +471,7 @@ try {
       const shelterId = req.params.id;
       console.log(shelterId)
       const pets = await Pet.find({shelter:shelterId});
+      // console.log(pets)
       if(!pets){
         return res.status(404).json({sucess:false,message:"not found"})
       }else{
@@ -483,7 +484,7 @@ try {
 
   // for getting the pet details
   const getPets = async (req, res) => {
-    try {
+    try { 
       const pets = await Pet.find({}).populate("shelter");
       res.status(200).json({sucess:true,pets});
     } catch (err) {
@@ -532,10 +533,13 @@ const deletePet = async (req, res) => {
 // for creating request for pet adaption
 const createRequest = async(req, res)=>{
   try {
-    const {userId, petId} = req.body
+    const {userId, petId, shelterId, data} = req.body
+    console.log(userId,petId, data)
     const newRequest = await Request.create({
       userId:userId,
-      petId:petId
+      shelterId,
+      petId:petId,
+      data
     })
     if(!newRequest){
       return res.status(400).json({success:false, message:"error creating "})

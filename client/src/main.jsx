@@ -27,6 +27,7 @@ import PetAdopt from './components/PetAdopt.jsx'
 import ShowFeedback from './components/ShowFeedback.jsx'
 import UserDashboard from './components/UserDashboard.jsx'
 import UserLayout from './components/UserLayout.jsx'
+import AdoptRequest from './components/AdoptRequest.jsx'
 
 const router = createBrowserRouter([
   {
@@ -98,14 +99,12 @@ const router = createBrowserRouter([
   },{
     path:'/about',
     element:<Layout><About/></Layout>
-=======
-<<<<<<< HEAD
   },{
     path:'/reset-password-user/:token',
     element:<NewPassword/>
   },
   {
-    path:'/petadopt',
+    path:'/petadopt/:id',
     element:<Layout><PetAdopt /></Layout>
   },
   {
@@ -115,11 +114,11 @@ const router = createBrowserRouter([
   {
     path:'/userdashboard',
     element:<UserLayout><UserDashboard /></UserLayout>
-<<<<<<< HEAD
-=======
->>>>>>> 80788c227609bea13ce264498f85043f4c56f15f
->>>>>>> 6ee59f109f4742ddc5dee81cbf7781a7c6707f8e
->>>>>>> 3423e6496b362651d39e15bc7e4bea08c8f6cace
+
+  },
+  {
+    path:'/adopt-request',
+    element:<ShelterLayout><AdoptRequest/></ShelterLayout>
   }
 
 ]);

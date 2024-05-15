@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,7 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
@@ -28,31 +28,76 @@ function PetAdopt() {
         address: ''
     });
     const userId = localStorage.getItem("userId");
+    const petId = useParams()
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
+    const [shelterId, setShelterId] = useState("")
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
 
-        axios.post(`http://localhost:5000/petAdopt/${id}`, formData)
-            .then(response => {
-                console.log('Success:', response.data);
-                // Reset the form after successful submission
-                setFormData({
-                    hadPetBefore: 'yes',
-                    enoughSpace: 'yes',
-                    petNutrition: 'yes',
-                    phoneNumber: '',
-                    address: ''
-                });
+    //     axios.post(`http://localhost:5000/petAdopt/${id}`, formData)
+    //         .then(response => {
+    //             console.log('Success:', response.data);
+    //             // Reset the form after successful submission
+    //             setFormData({
+    //                 hadPetBefore: 'yes',
+    //                 enoughSpace: 'yes',
+    //                 petNutrition: 'yes',
+    //                 phoneNumber: '',
+    //                 address: ''
+    //             });
+    //         })
+    //         .catch(error => {
+    //             console.error('Error:', error);
+    //         });
+    // };
+    const getPetDetails = async()=>{
+        try {
+            const resp = await fetch(`http://localhost:5000/getPetById/${petId.id}`)
+            const data =await resp.json()
+            // console.log(data)
+            setShelterId(data.shelter)
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+
+
+    const handleSubmit = async(e) =>{
+        e.preventDefault()
+        console.log(userId, formData, petId.id)
+        try {
+            const response = await fetch(`http://localhost:5000/create-pet-request`,{
+                method:"POST",
+                headers:{
+                    'Content-Type':"application/json"
+                },
+                body:JSON.stringify({
+                    petId:petId.id,
+                    shelterId,
+                    userId,
+                    data:formData
+                })
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    };
+            const data =await response.json()
+            console.log(data)
+            if(data.success){
+                alert("Pet request sent successfully!")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    console.log(shelterId)
+
+    useEffect(()=>{
+        getPetDetails()
+    },[])
 
     return (
         <ThemeProvider theme={createTheme()}>

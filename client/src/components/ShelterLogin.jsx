@@ -57,8 +57,8 @@ export default function ShelterLogin() {
     console.log(res.data)
     if (res.data.token) {
       localStorage.setItem('token', res.data.token); // Store the token
-      localStorage.setItem('userId', res.data.userId);
-      const usersid = localStorage.getItem('userId')
+      localStorage.setItem('shelterId', res.data.userId);
+      const usersid = localStorage.getItem('shelterId')
 
       console.log(usersid);
       navigate('/shelterdashboard');

@@ -25,7 +25,7 @@ function PetList() {
         description: ''
     });
     const [selectedImage, setSelectedImage] = useState(null);
-    const id = localStorage.getItem("userId")
+    const id = localStorage.getItem("shelterId")
     // console.log(id)
 
     useEffect(() => {

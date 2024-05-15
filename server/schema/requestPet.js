@@ -11,10 +11,19 @@ const requestSchema =  new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Pet"
     },
+    shelterId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"RegisterShelter"
+    },
+    
     status:{
         type:String,
         default:"Pending"
     },
+    data:{
+        type:Object,
+        require:true
+    }
 })
 
 
