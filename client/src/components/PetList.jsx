@@ -40,7 +40,7 @@ function PetList() {
   }, [id]);
     // console.log(pets)
     useEffect(() => {
-      console.log("Pets length:", pets.length);
+      // console.log("Pets length:", pets.length);
   }, [pets]);
 
     const handleDelete = async (id) => {
