@@ -187,6 +187,7 @@ const registerAdmin = async(req,res)=>{
     try {
       //Extract email and password from request
       const { email, password } = req.body;
+      console.log(email, password)
   
       // Checking through database
       const user = await RegisterAdmin.findOne({ email });

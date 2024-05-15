@@ -1,31 +1,29 @@
 const Feedback = require("../schema/feedbackSchema")
 
-// const addFeedback = async (req, res) => {
-//     try {
-//         const {userId} = req.params
-//       const {name,email,comment} = req.body;
+const addFeedback = async (req, res) => {
+    try {
+        const userId = req.params.id
+        const {comment} = req.body;
       
-//       const feedback = await Feedback.create({
-//         name: name,
-//         email:email,
-//         comment:comment,
-//         user:userId
-//       });
+      const newFeedback = await Feedback.create({
+        user:userId,
+        comment
+      });
   
-//       if (feedback) {
-//         return res.status(200).json({success:true, message: 'Your feedback has been added successfully', feedback });
-//       } else {
-//         return res.status(500).json({success:false, message: 'Failed to add feedback' });
-//       }
-//     } catch (err) {
-//       return res.status(500).json({ message: err.message });
-//     }
-//   };
+      if (newFeedback) {
+        return res.status(200).json({success:true, message: 'Your feedback has been added successfully', newFeedback });
+      } else {
+        return res.status(500).json({success:false, message: 'Failed to add feedback' });
+      }
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  };
 
   // for getting the pet details
   const getFeedback = async (req, res) => {
     try {
-      const Feedback = await Feedback.find({})
+      const Feedback = await Feedback.find({}).populate("user")
       if(!Feedback){
         return res.status(404).json({success:false,message:"Unable to get feedback"})
       }else{
@@ -40,4 +38,7 @@ const Feedback = require("../schema/feedbackSchema")
 
 
 
-module.exports = {getFeedback}
+module.exports = {
+  addFeedback,
+  getFeedback
+}
