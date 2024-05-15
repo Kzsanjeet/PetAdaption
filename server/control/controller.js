@@ -488,6 +488,8 @@ try {
       const shelterId = req.params.id;
       console.log(shelterId)
       const pets = await Pet.find({shelter:shelterId});
+      // const pets = await Pet.find({});
+
       // console.log(pets)
       if(!pets){
         return res.status(404).json({sucess:false,message:"not found"})
