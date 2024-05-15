@@ -352,9 +352,9 @@ const newPasswordShelter = async (req, res) => {
 
 const shelterData = async (req, res) => {
   try {
-    const userId = req.params.userId;
-    console.log(userId)
-    const shelterProfile = await RegisterShelter.findOne({ _id: userId });
+    const userId = req.params.id;
+    // console.log(userId)
+    const shelterProfile = await RegisterShelter.find({ _id: userId });
     if (!shelterProfile) {
       return res.status(404).json({ message: 'User profile not found' });
     }

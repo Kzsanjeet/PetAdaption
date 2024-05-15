@@ -50,12 +50,12 @@ const router = createBrowserRouter([
     element: <AdminLayout><Dashboard /></AdminLayout>
   },
   {
-    path:'/addshelter',
-    element: <AddShelter />
+    path:'/add-shelter',
+    element:<AdminLayout><AddShelter /></AdminLayout> 
   },
   {
     path:'/view-shelter',
-    element:<ViewShelter />
+    element:<AdminLayout><ViewShelter /></AdminLayout>
   },
   {
     path:'/shelterlogin',
@@ -134,7 +134,7 @@ const router = createBrowserRouter([
   {
     path:'/adopt-request',
   element:<ShelterLayout><AdoptRequest/></ShelterLayout>
-  }
+  },
 
 ]);
 

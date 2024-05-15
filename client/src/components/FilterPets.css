@@ -14,6 +14,9 @@
  flex-direction: row;
  gap: 20px;
 }
+.filter-pets-container{
+    overflow: hidden;
+}
 
 /* Filter container */
 .filter-container {
@@ -55,7 +58,7 @@
     flex-wrap: wrap;
     gap: 30px;
     position: relative;
-    left: 37%;
+    left: 280px;
     top: 10px;
 }
 
@@ -84,10 +87,24 @@
   max-width: 100%;
   height: auto;
 }
+.petImage{
+    width: 300px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
 
 .pet-info p {
   margin: 5px 0;
 }
+
+.petDetails{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 
 /* Responsive */
 @media screen and (max-width: 768px) {

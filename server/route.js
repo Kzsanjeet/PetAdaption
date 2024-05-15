@@ -54,7 +54,7 @@ router.route("/loginShelter").post(loginShelter)
 
 //for getting the user info for profile
 router.route("/userProfile").get(userInfo)
-router.route('/shelterData/:userId').get(shelterData)
+router.route('/shelterData/:id').get(shelterData)
 //getting all the shelter
 router.route('/get-shelter').get(getShelter)
 

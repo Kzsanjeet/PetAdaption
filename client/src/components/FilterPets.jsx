@@ -76,11 +76,13 @@ const FilterPets = () => {
         {filteredPets.length > 0 ? (
           filteredPets.map(pet => (
             <div key={pet._id} className="pet-card">
-              <h2>{pet.name}</h2>
-              <img src={`http://localhost:5000/${pet.image}`} alt={pet.name} />
-              <p>{pet.breed}</p>
-              <p>{pet.category}</p>
-              <p>{pet.description}</p>
+              <h2 className='petName'>{pet.name}</h2>
+              <img src={`http://localhost:5000/${pet.image}`} alt={pet.name} className='petImage' />
+              <div className='petDetails'>
+              <p className='petBreed' >{pet.breed}</p>
+              <p className='petCategory ' >{pet.category}</p>
+              <p className='petDescibe'>{pet.description}</p>
+              </div>
             </div>
           ))
         ) : (

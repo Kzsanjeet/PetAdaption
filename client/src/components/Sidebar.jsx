@@ -75,7 +75,7 @@ const Sidebar = () => {
                         {/* menu item */}
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                                <a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Add Shelter</a>
+                            <Link to="/add-shelter"> <a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Add Shelter</a></Link>  
                             </span>
                         </div>
 
@@ -87,16 +87,10 @@ const Sidebar = () => {
                         </div>
 
                         {/* menu item */}
-                        <div>
-                            <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                                <a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Settings</a>
-                            </span>
-                        </div>
 
-                        {/* menu item */}
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                                <a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Profile</a>
+                            <Link ><a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Profile</a></Link>    
                             </span>
                         </div>
 

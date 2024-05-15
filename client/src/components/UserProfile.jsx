@@ -1,96 +1,167 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./userprofile.css"
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const UserProfile = () => {
     const [shelterData, setShelterData] = useState(null);
-    const userId = localStorage.getItem("userId");
+    const [selectedShelter, setSelectedShelter] = useState(null);
+    const [editedShelter, setEditedShelter] = useState({
+        sheltername: '',
+        phone: '',
+        address: ''
+    });
 
+    useEffect(() => {
+        const fetchShelterData = async () => {
+            try {
+                const userId = localStorage.getItem("shelterId");
+                const response = await fetch(`http://localhost:5000/shelterData/${userId}`);
+                const data = await response.json();
+                console.log(data.shelterProfile);
+                setShelterData(data.shelterProfile[0]);
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-    const shelterProfile = async()=>{
-        try {
-            const response = await fetch(`http://localhost:5000/shelterData/${userId}`)
-            const data = await response.json()
-            console.log(data)
-            setShelterData(data.shelterProfile)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    useEffect(() =>{
-        
-        shelterProfile()
-    }, [])
+        fetchShelterData();
+    }, []);
 
-    console.log(shelterData)
+    const handleEdit = () => {
+        setSelectedShelter(true);
+        setEditedShelter({
+            sheltername: shelterData.sheltername,
+            phone: shelterData.phone,
+            address: shelterData.address
+        });
+    };
+
+    const handleEditSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form submitted:', editedShelter);
+        // Handle form submission here
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setEditedShelter(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
 
     if (!shelterData) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className="bg-gray-100 w-full lg:w-3/4 p-2 lg:ml-80">
-            <div className="container mx-auto py-2">
-                <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
-                    <div className="col-span-4 sm:col-span-3">
-                        <div className="bg-white shadow rounded-lg p-6">
-                            <div className="flex flex-col items-center">
-                                <img src={shelterData.profilePicture} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" alt="Profile Picture" />
-                                <h1 className="text-xl font-bold text-center">{shelterData.shelterName}</h1>
-                                <p className="text-gray-700">test</p>
-                            </div>
-                            <hr className="my-6 border-t border-gray-300" />
-                            <div className="flex flex-col">
-                                <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Address: </span>
-                                <span className="mb-8">{shelterData.address}</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Phone: </span>
-                                <span className="mb-8">{shelterData.phone}</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Email: </span>
-                                <span className="mb-8">{shelterData.email}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-span-4 sm:col-span-9">
-                        <div className="bg-white shadow rounded-lg p-6">
-                            <h2 className="text-xl font-bold mb-4">About Us</h2>
-                            <p className="text-gray-700">{shelterData.about}</p>
-                            {/* Social Media Links */}
-                            <h3 className="font-semibold text-center mt-3 -mb-2">Find us on</h3>
-                            <div className="flex justify-center items-center gap-6 my-6">
-                                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit LinkedIn" href={shelterData.socialMedia.linkedIn} target="_blank">
-                                    LinkedIn
-                                </a>
-                                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit YouTube" href={shelterData.socialMedia.youtube} target="_blank">
-                                    YouTube
-                                </a>
-                                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit Facebook" href={shelterData.socialMedia.facebook} target="_blank">
-                                    Facebook
-                                </a>
-                                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit Instagram" href={shelterData.socialMedia.instagram} target="_blank">
-                                    Instagram
-                                </a>
-                                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit Twitter" href={shelterData.socialMedia.twitter} target="_blank">
-                                    Twitter
-                                </a>
-                            </div>
-                            {/* Achievements */}
-                            <h2 className="text-xl font-bold mt-6 mb-4">Achievements</h2>
-                            {shelterData.achievements.map((achievement, index) => (
-                                <div key={index} className="mb-6">
-                                    <div className="flex justify-between flex-wrap gap-2 w-full">
-                                        <span className="text-gray-700 font-bold">{achievement.title}</span>
-                                    </div>
-                                    <p className="mt-2">{achievement.description}</p>
+        <>
+            <div className="bg-gray-100 w-full lg:w-3/4 p-2 lg:ml-80">
+                <div className="container mx-auto py-2">
+                    <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
+                        <div className="col-span-4 sm:col-span-3">
+                            <div className="bg-white shadow rounded-lg p-6">
+                                <hr className="my-6 border-t border-gray-300" />
+                                <div className="flex flex-col">
+                                    <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Shelter name: </span>
+                                    <span className="mb-8">{shelterData.sheltername}</span>
                                 </div>
-                            ))}
+                                <div className="flex flex-col">
+                                    <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Address: </span>
+                                    <span className="mb-8">{shelterData.address}</span>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Phone: </span>
+                                    <span className="mb-8">{shelterData.phone}</span>
+                                </div>
+                                <button className='edit-profile' onClick={handleEdit}>Edit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            {selectedShelter && (
+                <ThemeProvider theme={createTheme()}>
+                    <Container component="main" maxWidth="xs">
+                        <CssBaseline />
+                        <Box
+                            sx={{
+                                marginTop: 8,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Avatar sx={{ m: 1, bgcolor: '#ff6961' }}>
+                                {/* You can use an appropriate icon */}
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Edit Shelter
+                            </Typography>
+                            <Box component="form" noValidate onSubmit={handleEditSubmit} sx={{ mt: 3 }}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            name="sheltername"
+                                            required
+                                            fullWidth
+                                            id="sheltername"
+                                            label="Shelter Name"
+                                            autoFocus
+                                            value={editedShelter.sheltername}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            id="phone"
+                                            label="Phone"
+                                            name="phone"
+                                            autoComplete="phone"
+                                            value={editedShelter.phone}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            name="address"
+                                            label="Address"
+                                            id="address"
+                                            multiline
+                                            rows={4}
+                                            value={editedShelter.address}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2, bgcolor: '#3730A3', '&:hover': { bgcolor: '#4608c4' } }}
+                                >
+                                    Update Shelter
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Container>
+                </ThemeProvider>
+            )}
+        </>
     );
 };
 
