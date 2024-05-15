@@ -394,18 +394,7 @@ const addFeedback = async (req, res) => {
   }
 };
 
-const showFeedback = async (req, res) => {
-  try {
-      const feedbackList = await Feedback.find({});
-      if (feedbackList.length === 0) {
-          return res.status(404).json({ message: 'No feedbacks found' });
-      }
-      res.status(200).json({ success: true, feedbackList });
-  } catch (err) {
-      console.error(err.message);
-      res.status(500).json({ error: err });
-  }
-};
+
 
 
 const applyFilters = () => {
@@ -603,6 +592,5 @@ module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmi
    addFeedback,
    petCategory,
    applyFilters,
-   shelterData,
-   showFeedback
+   shelterData
   };

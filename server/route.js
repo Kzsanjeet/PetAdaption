@@ -16,7 +16,6 @@ const {registerUser,
            createRequest,
            showRequest,
            getPetById,
-           addFeedback,
            petCategory,
            applyFilters,
            userInfo,
@@ -24,15 +23,11 @@ const {registerUser,
            newPasswordShelter,
            specificShelterPets,
            getShelter,
-           shelterData,
-           showFeedback
+           shelterData
           } = require("./control/controller");
 
 const { editUserData, deleteUserData, editShelterData, deleteShelterData } = require("./control/profile");
-const {
-  //  addFeedback,
-    // deleteFeedback, 
-    getFeedback } = require("./control/feedback");
+
 
 
 
@@ -42,6 +37,12 @@ const {
       acceptPetReq,
       rejectPetReq
     } = require("./control/petRequest")
+
+    //importing form feedback
+    const {
+      addFeedback,
+      getFeedback
+    } = require("./control/feedback")
 
 
 //route for login and registration part
@@ -66,8 +67,12 @@ router.route('/getPetById/:id').get(getPetById);
 router.delete('/deletePet/:id', deletePet);
 router.put('/editPet/:id', editPet);
 router.get('/specific-shelter-pet/:id',specificShelterPets)
+
+
+//feedback
 router.route('/addFeedback/:userId').post(addFeedback)
-router.route('/showFeedback/').get(showFeedback)
+router.route("/getFeedback").get(getFeedback)
+
 
 //route for the password reset part
 router.route('/reset-password-mail').post(resetPassword)
@@ -104,10 +109,6 @@ router.route("/delete-userProfile/:userId").delete(deleteUserData)
 router.route("/edit-userProfile/:shelterId").patch(editShelterData)
 router.route("/delete-userProfile/:shelterId").delete(deleteShelterData)
 
-//Route for feedback
-// router.route('/addFeedback/:userId').post(addFeedback)
-// router.route("/deleteFeedback/:userId").delete(deleteFeedback)
-router.route("/getFeedback").get(getFeedback)
 
 
 
