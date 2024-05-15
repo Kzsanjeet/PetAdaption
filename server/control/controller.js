@@ -187,6 +187,7 @@ const registerAdmin = async(req,res)=>{
     try {
       //Extract email and password from request
       const { email, password } = req.body;
+      console.log(email, password)
   
       // Checking through database
       const user = await RegisterAdmin.findOne({ email });
@@ -369,42 +370,6 @@ const shelterData = async (req, res) => {
 
 
 
-
-//add feedback
-const addFeedback = async (req, res) => {
-  try {
-    const { name, email, comment } = req.body;
-    const { userId } = req.params;
-
-    const feedback = await Feedback.create({
-      userId: userId,
-      name: name,
-      email: email,
-      comment: comment
-    });
-
-    if (feedback) {
-      res.status(200).json({ message: 'Successfully sent' });
-    } else {
-      res.status(400).json({ message: 'Not sent' });
-    }
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-const showFeedback = async (req, res) => {
-  try {
-      const feedbackList = await Feedback.find({});
-      if (feedbackList.length === 0) {
-          return res.status(404).json({ message: 'No feedbacks found' });
-      }
-      res.status(200).json({ success: true, feedbackList });
-  } catch (err) {
-      console.error(err.message);
-      res.status(500).json({ error: err });
-  }
-};
 
 
 const applyFilters = () => {
@@ -599,9 +564,7 @@ module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmi
    resetPasswordShelter,
    newPasswordShelter,
    getPetById,
-   addFeedback,
    petCategory,
    applyFilters,
-   shelterData,
-   showFeedback
+   shelterData
   };

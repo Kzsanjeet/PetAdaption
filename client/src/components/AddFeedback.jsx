@@ -21,12 +21,9 @@ import { useNavigate } from 'react-router-dom';
 
 
 function AddFeedback() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    comment: '',
-  });
-  const navigate = useNavigate()
+  
+  const [comment, setComment] = useState(null)
+  const userId = localStorage.getItem("userId")
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -38,24 +35,31 @@ function AddFeedback() {
     }));
   };
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const userId = localStorage.getItem("userId");
-  
-    if (!userId) {
-      console.error("User ID not found in localStorage.");
-      return;
+    console.log(comment, userId);
+    
+    try {
+      const addFeedback = await fetch(`http://localhost:5000/add-feedback/${userId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ comment })
+      });
+      
+      const result = await addFeedback.json();
+      if (result.success) {
+        alert("Feedback added Successfully !!");
+        setComment("")
+      } else {
+        alert("Failed to add feedback");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("An error occurred while adding feedback");
     }
-  
-    axios.post(`http://localhost:5000/addFeedback/${userId}`, formData)
-      .then(res => {
-        alert("Feedback sent.")
-        navigate('/');
-      })
-      .catch(err => console.log(err));
-  
-    console.log(formData);
   };
+  
   
 
   return (
@@ -79,30 +83,7 @@ function AddFeedback() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  name="name"
-                  autoComplete="family-name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </Grid>
+            
               <Grid item xs={12}>
               <TextField
                     required
@@ -112,8 +93,8 @@ function AddFeedback() {
                     id="comment"
                     multiline
                     rows={4}
-                    value={formData.comment}
-                    onChange={handleChange}
+                    value={comment}
+                    onChange={(event)=>setComment(event.target.value)}
                 />
               </Grid>
             </Grid>
