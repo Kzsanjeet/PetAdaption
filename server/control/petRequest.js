@@ -26,9 +26,42 @@ const showPetRequest = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 }
+const acceptPetReq = async(req, res) =>{
+    try {
+        const {reqId} = req.params.id;
+        const acceptReq = await Request.findByIdAndUpdate({_id:reqId},{
+            status:"Accepted"
+        })
+        if(!acceptReq){
+            return res.status(400).json({success:false, message:"Unable to accept the request!!"})
+        }
+        return res.status(200).json({success:true, message:"Successfully accepted." , acceptReq})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({success:false, message:"Error accepting request :", error})
+    }
+}
+
+
+const rejectPetReq = async(req, res) =>{
+    try {
+        const {reqId} = req.params.id;
+        const acceptReq = await Request.findByIdAndDelete({_id:reqId})
+        if(!acceptReq){
+            return res.status(400).json({success:false, message:"Unable to reject the request!!"})
+        }
+        return res.status(200).json({success:true, message:"Successfully rejected." })
+        
+    } catch (error) {
+        res.status(400).json({success:false, message:"error while rejecting :", error})
+    }
+}
+
 
 
 
 module.exports = {
-    showPetRequest
+    showPetRequest,
+    acceptPetReq,
+    rejectPetReq
 }

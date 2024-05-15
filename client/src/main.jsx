@@ -28,6 +28,9 @@ import ShowFeedback from './components/ShowFeedback.jsx'
 import UserDashboard from './components/UserDashboard.jsx'
 import UserLayout from './components/UserLayout.jsx'
 import AdoptRequest from './components/AdoptRequest.jsx'
+import ForgotShelter from './components/ForgotShelter.jsx'
+import NewPasswordShelter from './components/NewPasswordShelter.jsx'
+import ViewShelter from './components/ViewShelter.jsx'
 
 const router = createBrowserRouter([
   {
@@ -49,6 +52,10 @@ const router = createBrowserRouter([
   {
     path:'/addshelter',
     element: <AddShelter />
+  },
+  {
+    path:'/view-shelter',
+    element:<ViewShelter />
   },
   {
     path:'/shelterlogin',
@@ -88,6 +95,10 @@ const router = createBrowserRouter([
   },{
     path:"/forgot",
     element:<Forgot/>
+  },
+  {
+    path:"/forgot-shelter",
+    element:<ForgotShelter/>
   },{
     path:"/addfeedback",
     element:<AddFeedback />
@@ -104,6 +115,10 @@ const router = createBrowserRouter([
     element:<NewPassword/>
   },
   {
+    path:'/reset-password-shelter/:token',
+    element:<NewPasswordShelter/>
+  },
+  {
     path:'/petadopt/:id',
     element:<Layout><PetAdopt /></Layout>
   },
@@ -118,7 +133,7 @@ const router = createBrowserRouter([
   },
   {
     path:'/adopt-request',
-    element:<ShelterLayout><AdoptRequest/></ShelterLayout>
+  element:<ShelterLayout><AdoptRequest/></ShelterLayout>
   }
 
 ]);

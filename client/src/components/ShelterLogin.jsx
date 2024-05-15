@@ -129,7 +129,7 @@ export default function ShelterLogin() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link to="/forgot-shelter" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>

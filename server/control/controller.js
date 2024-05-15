@@ -254,12 +254,28 @@ const loginShelter = async (req, res) => {
     }
   };  
 
+
+  //getting all shelter
+  const getShelter = async(req,res)=>{
+    try {
+      const shelter = await RegisterShelter.find({})
+      // console.log(shelter)
+      if(!shelter){
+        return res.status(404).json({success:false, message:"cannot find shelter"})
+      }
+      res.status(200).json({success:true, shelter})
+
+    } catch (error) {
+        return res.status(404).json({success:false, message:"error getting shelter :", error})
+    }
+  }
+
  //for reseting the password for Customer
  const resetPasswordShelter = async (req, res) => {
   try {
       const {email} = req.body;
-      
-      const checkEmail = await RegisterShelter.findOne({email});
+      console.log(email)
+      const checkEmail = await RegisterShelter.find({email});
       if(!checkEmail){
           return res.status(400).json({ success: false, message: 'Email does not exist' });
       }
@@ -280,7 +296,7 @@ const loginShelter = async (req, res) => {
       from: 'sanjeetkazithapa@gmail.com',
       to: email,
       subject: 'Password Reset',
-      html: `<p>You requested a password reset. Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password.</p>`
+      html: `<p>You requested a password reset for shelter. Click <a href="http://localhost:5173/reset-password-shelter/${token}">here</a> to reset your password.</p>`
 
     };
 
@@ -297,11 +313,12 @@ const newPasswordShelter = async (req, res) => {
   try {
       const { password,token } = req.body;
       // const { token } = req.params;
+      console.log(password,token)
 
       // Verify and decode the JWT token
       let decodedEmail;
       try {
-          decodedEmail = jwt.verify(token, 'JWT_SECRET');
+          decodedEmail = jwt.verify(token, process.env.JWT_SECRET);
       } catch (error) {
           return res.status(400).json({ success: false, message: 'Invalid or expired token' });
       }
@@ -571,6 +588,7 @@ const showRequest = async (req, res) => {
 
 
 module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmin,loginAdmin, addPet, getPets, editPet, deletePet, newPassword,
+    getShelter,
    resetPassword,
    specificShelterPets,
    createRequest,
