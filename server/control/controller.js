@@ -238,6 +238,7 @@ const loginShelter = async (req, res) => {
     try {
       //Extract email and password from the request
       const { email, password } = req.body;
+      // console.log(email,password)
   
       // To find the specific user in database
       const user = await RegisterShelter.findOne({ email });
