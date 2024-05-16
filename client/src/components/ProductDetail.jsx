@@ -38,10 +38,20 @@ const ProductDetail = ({ petId }) => {
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img alt={pet.name} className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src={`http://localhost:5000/${pet.image}`} />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+          <h1>Pet details</h1>
             <h2 className="text-sm title-font text-gray-500 tracking-widest">{pet.breed}</h2>
             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{pet.name}</h1>
 
             <p className="leading-relaxed py-4">{pet.description}</p>
+
+            <div className='border m-2'>
+            <h1 >Shelter Details</h1>
+              <h2 className="text-sm title-font text-gray-500 tracking-widest">{pet.shelter.firstname} {pet.shelter.lastname}</h2>
+              <h2 className="text-gray-900 text-xl title-font font-medium mb-1">{pet.shelter.sheltername}</h2>
+              <h2 className="text-gray-900 text-xl title-font font-medium mb-1">Contact: {pet.shelter.phone}</h2>
+              <p className="leading-relaxed py-4">{pet.shelter.email}</p>
+            </div>
+
             
             <div className="flex py-10">
               <Link to={`/petadopt/${pet._id}`}>
