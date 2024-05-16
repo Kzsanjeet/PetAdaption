@@ -62,7 +62,7 @@ const deleteShelterData = async(req,res)=>{
 
     try {
         const shelterId = req.params.id
-        console.log(shelterId)
+        // console.log(shelterId)
         const deleteUser = await RegisterShelter.findByIdAndDelete({_id:shelterId})
         if(!deleteUser){
             return res.status(400).json({success:false,message:"Unable to delete the user profile"})
