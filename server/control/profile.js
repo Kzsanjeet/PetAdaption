@@ -1,5 +1,19 @@
 const RegisterCustomer = require("../schema/registerSchema")
+const RegisterShelter = require("../schema/registerSchema")
 
+const getUser = async(req,res)=>{
+    try {
+        const userId = req.params.id;
+        const userData = await RegisterCustomer.findById(userId)
+        if(!userData){
+            return res.status(404).json({success:false,message:"unable to get the user data"})
+        }else{
+            return res.status(200).json({success:true,userData})
+        }
+    } catch (error) {
+        return res.status(400).json({success:false,message:"error",error})
+    }
+}
 
 // for editing the user profile for cutomers
 const editUserData = async(req,res)=>{
@@ -64,5 +78,5 @@ const deleteShelterData = async(req,res)=>{
 
 
 
-module.exports = {editUserData,deleteUserData,editShelterData,deleteShelterData}
+module.exports = {editUserData,deleteUserData,editShelterData,deleteShelterData,getUser}
 

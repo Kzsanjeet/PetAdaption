@@ -18,7 +18,6 @@ const {registerUser,
            getPetById,
            petCategory,
            applyFilters,
-           userInfo,
            resetPasswordShelter,
            newPasswordShelter,
            specificShelterPets,
@@ -27,9 +26,6 @@ const {registerUser,
           } = require("./control/controller");
 
 const { editUserData, deleteUserData, editShelterData, deleteShelterData } = require("./control/profile");
-
-
-
 
     //importing from pet Request
     const {
@@ -54,10 +50,11 @@ router.route("/registerAdmin").post(registerAdmin)
 router.route("/loginShelter").post(loginShelter)
 
 //for getting the user info for profile
-router.route("/userProfile").get(userInfo)
 router.route('/shelterData/:id').get(shelterData)
+
 //getting all the shelter
 router.route('/get-shelter').get(getShelter)
+//get
 
 //route for pet part
 router.route('/getPets').get(getPets);
