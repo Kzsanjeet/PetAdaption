@@ -52,7 +52,7 @@ export default function ShelterLogin() {
   axios.defaults.withCredentials = true;
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:5000/loginshelter', formData)
+    axios.post('http://localhost:5000/loginShelter', formData)
   .then(res => {
     console.log(res.data)
     if (res.data.token) {

@@ -31,6 +31,8 @@ import AdoptRequest from './components/AdoptRequest.jsx'
 import ForgotShelter from './components/ForgotShelter.jsx'
 import NewPasswordShelter from './components/NewPasswordShelter.jsx'
 import ViewShelter from './components/ViewShelter.jsx'
+import ProfileUser from './components/ProfileUser.jsx'
+import ViewFeedback from './components/ViewFeedback.jsx'
 
 const router = createBrowserRouter([
   {
@@ -111,6 +113,10 @@ const router = createBrowserRouter([
     path:'/about',
     element:<Layout><About/></Layout>
   },{
+    path:"/user-profile-home",
+    element:<Layout><ProfileUser/></Layout>
+  },
+  {
     path:'/reset-password-user/:token',
     element:<NewPassword/>
   },
@@ -134,7 +140,10 @@ const router = createBrowserRouter([
   {
     path:'/adopt-request',
   element:<ShelterLayout><AdoptRequest/></ShelterLayout>
-  },
+  },{
+    path:"/viewfeedback",
+    element:<AdminLayout><ViewFeedback/></AdminLayout>
+  }
 
 ]);
 

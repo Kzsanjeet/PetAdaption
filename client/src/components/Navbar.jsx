@@ -19,8 +19,8 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token'); 
     localStorage.removeItem("userId")// Remove the token
-    setIsLoggedIn(false); // Update isLoggedIn state
-    window.reload()
+    setIsLoggedIn(false); 
+    window.location.reload()// Update isLoggedIn state
     navigate('/');
   };
 
@@ -50,12 +50,17 @@ const Navbar = () => {
           <Link to="/filterpets"> <a href="#" className="text-sm font-semibold leading-6 text-white">Categories</a></Link>
             <a href="#" className="text-sm font-semibold leading-6 text-white">Other Pets</a>
           <Link to="/about"><a href="#" className="text-sm font-semibold leading-6 text-white">About</a></Link>
+          <Link to="/user-profile-home"><a href="#" className="text-sm font-semibold leading-6 text-white">Profile</a></Link>
+
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             {isLoggedIn ? (
               <button className="text-sm font-semibold leading-6 text-white" onClick={handleLogout}>Logout</button>
             ) : (
+              <>
+              <Link to="/signin"> <a href="#" className="text-sm font-semibold leading-6 text-white m-3">User login <span aria-hidden="true">&rarr;</span></a></Link>
               <Link to="/shelterlogin" className="text-sm font-semibold leading-6 text-white">Shelter Login <span aria-hidden="true">&rarr;</span></Link>
+              </>
             )}
           </div>
         </nav>

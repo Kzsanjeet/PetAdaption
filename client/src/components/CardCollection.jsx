@@ -10,13 +10,24 @@ import axios from 'axios'
 const CardCollection = () => {
   const [pets, setPets] = useState([]);
 
+
+
+  const fetchPets = async () => {
+    console.log("Hello")
+    try {
+        const response = await fetch('http://localhost:5000/getPets');
+        const petsData = await response.json();
+        const acceptedPets = petsData.pets.filter(pet => pet.status !== 'booked');
+        setPets(acceptedPets);
+    } catch (error) {
+        console.error('Error fetching pets:', error);
+    }
+};
+
   useEffect(() => {
-    axios.get('http://localhost:5000/getPets')
-      .then(res =>{setPets(res.data.pets)}
-   )
-      
-      .catch(err => console.log(err));
+    fetchPets();
   }, []);
+
 
   const newestPets = pets.sort((a, b) => {
     const timestampA = parseInt(a._id.toString().substring(0, 8), 16);

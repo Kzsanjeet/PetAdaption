@@ -109,11 +109,7 @@ const AdoptRequest = () => {
                                     <h2>Enough Space ? <span>{pet.data?.enoughSpace}</span></h2>
                                     <h2>Had Pet Before ? <span>{pet.data?.hadPetBefore}</span></h2>
                                     <h2>Pet Nutrition ? <span>{pet.data?.petNutrition}</span></h2>
-                                    {pet.status === 'Approved' ? (
-                                        <button className="approve" disabled>
-                                            {pet.status}
-                                        </button>
-                                    ) : (
+                                    {pet.status === 'Pending' ? (
                                         <>
                                             <button className="approve" onClick={() => handleAccept(pet._id, pet.petId._id)}>
                                                 Approve
@@ -122,6 +118,10 @@ const AdoptRequest = () => {
                                                 Deny
                                             </button>
                                         </>
+                                    ): (
+                                        <button className="approve" disabled>
+                                            {pet.status}
+                                        </button>
                                     )}
                                 </div>
                             </div>
