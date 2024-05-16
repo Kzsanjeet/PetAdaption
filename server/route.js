@@ -26,7 +26,9 @@ const {registerUser,
            shelterData
           } = require("./control/controller");
 
-const { editUserData, deleteUserData, editShelterData, deleteShelterData, getUser } = require("./control/profile");
+const { editUserData, deleteUserData, editShelterData, deleteShelterData, getUser,
+  getMyBookedPet
+ } = require("./control/profile");
 
 
 
@@ -68,6 +70,7 @@ router.route('/getPetById/:id').get(getPetById);
 router.delete('/deletePet/:id', deletePet);
 router.put('/editPet/:id', editPet);
 router.get('/specific-shelter-pet/:id',specificShelterPets)
+router.get("/get-my-booked-pet", getMyBookedPet)
 
 
 //feedback

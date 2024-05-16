@@ -1,4 +1,8 @@
 const {RegisterCustomer,RegisterShelter, RegisterAdmin, Pet} = require("../schema/registerSchema") //imported schema
+const Request = require("../schema/requestPet")
+
+const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt")
 
 
 
@@ -39,8 +43,10 @@ const editShelterData = async(req,res)=>{
         const {
             sheltername,phone,address,password
         } = req.body
+        const salt = bcrypt.genSaltSync(10);
+        const hashPassword = bcrypt.hashSync(password,salt)
         // console.log(shelterId,sheltername,phone,address,password)
-        const editUser = await RegisterShelter.findByIdAndUpdate({_id:shelterId},{sheltername,phone,address,password});
+        const editUser = await RegisterShelter.findByIdAndUpdate({_id:shelterId},{sheltername,phone,address,password:hashPassword});
         if(!editUser){
             return res.status(404).json({success:false,message:"Unable to edit the profile"})
         }else{
@@ -88,6 +94,22 @@ const getUser = async (req, res) => {
 };
 
 
+//showing the booked list of pets for user
+const getMyBookedPet = async() =>{
+    try {
+        const userId = req.params.id;
+        const myPets = await Request.find({userId:userId})
+        if(!myPets){
+            res.status(404).json({success:false,message:""})
+        }
+        res.status(200).json({success:true, myPets})
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({message:error})
+    }
+}
+
+
 
 
 module.exports = {
@@ -95,6 +117,7 @@ module.exports = {
     deleteUserData,
     editShelterData,
     deleteShelterData,
-    getUser
+    getUser,
+    getMyBookedPet
 }
 
