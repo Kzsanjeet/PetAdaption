@@ -26,7 +26,9 @@ const {registerUser,
            shelterData
           } = require("./control/controller");
 
-const { editUserData, deleteUserData, editShelterData, deleteShelterData } = require("./control/profile");
+const { editUserData, deleteUserData, editShelterData, deleteShelterData, getUser,
+  getMyBookedPet
+ } = require("./control/profile");
 
 
 
@@ -54,7 +56,8 @@ router.route("/registerAdmin").post(registerAdmin)
 router.route("/loginShelter").post(loginShelter)
 
 //for getting the user info for profile
-router.route("/userProfile").get(userInfo)
+router.route('/get-user-data/:id').get(getUser)
+
 router.route('/shelterData/:id').get(shelterData)
 //getting all the shelter
 router.route('/get-shelter').get(getShelter)
@@ -67,6 +70,7 @@ router.route('/getPetById/:id').get(getPetById);
 router.delete('/deletePet/:id', deletePet);
 router.put('/editPet/:id', editPet);
 router.get('/specific-shelter-pet/:id',specificShelterPets)
+router.get("/get-my-booked-pet", getMyBookedPet)
 
 
 //feedback
@@ -106,8 +110,8 @@ router.route("/edit-userProfile/:userId").patch(editUserData)
 router.route("/delete-userProfile/:userId").delete(deleteUserData)
 
 //route for edit shelter
-router.route("/edit-userProfile/:shelterId").patch(editShelterData)
-router.route("/delete-userProfile/:shelterId").delete(deleteShelterData)
+router.route("/edit-shelter-profile/:id").patch(editShelterData)
+router.route("/delete-shelter/:id").delete(deleteShelterData)
 
 
 

@@ -13,6 +13,28 @@ const ViewShelter = () => {
         }
     }
 
+    const deleteShelter = async(shelterId) =>{
+      try {
+        const resp = await fetch(`http://localhost:5000/delete-shelter/${shelterId}`,{
+          method:"DELETE",
+          headers:{
+            "Content-Type":"application/json"
+          }
+        })
+        const data = await resp.json()
+        if(data.success){
+          alert("Shelter delete successfull !!!!!")
+          getShelter()
+        }else{
+
+          alert("Unable to delete shelter......")
+        }
+      } catch (error) {
+        console.log("error while deleting shelter : ", error)
+      }
+    }
+
+
     useEffect(()=>{
         getShelter()
     },[])
@@ -28,7 +50,7 @@ const ViewShelter = () => {
                         <h3 className="text-lg font-semibold">{shelter.sheltername}</h3>
                         <p className="text-gray-500">{shelter.address}</p>
                         <p className="mt-2 text-sm">{shelter.email}</p>
-                        <button className='delete-button-shelter'>Delete</button>
+                        <button className='delete-button-shelter' onClick={()=> deleteShelter(shelter._id)}>Delete</button>
                       </div>
                     </div>
                   ))}
