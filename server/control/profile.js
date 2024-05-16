@@ -1,10 +1,28 @@
+<<<<<<< HEAD
+const RegisterCustomer = require("../schema/registerSchema")
+const RegisterShelter = require("../schema/registerSchema")
+=======
 const {RegisterCustomer,RegisterShelter, RegisterAdmin, Pet} = require("../schema/registerSchema") //imported schema
 const Request = require("../schema/requestPet")
 
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
+>>>>>>> 18ff0f8bb155af537975fa647e5faf1587705593
 
+const getUser = async(req,res)=>{
+    try {
+        const userId = req.params.id;
+        const userData = await RegisterCustomer.findById(userId)
+        if(!userData){
+            return res.status(404).json({success:false,message:"unable to get the user data"})
+        }else{
+            return res.status(200).json({success:true,userData})
+        }
+    } catch (error) {
+        return res.status(400).json({success:false,message:"error",error})
+    }
+}
 
 // for editing the user profile for cutomers
 const editUserData = async(req,res)=>{
@@ -62,7 +80,7 @@ const deleteShelterData = async(req,res)=>{
 
     try {
         const shelterId = req.params.id
-        console.log(shelterId)
+        // console.log(shelterId)
         const deleteUser = await RegisterShelter.findByIdAndDelete({_id:shelterId})
         if(!deleteUser){
             return res.status(400).json({success:false,message:"Unable to delete the user profile"})
@@ -112,6 +130,9 @@ const getMyBookedPet = async() =>{
 
 
 
+<<<<<<< HEAD
+module.exports = {editUserData,deleteUserData,editShelterData,deleteShelterData,getUser}
+=======
 module.exports = {
     editUserData,
     deleteUserData,
@@ -120,4 +141,5 @@ module.exports = {
     getUser,
     getMyBookedPet
 }
+>>>>>>> 18ff0f8bb155af537975fa647e5faf1587705593
 

@@ -55,30 +55,30 @@ const loginUser = async (req, res) => {
 };
 
 
-const userInfo = async (req, res) => {
-  try {
-    // console.log("hello")
-    const token = req.headers.authorization.split(" ")[1]
-    if(!token){
-        return res.status(403).json({message:"Token is required"})
-    }
-    // console.log(token)
-    const decode = jwt.verify(token, process.env.SECRET_KEY);
-    // console.log(decode)
-    if (!decode) {
-      return res.status(401).json({ success: false, message: "Invalid or expired token" });
-    }
+// const userInfo = async (req, res) => {
+//   try {
+//     // console.log("hello")
+//     const token = req.headers.authorization.split(" ")[1]
+//     if(!token){
+//         return res.status(403).json({message:"Token is required"})
+//     }
+//     // console.log(token)
+//     const decode = jwt.verify(token, process.env.SECRET_KEY);
+//     // console.log(decode)
+//     if (!decode) {
+//       return res.status(401).json({ success: false, message: "Invalid or expired token" });
+//     }
 
-    const getUser = await RegisterCustomer.findById(decode.id);
-    if (getUser) {
-      return res.status(200).json({ success: true, message: "Success", user: getUser });
-    } else {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-  } catch (error) {
-    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
-  }
-};
+//     const getUser = await RegisterCustomer.findById(decode.id);
+//     if (getUser) {
+//       return res.status(200).json({ success: true, message: "Success", user: getUser });
+//     } else {
+//       return res.status(404).json({ success: false, message: "User not found" });
+//     }
+//   } catch (error) {
+//     return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+//   }
+// };
 
 
  //for reseting the password for Customer(user)
@@ -562,7 +562,6 @@ module.exports={registerUser,registerShelter,loginUser,loginShelter,registerAdmi
    specificShelterPets,
    createRequest,
    showRequest,
-   userInfo,
    resetPasswordShelter,
    newPasswordShelter,
    getPetById,
