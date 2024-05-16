@@ -48,13 +48,10 @@ const Sidebar = () => {
                 <div className="flex items-center justify-between px-8 py-5">
                     <div className="flex items-center mr-5">
                         <div className="mr-5">
-                            <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
-                                <img className="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]" src={dog} alt="avatar image" />
-                            </div>
                         </div>
                         <div className="mr-2">
                             <a href="javascript:void(0)" className="dark:hover:text-primary hover:text-primary transition-colors duration-200 ease-in-out text-[1.075rem] font-medium dark:text-neutral-400/90 text-secondary-inverse">{userData.firstName}</a>
-                            <span className="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">Backend Developer</span>
+                            <span className="admin-text">Admin Panel</span>
                         </div>
                     </div>
                     <a className="inline-flex relative items-center group justify-end text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-[.95rem] transition-colors duration-150 ease-in-out text-dark bg-transparent shadow-none border-0" href="javascript:void(0)">
@@ -90,7 +87,7 @@ const Sidebar = () => {
 
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                            <Link ><a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Profile</a></Link>    
+                            <Link to="/viewfeedback"><a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">View Feedback</a></Link>    
                             </span>
                         </div>
 

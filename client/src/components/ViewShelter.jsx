@@ -28,6 +28,7 @@ const ViewShelter = () => {
                         <h3 className="text-lg font-semibold">{shelter.sheltername}</h3>
                         <p className="text-gray-500">{shelter.address}</p>
                         <p className="mt-2 text-sm">{shelter.email}</p>
+                        <button className='delete-button-shelter'>Delete</button>
                       </div>
                     </div>
                   ))}
