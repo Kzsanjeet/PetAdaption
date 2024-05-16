@@ -1,14 +1,9 @@
-<<<<<<< HEAD
-const RegisterCustomer = require("../schema/registerSchema")
-const RegisterShelter = require("../schema/registerSchema")
-=======
 const {RegisterCustomer,RegisterShelter, RegisterAdmin, Pet} = require("../schema/registerSchema") //imported schema
 const Request = require("../schema/requestPet")
 
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
->>>>>>> 18ff0f8bb155af537975fa647e5faf1587705593
 
 const getUser = async(req,res)=>{
     try {
@@ -94,29 +89,33 @@ const deleteShelterData = async(req,res)=>{
     }
 }
 
-const getUser = async (req, res) => {
-    try {
-        const userId = req.params.id;
+// const getUser = async (req, res) => {
+//     try {
+//         const userId = req.params.id;
 
-        const userProfile = await RegisterCustomer.find({ _id: userId });
+//         const userProfile = await RegisterCustomer.find({ _id: userId });
 
-        if (!userProfile || userProfile.length === 0) {
-            return res.status(404).json({ success: false, message: "Unable to get the user data" });
-        } else {
-            return res.status(200).json({ success: true, userProfile });
-        }
-    } catch (error) {
-        console.error("Error:", error); // Log the error for debugging
-        return res.status(400).json({ success: false, message: "Error occurred", error });
-    }
-};
+//         if (!userProfile || userProfile.length === 0) {
+//             return res.status(404).json({ success: false, message: "Unable to get the user data" });
+//         } else {
+//             return res.status(200).json({ success: true, userProfile });
+//         }
+//     } catch (error) {
+//         console.error("Error:", error); // Log the error for debugging
+//         return res.status(400).json({ success: false, message: "Error occurred", error });
+//     }
+// };
 
 
 //showing the booked list of pets for user
-const getMyBookedPet = async() =>{
+const getMyBookedPet = async(req,res) =>{
     try {
+        // console.log("Hello")
         const userId = req.params.id;
-        const myPets = await Request.find({userId:userId})
+        // console.log(userId)
+        const myPets = await Request.find({userId:userId}).populate("petId")
+
+        
         if(!myPets){
             res.status(404).json({success:false,message:""})
         }
@@ -130,9 +129,7 @@ const getMyBookedPet = async() =>{
 
 
 
-<<<<<<< HEAD
 module.exports = {editUserData,deleteUserData,editShelterData,deleteShelterData,getUser}
-=======
 module.exports = {
     editUserData,
     deleteUserData,
@@ -141,5 +138,4 @@ module.exports = {
     getUser,
     getMyBookedPet
 }
->>>>>>> 18ff0f8bb155af537975fa647e5faf1587705593
 

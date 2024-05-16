@@ -1,7 +1,30 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 const MyPet = ()=>{
     const [request,setRequestlist]=useState([])
+
+    const userId = localStorage.getItem("userId")
+    console.log(userId)
+
+    const getMyPet = async()=>{
+        try {
+            const resp = await fetch(`http://localhost:5000/get-my-booked-pet/${userId}`)
+            const data = await resp.json()
+            console.log(data)
+            if(data.success){
+                setRequestlist(data.myPets.filter((pet)=>pet.status=="Accepted"))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getMyPet()
+    },[])
+
+    console.log(request)
+
     return (
         <>
             <div className="flex justify-center">
