@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './FilterPets.css'; // Import your CSS file for styling
 
 const FilterPets = () => {
   const [pets, setPets] = useState([]);
@@ -14,8 +15,8 @@ const FilterPets = () => {
     // Fetch pets from backend
     axios.get('http://localhost:5000/getPets')
       .then(response => {
-        setPets(response.data);
-        setFilteredPets(response.data); // Initialize filteredPets with all pets
+        setPets(response.data.pets);
+        setFilteredPets(response.data.pets); // Initialize filteredPets with all pets
       })
       .catch(error => {
         console.error('Error fetching pets:', error);
@@ -42,7 +43,7 @@ const FilterPets = () => {
   };
 
   return (
-    <div>
+    <div className="filter-pets-container">
       <h1>Filter Pets</h1>
       <form onSubmit={(e) => { e.preventDefault(); applyFilters(); }}>
         <label>
@@ -54,31 +55,40 @@ const FilterPets = () => {
             onChange={handleFilterChange}
           />
         </label>
-        <label>
+        <div className='Categories'>
+        <label className='categoryHead' >
           Category:
-          <input
-            type="text"
-            name="category"
-            value={filters.category}
-            onChange={handleFilterChange}
-          />
-        </label>
+          </label>
+          <select  name="category" value={filters.category} onChange={handleFilterChange}>
+            <option value="">Select Category</option>
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Bird">Bird</option>
+            {/* Add more options as needed */}
+          </select>
+       
         {/* Add more filter inputs here */}
         <button type="submit">Apply Filters</button>
+        </div>
+       
       </form>
-      <ul>
-        {filteredPets.length>0 ? (filteredPets.map(pet => (
-          <li key={pet._id}>
-            <h2>{pet.name}</h2>
-            <img src={pet.image} alt={pet.name} />
-            <p>{pet.breed}</p>
-            <p>{pet.category}</p>
-            <p>{pet.description}</p>
-          </li>
-        ))):<div>No pets</div>}
-        
-        
-      </ul>
+      <div className="pets-grid">
+        {filteredPets.length > 0 ? (
+          filteredPets.map(pet => (
+            <div key={pet._id} className="pet-card">
+              <h2 className='petName'>{pet.name}</h2>
+              <img src={`http://localhost:5000/${pet.image}`} alt={pet.name} className='petImage' />
+              <div className='petDetails'>
+              <p className='petBreed' >{pet.breed}</p>
+              <p className='petCategory ' >{pet.category}</p>
+              <p className='petDescibe'>{pet.description}</p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div>No pets</div>
+        )}
+      </div>
     </div>
   );
 };
