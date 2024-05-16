@@ -51,6 +51,7 @@ const Navbar = () => {
             <a href="#" className="text-sm font-semibold leading-6 text-white">Other Pets</a>
           <Link to="/about"><a href="#" className="text-sm font-semibold leading-6 text-white">About</a></Link>
           <Link to="/user-profile-home"><a href="#" className="text-sm font-semibold leading-6 text-white">Profile</a></Link>
+          <Link to="/request"><a href="#" className="text-sm font-semibold leading-6 text-white">My pets</a></Link>
 
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -99,6 +100,9 @@ const Navbar = () => {
             <a href="#" className="block mt-4 text-sm font-semibold leading-6 text-gray-900">Donate</a>
             <div className="mt-6">
               <Link to="/shelterlogin" className="block text-sm font-semibold leading-6 text-gray-900">Shelter Login <span aria-hidden="true">&rarr;</span></Link>
+            </div>
+            <div className="mt-6">
+              <Link to="/request" className="block text-sm font-semibold leading-6 text-gray-900">Request <span aria-hidden="true">&rarr;</span></Link>
             </div>
           </div>
         </div>

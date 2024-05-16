@@ -33,6 +33,7 @@ import NewPasswordShelter from './components/NewPasswordShelter.jsx'
 import ViewShelter from './components/ViewShelter.jsx'
 import ProfileUser from './components/ProfileUser.jsx'
 import ViewFeedback from './components/ViewFeedback.jsx'
+import MyPet from "./components/MyPet.jsx"
 
 const router = createBrowserRouter([
   {
@@ -143,6 +144,10 @@ const router = createBrowserRouter([
   },{
     path:"/viewfeedback",
     element:<AdminLayout><ViewFeedback/></AdminLayout>
+  }
+  ,{
+    path:"/request",
+    element:<Layout><MyPet/></Layout>
   }
 
 ]);
