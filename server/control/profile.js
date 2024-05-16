@@ -1,4 +1,5 @@
-const {RegisterCustomer} = require("../schema/registerSchema")
+const {RegisterCustomer,RegisterShelter, RegisterAdmin, Pet} = require("../schema/registerSchema") //imported schema
+
 
 
 // for editing the user profile for cutomers
@@ -43,21 +44,26 @@ const editShelterData = async(req,res)=>{
             return res.status(200).json({success:true,message:"Edited successfully"})
         }
     } catch (error) {
+        console.log(error)
         return res.status(400).json({success:false,message:"error",error})
     }
 }
 
 const deleteShelterData = async(req,res)=>{
+
     try {
         const shelterId = req.params.id
-        const deleteUser = await RegisterShelter.findByIdandDelete({_id:shelterId});
+        console.log(shelterId)
+        const deleteUser = await RegisterShelter.findByIdAndDelete({_id:shelterId})
         if(!deleteUser){
             return res.status(400).json({success:false,message:"Unable to delete the user profile"})
         }else{
             return res.status(200).json({success:true,message:"Deleted successully"})
         }
     } catch (error) {
+        // console.log(error)
         return res.status(401).json({sucess:false,message:"error,err"})
+
     }
 }
 

@@ -108,7 +108,7 @@ router.route("/delete-userProfile/:userId").delete(deleteUserData)
 
 //route for edit shelter
 router.route("/edit-userProfile/:shelterId").patch(editShelterData)
-router.route("/delete-userProfile/:shelterId").delete(deleteShelterData)
+router.route("/delete-shelter/:id").delete(deleteShelterData)
 
 
 
