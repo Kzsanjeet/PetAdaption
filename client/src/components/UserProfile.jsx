@@ -17,7 +17,9 @@ const UserProfile = () => {
     const [editedShelter, setEditedShelter] = useState({
         sheltername: '',
         phone: '',
-        address: ''
+        address: '',
+        password: '',
+        confirmPassword: ''
     });
 
     useEffect(() => {
@@ -41,13 +43,40 @@ const UserProfile = () => {
         setEditedShelter({
             sheltername: shelterData.sheltername,
             phone: shelterData.phone,
-            address: shelterData.address
+            address: shelterData.address,
+            password: '',
+            confirmPassword: ''
         });
     };
 
-    const handleEditSubmit = (e) => {
+    const shelterId = localStorage.getItem("shelterId")
+    const handleEditSubmit = async(e) => {
         e.preventDefault();
-        console.log('Form submitted:', editedShelter);
+        
+        if(editedShelter.password === editedShelter.confirmPassword){
+            // console.log('Form submitted:', editedShelter);
+            try {
+                const updateShelter = await fetch(`http://localhost:5000/edit-shelter-profile/${shelterId}`,{
+                    method:"PATCH",
+                    headers:{
+                        "Content-Type": "application/json"
+                    },
+                    body:JSON.stringify(editedShelter)
+                })
+
+                const data  = await updateShelter.json()
+
+                // console.log(updateShelter)
+                if(data.success){
+                    alert("Profile updated successfull.")
+                }else{
+                    alert("Unable to update profile.")
+                }
+            } catch (error) {
+                console.log("error on updating profile shelter: ",error)
+            }
+
+        }
         // Handle form submission here
     };
 
@@ -57,6 +86,10 @@ const UserProfile = () => {
             ...prevState,
             [name]: value
         }));
+    };
+
+    const handleClose = () => {
+        setSelectedShelter(false);
     };
 
     if (!shelterData) {
@@ -91,7 +124,7 @@ const UserProfile = () => {
             </div>
 
             {selectedShelter && (
-                <ThemeProvider theme={createTheme()}>
+                <ThemeProvider theme={createTheme()} className="absolute m-10">
                     <Container component="main" maxWidth="xs">
                         <CssBaseline />
                         <Box
@@ -147,7 +180,32 @@ const UserProfile = () => {
                                             onChange={handleChange}
                                         />
                                     </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            name="password"
+                                            label="Password"
+                                            type="password"
+                                            id="password"
+                                            value={editedShelter.password}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            name="confirmPassword"
+                                            label="Confirm Password"
+                                            type="password"
+                                            id="confirmPassword"
+                                            value={editedShelter.confirmPassword}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
                                 </Grid>
+
                                 <Button
                                     type="submit"
                                     fullWidth
@@ -155,6 +213,15 @@ const UserProfile = () => {
                                     sx={{ mt: 3, mb: 2, bgcolor: '#3730A3', '&:hover': { bgcolor: '#4608c4' } }}
                                 >
                                     Update Shelter
+                                </Button>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={handleClose}
+                                    sx={{ mt: 1 }}
+                                >
+                                    Close
                                 </Button>
                             </Box>
                         </Box>

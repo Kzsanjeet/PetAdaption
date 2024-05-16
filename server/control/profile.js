@@ -35,13 +35,16 @@ const deleteUserData = async(req,res)=>{
 //for shelter profile
 const editShelterData = async(req,res)=>{
     try {
-        const ShelterId = req.params.id
-        const {firstname,lastname,sheltername,phone,address,email,password} = req.body
-        const editUser = await RegisterShelter.findByIdAndUpdate(ShelterId,{firstname,lastname,sheltername,phone,address,email,password});
+        const shelterId = req.params.id
+        const {
+            sheltername,phone,address,password
+        } = req.body
+        // console.log(shelterId,sheltername,phone,address,password)
+        const editUser = await RegisterShelter.findByIdAndUpdate({_id:shelterId},{sheltername,phone,address,password});
         if(!editUser){
             return res.status(404).json({success:false,message:"Unable to edit the profile"})
         }else{
-            return res.status(200).json({success:true,message:"Edited successfully"})
+            return res.status(200).json({success:true,message:"Edited successfully", editUser})
         }
     } catch (error) {
         console.log(error)
