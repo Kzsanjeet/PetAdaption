@@ -389,7 +389,8 @@ const applyFilters = () => {
 // get pet by ID
 const getPetById = async (req, res) => {
   try {
-    const pet = await Pet.findById(req.params.id);
+    const petId = req.params.id
+    const pet = await Pet.findById({_id:petId}).populate("shelter");
     if (!pet) {
       return res.status(404).json({ message: 'Pet not found' });
     }
