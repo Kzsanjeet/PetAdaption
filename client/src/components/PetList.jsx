@@ -1,3 +1,22 @@
+
+import React from 'react';
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+
 function PetList() {
   const [pets, setPets] = useState([]);
   const [selectedPet, setSelectedPet] = useState(null);
@@ -7,7 +26,21 @@ function PetList() {
       description: ''
   });
   const [selectedImage, setSelectedImage] = useState(null);
-  const id = localStorage.getItem("shelterId");
+  const shelterId = localStorage.getItem("shelterId");
+
+  const getMyShelterPet = async()=>{
+    try {
+        const resp = await fetch(`http://localhost:5000/specific-shelter-pet/${shelterId}`)
+        const data = await resp.json()
+        console.log(data)
+        if(data.sucess){
+            setPets(data.pets)
+            // console.log("hello")
+        }
+    } catch (error) {
+        console.log("error getting pets from shelter:" , error)
+    }
+  }
 
 
   const handleDelete = async (id) => {
@@ -61,6 +94,12 @@ function PetList() {
           [name]: value
       });
   };
+
+  useEffect(()=>{
+    getMyShelterPet()
+  },[])
+
+  console.log(pets)
 
   return (
       <>

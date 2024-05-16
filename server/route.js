@@ -68,8 +68,7 @@ router.route('/getPetById/:id').get(getPetById);
 router.delete('/deletePet/:id', deletePet);
 router.put('/editPet/:id', editPet);
 router.get('/specific-shelter-pet/:id',specificShelterPets)
-router.get("/get-my-booked-pet", getMyBookedPet)
-
+router.get("/get-my-booked-pet/:id", getMyBookedPet)
 
 //feedback
 router.post('/add-feedback/:id', addFeedback);
