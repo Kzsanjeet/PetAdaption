@@ -93,7 +93,7 @@ function AddFeedback() {
                     id="comment"
                     multiline
                     rows={4}
-                    value={comment}
+                    value={comment || ""}
                     onChange={(event)=>setComment(event.target.value)}
                 />
               </Grid>

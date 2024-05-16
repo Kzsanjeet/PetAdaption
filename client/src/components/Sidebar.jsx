@@ -3,6 +3,7 @@ import dog from '../assets/images/dog.jpg';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'; // Import the jwt-decode library
 import { Link } from 'react-router-dom';
+import "./admin.css"
 
 const Sidebar = () => {
     const [userData, setUserData] = useState({ firstName: '' });
@@ -41,7 +42,7 @@ const Sidebar = () => {
             </div>
 
             {/* Sidebar */}
-            <aside style={{ marginTop: '80px' }} className={`group/sidebar flex flex-col lg:w-[300px] w-[250px] transition-all duration-300 ease-in-out m-0 fixed z-40 inset-y-0 left-0 bg-white border-r border-r-dashed border-r-neutral-200 sidenav fixed-start loopple-fixed-start ${isSidebarOpen ? 'block' : 'hidden'} lg:block`} id="sidenav-main">
+            <aside style={{ marginTop: '80px' }} className={`admin-sidebar group/sidebar flex flex-col lg:w-[300px] w-[250px] transition-all duration-300 ease-in-out m-0 fixed z-40 inset-y-0 left-0 bg-white border-r border-r-dashed border-r-neutral-200 sidenav fixed-start loopple-fixed-start ${isSidebarOpen ? 'block' : 'hidden'} lg:block`} id="sidenav-main">
 
                 <div className="hidden lg:block dark:border-neutral-700/70 border-neutral-200"></div>
 
@@ -72,14 +73,14 @@ const Sidebar = () => {
                         {/* menu item */}
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                            <Link to="/add-shelter"> <a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Add Shelter</a></Link>  
+                            <Link to="/add-shelter"> <a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] text-dark">Add Shelter</a></Link>  
                             </span>
                         </div>
 
                         {/* menu item */}
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                                <Link to={'/view-shelter'} href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">View Shelter</Link>
+                                <Link to={'/view-shelter'} href="javascript:;" className="flex items-center flex-grow text-[1.15rem] text-dark">View Shelter</Link>
                             </span>
                         </div>
 
@@ -87,7 +88,7 @@ const Sidebar = () => {
 
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                            <Link to="/viewfeedback"><a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">View Feedback</a></Link>    
+                            <Link to="/viewfeedback"><a href="javascript:;" className="flex items-center flex-grow text-[1.15rem] text-dark">View Feedback</a></Link>    
                             </span>
                         </div>
 

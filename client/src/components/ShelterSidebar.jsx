@@ -74,33 +74,33 @@ const ShelterSidebar = () => {
                                                 {/* menu item */}
                                                 <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                                <Link to="/shelterdashboard" href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Add New Pet</Link>
+                                <Link to="/shelterdashboard" href="javascript:;" className="flex items-center flex-grow text-[1.15rem] text-dark">Add New Pet</Link>
                             </span>
                         </div>
 
                         {/* menu item */}
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                                <Link to="/petlist" href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">My Listed Pets</Link>
+                                <Link to="/petlist" href="javascript:;" className="flex items-center flex-grow text-[1.15rem] text-dark">My Listed Pets</Link>
                             </span>
                         </div>
 
                         {/* menu item */}
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                                <Link to="/adopt-request" href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Adopt Requests</Link>
+                                <Link to="/adopt-request" href="javascript:;" className="flex items-center flex-grow text-[1.15rem] text-dark">Adopt Requests</Link>
                             </span>
                         </div>
 
                         {/* menu item */}
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                                <Link to='/UserProfile' href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Profile</Link>
+                                <Link to='/UserProfile' href="javascript:;" className="flex items-center flex-grow text-[1.15rem] text-dark">Profile</Link>
                             </span>
                         </div>
                         <div>
                             <span className="select-none flex items-center px-4 py-[.775rem] cursor-pointer my-[.4rem] rounded-[.95rem]">
-                                <Link to='/shelterlogin' href="javascript:;" className="flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500 hover:text-dark">Logout</Link>
+                                <Link to='/shelterlogin' href="javascript:;" className="flex items-center flex-grow text-[1.15rem] text-dark">Logout</Link>
                             </span>
                         </div>
 
