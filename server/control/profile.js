@@ -1,4 +1,4 @@
-const RegisterCustomer = require("../schema/registerSchema")
+const {RegisterCustomer} = require("../schema/registerSchema")
 
 
 // for editing the user profile for cutomers
@@ -61,8 +61,32 @@ const deleteShelterData = async(req,res)=>{
     }
 }
 
+const getUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        const userProfile = await RegisterCustomer.find({ _id: userId });
+
+        if (!userProfile || userProfile.length === 0) {
+            return res.status(404).json({ success: false, message: "Unable to get the user data" });
+        } else {
+            return res.status(200).json({ success: true, userProfile });
+        }
+    } catch (error) {
+        console.error("Error:", error); // Log the error for debugging
+        return res.status(400).json({ success: false, message: "Error occurred", error });
+    }
+};
 
 
 
-module.exports = {editUserData,deleteUserData,editShelterData,deleteShelterData}
+
+
+module.exports = {
+    editUserData,
+    deleteUserData,
+    editShelterData,
+    deleteShelterData,
+    getUser
+}
 

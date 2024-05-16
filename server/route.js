@@ -26,7 +26,7 @@ const {registerUser,
            shelterData
           } = require("./control/controller");
 
-const { editUserData, deleteUserData, editShelterData, deleteShelterData } = require("./control/profile");
+const { editUserData, deleteUserData, editShelterData, deleteShelterData, getUser } = require("./control/profile");
 
 
 
@@ -54,7 +54,8 @@ router.route("/registerAdmin").post(registerAdmin)
 router.route("/loginShelter").post(loginShelter)
 
 //for getting the user info for profile
-router.route("/userProfile").get(userInfo)
+router.route('/get-user-data/:id').get(getUser)
+
 router.route('/shelterData/:id').get(shelterData)
 //getting all the shelter
 router.route('/get-shelter').get(getShelter)
