@@ -87,6 +87,8 @@ function PetAdopt() {
             console.log(data)
             if(data.success){
                 alert("Pet request sent successfully!")
+                window.location.reload()
+                
             }
         } catch (error) {
             console.log(error)
@@ -97,6 +99,7 @@ function PetAdopt() {
 
     useEffect(()=>{
         getPetDetails()
+        setFormData("")
     },[])
 
     return (

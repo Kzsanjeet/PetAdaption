@@ -50,9 +50,12 @@ const Navbar = () => {
           <Link to="/filterpets"> <a href="#" className="text-sm font-semibold leading-6 text-white">Categories</a></Link>
             <a href="#" className="text-sm font-semibold leading-6 text-white">Other Pets</a>
           <Link to="/about"><a href="#" className="text-sm font-semibold leading-6 text-white">About</a></Link>
-          <Link to="/user-profile-home"><a href="#" className="text-sm font-semibold leading-6 text-white">Profile</a></Link>
+          {isLoggedIn && <>
+            <Link to="/user-profile-home"><a href="#" className="text-sm font-semibold leading-6 text-white">Profile</a></Link>
           <Link to="/request"><a href="#" className="text-sm font-semibold leading-6 text-white">My pets</a></Link>
 
+          </>}
+         
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             {isLoggedIn ? (
