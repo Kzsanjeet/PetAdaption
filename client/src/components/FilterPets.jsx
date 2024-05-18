@@ -44,17 +44,7 @@ const FilterPets = () => {
 
   return (
     <div className="filter-pets-container">
-      <h1>Filter Pets</h1>
       <form onSubmit={(e) => { e.preventDefault(); applyFilters(); }}>
-        <label>
-          Breed:
-          <input
-            type="text"
-            name="breed"
-            value={filters.breed}
-            onChange={handleFilterChange}
-          />
-        </label>
         <div className='Categories'>
         <label className='categoryHead' >
           Category:

@@ -36,14 +36,15 @@ const UserProfile = () => {
         };
 
         fetchShelterData();
+        
     }, []);
 
     const handleEdit = () => {
         setSelectedShelter(true);
         setEditedShelter({
-            sheltername: shelterData.sheltername,
-            phone: shelterData.phone,
-            address: shelterData.address,
+            sheltername: "",
+            phone: "",
+            address:"",
             password: '',
             confirmPassword: ''
         });
@@ -69,6 +70,7 @@ const UserProfile = () => {
                 // console.log(updateShelter)
                 if(data.success){
                     alert("Profile updated successfull.")
+                    setEditedShelter("")
                 }else{
                     alert("Unable to update profile.")
                 }

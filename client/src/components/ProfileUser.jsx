@@ -12,7 +12,7 @@ const ProfileUser = () => {
             const data = await resp.json()
             // console.log(data)
             if(data.success){
-                setUserData(data.userProfile)
+                setUserData(data.userData)
             }
         } catch (error) {
             console.log("error on showin profile: ", error)
@@ -33,14 +33,14 @@ const ProfileUser = () => {
                             <div className="bg-white shadow rounded-lg p-6">
                                 <hr className="my-6 border-t border-gray-300" />
                                 <div className="flex flex-col">
-                                <span className="mb-8"> Id: {userData && userData[0]._id}</span>
+                                <span className="mb-8"> Id: { userData._id}</span>
 
                                     <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">User name: </span>
-                                    <span className="mb-8">{userData && userData[0].firstname} {userData && userData[0].lastname}</span>
+                                    <span className="mb-8">{userData.firstname} {userData.lastname}</span>
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">Email: </span>
-                                    <span className="mb-8">{userData && userData[0].email}</span>
+                                    <span className="mb-8">{userData.email}</span>
                                 </div>
                             </div>
                         </div>
