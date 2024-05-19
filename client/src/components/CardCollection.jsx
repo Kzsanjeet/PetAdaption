@@ -33,7 +33,7 @@ const CardCollection = () => {
     const timestampA = parseInt(a._id.toString().substring(0, 8), 16);
     const timestampB = parseInt(b._id.toString().substring(0, 8), 16);
     return timestampB - timestampA;
-  }).slice(0, 4);
+  }).slice(0, 8);
 
   return (
     <>
