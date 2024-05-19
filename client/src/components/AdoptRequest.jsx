@@ -11,7 +11,7 @@ const AdoptRequest = () => {
       const data = await response.json();
       setReqlist(data.showPet);
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching pet requests:", error);
     }
   };
 
@@ -20,15 +20,19 @@ const AdoptRequest = () => {
       const acceptReq = await fetch(`http://localhost:5000/accept-pet-request/${requestId}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ petId }),
+        body: JSON.stringify({ petId })
       });
 
       if (acceptReq.ok) {
         const data = await acceptReq.json();
         if (data.success) {
-          window.location.reload();
+          setReqlist(prevReqlist =>
+            prevReqlist.map(pet =>
+              pet._id === requestId ? { ...pet, data: { ...pet.data, status: 'Accepted' } } : pet
+            )
+          );
         }
       } else {
         console.error('Failed to accept pet request:', acceptReq.status);
@@ -43,14 +47,14 @@ const AdoptRequest = () => {
       const rejectReq = await fetch(`http://localhost:5000/reject-pet-request/${requestId}`, {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       });
 
       if (rejectReq.ok) {
         const data = await rejectReq.json();
         if (data.success) {
-          window.location.reload();
+          setReqlist(prevReqlist => prevReqlist.filter(pet => pet._id !== requestId));
         }
       } else {
         console.error('Failed to reject pet request:', rejectReq.status);
@@ -82,14 +86,15 @@ const AdoptRequest = () => {
                     <p className="text-gray-500">{pet.petId.breed}</p>
                     <p className="mt-2 text-sm">{pet.petId.description}</p>
                   </div>
-                  <div className="flex gap-4 mt-4">
-                    <button className="approve" onClick={() => handleAccept(pet._id, pet.petId._id)}>
-                      Approve
-                    </button>
-                    <button className="remove" onClick={() => handleReject(pet._id)}>
-                      Deny
-                    </button>
-                  </div>
+                  {pet.data.status === 'Pending' ? (
+                    
+                    <div>
+                      <button className="approve" onClick={() => handleAccept(pet._id, pet.petId._id)}>Approve</button>
+                      <button className="remove" onClick={() => handleReject(pet._id)}>Deny</button>
+                    </div>
+                  ) : (
+                    <div><button className="approve">Accepted</button></div>
+                  )}
                 </div>
                 <div className="w-full lg:w-1/2 p-4 bg-gray-100 rounded-lg shadow-inner">
                   <h1 className="font-bold text-lg mb-2">Sender details:</h1>
