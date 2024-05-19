@@ -64,7 +64,7 @@ router.route('/get-shelter').get(getShelter)
 router.route('/getPets').get(getPets);
 // router.route('/getPets').get(applyFilters);
 router.route('/getPetById/:id').get(getPetById);
-// router.route('/petCategory').get(petCategory);
+router.route('/petCategory').get(petCategory);
 router.delete('/deletePet/:id', deletePet);
 router.put('/editPet/:id', editPet);
 router.get('/specific-shelter-pet/:id',specificShelterPets)

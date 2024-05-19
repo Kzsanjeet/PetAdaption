@@ -12,7 +12,7 @@ const App = () => {
 
   return (
     <>
-      <Hero/>
+      <Hero title = "Change a Life, Adopt a Pet" title2 ="Your New Best Friend Awaits"/>
       <div className="relative -top-16 md:-top-24">
       <IconCollection />
       <CardCollection />
