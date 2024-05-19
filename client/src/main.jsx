@@ -85,12 +85,16 @@ const router = createBrowserRouter([
     element:<Layout><ProductDetail /></Layout>
   },
   {
-    path:'/category/:dog',
-    element: <Layout><CategoryPets category ="dog"/></Layout>
+    path:'/category/:Dog',
+    element: <Layout><CategoryPets category ="Dog"/></Layout>
   },
   {
-    path:'/category/:cat',
-    element: <Layout><CategoryPets category ="cat"/></Layout>
+    path:'/category/:Cat',
+    element: <Layout><CategoryPets category ="Cat"/></Layout>
+  },
+  {
+    path:'/category/:Bird',
+    element: <Layout><CategoryPets category ="Bird"/></Layout>
   },
   {
     path:'/filterpets',

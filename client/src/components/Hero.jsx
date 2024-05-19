@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import dogandkids from '../assets/images/dogandkids.jpeg';
 import { Link } from 'react-router-dom';
 
-const Hero = () => {
+const Hero = ({ title, title2 }) => {
     const [isLogged, setIsLogged] = useState(false);
 
     useEffect(() => {
@@ -14,6 +14,15 @@ const Hero = () => {
         }
     }, []);
 
+    const renderTitleWithLineBreaks = (text) => {
+        return text.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+                {line}
+                {index !== text.split('\n').length - 1 && <br />}
+            </React.Fragment>
+        ));
+    };
+
     return (
         <>
             <div
@@ -24,8 +33,9 @@ const Hero = () => {
                     <div className="flex h-full items-center justify-center">
                         <div className="px-6 text-center text-white md:px-12">
                             <h1 className="mt-6 mb-16 text-5xl font-bold tracking-tight md:text-6xl xl:text-7xl">
-                                Change a Life, Adopt a Pet <br />
-                                <span>Your New Best Friend Awaits!</span>
+                                {renderTitleWithLineBreaks(title)}
+                                <br />
+                                {title2}
                             </h1>
                             {!isLogged && (
                                 <>

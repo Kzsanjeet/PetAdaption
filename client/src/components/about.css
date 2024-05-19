@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
 .about-div{
     h1{
         font-size: 4.5rem;
@@ -6,7 +7,6 @@
     }
     p{
         margin-top: 1rem;
-        width: 70%;
         text-align: justify;
         line-height: 1.5rem;
     }
@@ -15,8 +15,14 @@
     margin: 3rem 5rem;
     padding: 3rem 5rem;
 }
-
 .faq-div{
+    h1{
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+    }
+}
+/* .faq-div{
     margin-top: 6rem;
     font-weight: 500;
     font-size: 2rem;
@@ -45,7 +51,7 @@
             margin-bottom: .5rem;
         }
     }
-}
+} */
 
 .mission-div{
     margin-top: 4rem;
@@ -55,4 +61,82 @@
         font-size: 1rem;
         font-weight: 400;
     }
+}
+
+/* about.css */
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+.about-main-div {
+  padding: 20px;
+  width:1200px;
+  width:1200px;
+  margin:0 auto;
+  /* background-color: #f8f9fa; */
+}
+
+.about-div, .mission-div {
+  margin-bottom: 20px;
+}
+
+.faq-div {
+  margin-bottom: 20px;
+}
+
+.accordion {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+}
+
+.accordion-header {
+  border: none;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.accordion-header span {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.accordion-body {
+  color: #444;
+  font-size: 14px;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity .3s, height .3s;
+}
+
+.accordion-body.active {
+  height: auto;
+  opacity: 1;
+  padding-top: 8px;
+}
+
+.arrow {
+  transition: transform .2s linear;
+}
+
+.accordion:has(.active) .arrow {
+  transform: rotate(180deg);
 }
