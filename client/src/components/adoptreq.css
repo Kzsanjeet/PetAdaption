@@ -67,7 +67,7 @@
     color: aliceblue;
     border-radius: .3rem;
     position: relative;
-    right: -40%;
+    /* right: -40%; */
     bottom: -12%;
 }
 .remove{
@@ -78,6 +78,6 @@
     border-radius: .3rem;
     margin-left: .5rem;
     position: relative;
-    right: -40%;
+    /* right: -40%; */
     bottom: -12%;
 }
