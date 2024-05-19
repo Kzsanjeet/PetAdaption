@@ -10,6 +10,7 @@ const AdoptRequest = () => {
       const response = await fetch(`http://localhost:5000/show-pet-request/${shelterId}`);
       const data = await response.json();
       setReqlist(data.showPet);
+      console.log(data.showPet)
     } catch (error) {
       console.log("Error fetching pet requests:", error);
     }
@@ -28,11 +29,13 @@ const AdoptRequest = () => {
       if (acceptReq.ok) {
         const data = await acceptReq.json();
         if (data.success) {
+          window.location.reload()
           setReqlist(prevReqlist =>
             prevReqlist.map(pet =>
               pet._id === requestId ? { ...pet, data: { ...pet.data, status: 'Accepted' } } : pet
             )
           );
+          
         }
       } else {
         console.error('Failed to accept pet request:', acceptReq.status);
@@ -86,20 +89,20 @@ const AdoptRequest = () => {
                     <p className="text-gray-500">{pet.petId.breed}</p>
                     <p className="mt-2 text-sm">{pet.petId.description}</p>
                   </div>
-                  {pet.data.status === 'Pending' ? (
+                  {pet.status === 'Pending' ? (
                     
                     <div>
-                      <button className="approve" onClick={() => handleAccept(pet._id, pet.petId._id)}>Approve</button>
-                      <button className="remove" onClick={() => handleReject(pet._id)}>Deny</button>
-                    </div>
+                    <button className="approve" onClick={() => handleAccept(pet._id, pet.petId._id)}>Approve</button>
+                    <button className="remove" onClick={() => handleReject(pet._id)}>Deny</button>
+                  </div>
                   ) : (
-                    <div><button className="approve">Accepted</button></div>
+                    <div><button className="approve">{pet.status}</button></div>
                   )}
                 </div>
                 <div className="w-full lg:w-1/2 p-4 bg-gray-100 rounded-lg shadow-inner">
                   <h1 className="font-bold text-lg mb-2">Sender details:</h1>
-                  <p><strong>Full name:</strong> {pet.userId.firstname} {pet.userId.lastname}</p>
-                  <p><strong>Email:</strong> {pet.userId.email}</p>
+                  <p><strong>Full name:</strong> {pet.userId?.firstname} {pet.userId?.lastname}</p>
+                  <p><strong>Email:</strong> {pet.userId?.email}</p>
                   <p><strong>Address:</strong> {pet.data.address}</p>
                   <p><strong>Enough Space?</strong> {pet.data.enoughSpace}</p>
                   <p><strong>Had Pet Before?</strong> {pet.data.hadPetBefore}</p>
